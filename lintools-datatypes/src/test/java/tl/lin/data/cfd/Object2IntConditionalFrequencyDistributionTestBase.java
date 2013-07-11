@@ -17,19 +17,9 @@
 package tl.lin.data.cfd;
 
 import static org.junit.Assert.assertEquals;
-import junit.framework.JUnit4TestAdapter;
 
-import org.junit.Test;
-
-public class Object2IntConditionalFrequencyDistributionTest {
-
-  @Test
-  public void test1Entry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
-    test1Common(cfd);
-  }
-
-  private void test1Common(Object2IntConditionalFrequencyDistribution<String> cfd) {
+public class Object2IntConditionalFrequencyDistributionTestBase {
+  protected void test1Common(Object2IntConditionalFrequencyDistribution<String> cfd) {
     cfd.set("a", "a", 2);
     cfd.check();
 
@@ -70,13 +60,7 @@ public class Object2IntConditionalFrequencyDistributionTest {
     assertEquals(19, cfd.getSumOfAllCounts());
   }
 
-  @Test
-  public void test2Entry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
-    test2Common(cfd);
-  }
-
-  private void test2Common(Object2IntConditionalFrequencyDistribution<String> cfd) {
+  protected void test2Common(Object2IntConditionalFrequencyDistribution<String> cfd) {
     cfd.set("a", "a", 2);
     cfd.check();
 
@@ -107,13 +91,7 @@ public class Object2IntConditionalFrequencyDistributionTest {
     assertEquals(16, cfd.getSumOfAllCounts());
   }
 
-  @Test
-  public void test3Entry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
-    test3Common(cfd);
-  }
-
-  private void test3Common(Object2IntConditionalFrequencyDistribution<String> cfd) {
+  protected void test3Common(Object2IntConditionalFrequencyDistribution<String> cfd) {
     cfd.set("a", "a", 2);
     cfd.set("a", "b", 5);
     cfd.set("a", "c", 6);
@@ -133,22 +111,12 @@ public class Object2IntConditionalFrequencyDistributionTest {
     assertEquals(30, cfd.getSumOfAllCounts());
   }
 
-  @Test
-  public void testLargeMarginalEntry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
-    testLargeMarginalCommon(cfd);
-  }
-
-  private void testLargeMarginalCommon(Object2IntConditionalFrequencyDistribution<String> cfd) {
+  protected void testLargeMarginalCommon(Object2IntConditionalFrequencyDistribution<String> cfd) {
     cfd.set("1", "2", 2000000000);
     cfd.set("1", "3", 2000000000);
     cfd.set("1", "5", 2000000000);
     cfd.set("1", "1", 2000000000);
 
     assertEquals(8000000000L, cfd.getMarginalCount("1"));
-  }
-
-  public static junit.framework.Test suite() {
-    return new JUnit4TestAdapter(Object2IntConditionalFrequencyDistributionTest.class);
   }
 }
