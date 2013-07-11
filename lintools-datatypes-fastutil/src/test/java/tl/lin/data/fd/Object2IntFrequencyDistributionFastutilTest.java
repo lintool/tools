@@ -20,73 +20,73 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Test;
 
-public class Object2LongFrequencyDistributionTest extends
-    Object2LongFrequencyDistributionTestBase {
+public class Object2IntFrequencyDistributionFastutilTest extends
+    Object2IntFrequencyDistributionTestBase {
 
   @Test
   public void test1Fastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     test1Common(fd);
   }
 
   @Test
   public void test2Fastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     test2Common(fd);
   }
 
   @Test
   public void test3Fastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     test3Common(fd);
   }
 
   @Test(expected = RuntimeException.class)
   public void testFailedDecrement1Fastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     testFailedDecrement1Common(fd);
   }
 
   @Test(expected = RuntimeException.class)
   public void testFailedDecrement2Fastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     testFailedDecrement2Common(fd);
   }
 
   @Test
   public void testMultiIncrementDecrementFastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     testMultiIncrementDecrementCommon(fd);
   }
 
   @Test
   public void testGetFrequencySortedFastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     testGetFrequencySortedCommon(fd);
   }
 
   @Test
   public void testGetSortedEventsFastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     testGetSortedEventsCommon(fd);
   }
 
   @Test
   public void testIterableFastutil() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionFastutil<String>();
+    Object2IntFrequencyDistribution<String> fd =
+      new Object2IntFrequencyDistributionFastutil<String>();
     testIterableCommon(fd);
   }
 
   public static junit.framework.Test suite() {
-    return new JUnit4TestAdapter(Object2LongFrequencyDistributionTest.class);
+    return new JUnit4TestAdapter(Object2IntFrequencyDistributionFastutilTest.class);
   }
 }
