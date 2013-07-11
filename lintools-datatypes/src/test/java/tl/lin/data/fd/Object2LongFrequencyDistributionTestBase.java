@@ -26,23 +26,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
-
 import tl.lin.data.SortableEntries.Order;
-import tl.lin.data.pair.PairOfObjectInt;
+import tl.lin.data.pair.PairOfObjectLong;
 
-public class Object2IntFrequencyDistributionTest {
-
-  @Test
-  public void test1Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    test1Common(fd);
-  }
-
-  private void test1Common(Object2IntFrequencyDistribution<String> fd) {
+public class Object2LongFrequencyDistributionTestBase {
+  protected void test1Common(Object2LongFrequencyDistribution<String> fd) {
     assertEquals(0, fd.get("a"));
 
     fd.increment("a");
@@ -106,14 +94,7 @@ public class Object2IntFrequencyDistributionTest {
     assertTrue(set.contains("c"));
   }
 
-  @Test
-  public void test2Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    test2Common(fd);
-  }
-
-  private void test2Common(Object2IntFrequencyDistribution<String> fd) {
+  protected void test2Common(Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a");
     fd.increment("a");
     fd.increment("b");
@@ -169,14 +150,7 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(5, fd.get("d"));
   }
 
-  @Test
-  public void test3Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    test3Common(fd);
-  }
-
-  private void test3Common(Object2IntFrequencyDistribution<String> fd) {
+  protected void test3Common(Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a");
     fd.increment("a");
     fd.increment("b");
@@ -194,15 +168,8 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(0, fd.getSumOfCounts());
   }
 
-  @Test(expected = RuntimeException.class)
-  public void testFailedDecrement1Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testFailedDecrement1Common(fd);
-  }
-
-  private void testFailedDecrement1Common(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testFailedDecrement1Common(
+      Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a");
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -218,15 +185,8 @@ public class Object2IntFrequencyDistributionTest {
     fd.decrement("a");
   }
 
-  @Test(expected = RuntimeException.class)
-  public void testFailedDecrement2Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testFailedDecrement2Common(fd);
-  }
-
-  private void testFailedDecrement2Common(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testFailedDecrement2Common(
+      Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a", 1000);
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -249,15 +209,8 @@ public class Object2IntFrequencyDistributionTest {
     fd.decrement("a", 4);
   }
 
-  @Test
-  public void testMultiIncrementDecrementEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testMultiIncrementDecrementCommon(fd);
-  }
-
-  private void testMultiIncrementDecrementCommon(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testMultiIncrementDecrementCommon(
+      Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a", 2);
     fd.increment("b", 3);
     fd.increment("c", 4);
@@ -279,26 +232,20 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(4, fd.get("c"));
   }
 
-  @Test
-  public void testGetFrequencySortedEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testGetFrequencySortedCommon(fd);
-  }
-
-  private void testGetFrequencySortedCommon(
-      Object2IntFrequencyDistribution<String> fd) {
-    fd.set("a", 5);
-    fd.set("d", 2);
-    fd.set("b", 5);
-    fd.set("e", 2);
-    fd.set("f", 1);
-    fd.set("c", 5);
+  protected void testGetFrequencySortedCommon(
+      Object2LongFrequencyDistribution<String> fd) {
+    fd.set("a", 5L);
+    fd.set("d", 2L);
+    fd.set("b", 5L);
+    fd.set("e", 2L);
+    fd.set("f", 1L);
+    fd.set("c", 5L);
 
     assertEquals(6, fd.getNumberOfEvents());
     assertEquals(20, fd.getSumOfCounts());
 
-    List<PairOfObjectInt<String>> list = fd.getEntries(Order.ByRightElementDescending);
+    List<PairOfObjectLong<String>> list = fd
+        .getEntries(Order.ByRightElementDescending);
 
     assertEquals(6, list.size());
 
@@ -359,26 +306,18 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(5, list.get(3).getRightElement());
   }
 
-  @Test
-  public void testGetSortedEventsEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testGetSortedEventsCommon(fd);
-  }
-
-  private void testGetSortedEventsCommon(
-      Object2IntFrequencyDistribution<String> fd) {
-    fd.set("a", 1);
-    fd.set("d", 3);
-    fd.set("b", 4);
-    fd.set("e", 7);
-    fd.set("f", 9);
-    fd.set("c", 2);
+  protected void testGetSortedEventsCommon(Object2LongFrequencyDistribution<String> fd) {
+    fd.set("a", 1L);
+    fd.set("d", 3L);
+    fd.set("b", 4L);
+    fd.set("e", 7L);
+    fd.set("f", 9L);
+    fd.set("c", 2L);
 
     assertEquals(6, fd.getNumberOfEvents());
     assertEquals(26, fd.getSumOfCounts());
 
-    List<PairOfObjectInt<String>> list = fd.getEntries(Order.ByLeftElementAscending);
+    List<PairOfObjectLong<String>> list = fd.getEntries(Order.ByLeftElementAscending);
 
     assertEquals(6, list.size());
 
@@ -439,14 +378,7 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(2, list.get(3).getRightElement());
   }
 
-  @Test
-  public void testIterableEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testIterableCommon(fd);
-  }
-
-  private void testIterableCommon(Object2IntFrequencyDistribution<String> fd) {
+  protected void testIterableCommon(Object2LongFrequencyDistribution<String> fd) {
     fd.set("a", 1);
     fd.set("d", 3);
     fd.set("b", 4);
@@ -457,16 +389,16 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(6, fd.getNumberOfEvents());
     assertEquals(26, fd.getSumOfCounts());
 
-    SortedSet<PairOfObjectInt<String>> list = new TreeSet<PairOfObjectInt<String>>();
+    SortedSet<PairOfObjectLong<String>> list = new TreeSet<PairOfObjectLong<String>>();
 
-    for (PairOfObjectInt<String> pair : fd) {
+    for (PairOfObjectLong<String> pair : fd) {
       list.add(pair.clone());
     }
 
     assertEquals(6, list.size());
 
-    Iterator<PairOfObjectInt<String>> iter = list.iterator();
-    PairOfObjectInt<String> e = iter.next();
+    Iterator<PairOfObjectLong<String>> iter = list.iterator();
+    PairOfObjectLong<String> e = iter.next();
     assertEquals("a", e.getLeftElement());
     assertEquals(1, e.getRightElement());
     e = iter.next();
@@ -484,9 +416,5 @@ public class Object2IntFrequencyDistributionTest {
     e = iter.next();
     assertEquals("f", e.getLeftElement());
     assertEquals(9, e.getRightElement());
-  }
-
-  public static junit.framework.Test suite() {
-    return new JUnit4TestAdapter(Object2IntFrequencyDistributionTest.class);
   }
 }
