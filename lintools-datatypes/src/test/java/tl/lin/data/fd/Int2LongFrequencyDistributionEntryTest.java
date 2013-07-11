@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -20,8 +20,8 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Test;
 
-public class Int2LongFrequencyDistributionEntryTest extends
-    Int2LongFrequencyDistributionTestBase {
+public class Int2LongFrequencyDistributionEntryTest
+    extends Int2LongFrequencyDistributionTestBase {
     
   @Test
   public void test1Entry() {

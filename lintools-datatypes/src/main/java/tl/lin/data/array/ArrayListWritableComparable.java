@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -24,21 +24,15 @@ import java.util.ArrayList;
 import org.apache.hadoop.io.WritableComparable;
 
 /**
- * <p>
  * WritableComparable extension of a Java ArrayList. Elements in the list must be homogeneous and
  * must implement Hadoop's WritableComparable interface.
- * </p>
  *
  * @param <E> type of list element
- *
- * @author Jimmy Lin
- * @author Tamer Elsayed
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ArrayListWritableComparable<E extends WritableComparable> extends ArrayList<E>
     implements WritableComparable<ArrayListWritableComparable<E>> {
-
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 4911321393319821792L;
 
   /**
    * Creates an ArrayListWritableComparable object.
@@ -81,7 +75,7 @@ public class ArrayListWritableComparable<E extends WritableComparable> extends A
   }
 
   /**
-   * Serializes this Tuple.
+   * Serializes this array.
    *
    * @param out where to write the raw byte representation
    */

@@ -30,7 +30,6 @@ import java.util.Set;
  * @param <K>
  *            the type of keys maintained by this map
  */
-
 public class HMapKS<K> implements MapKS<K>, Cloneable, Serializable {
 
 	/**

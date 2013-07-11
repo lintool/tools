@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -13,15 +13,14 @@
  * implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
 package tl.lin.data.fd;
 
 import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Test;
 
-public class Object2IntFrequencyDistributionEntryTest extends
-    Object2IntFrequencyDistributionTestBase {
+public class Object2IntFrequencyDistributionEntryTest
+    extends Object2IntFrequencyDistributionTestBase {
 
   @Test
   public void test1Entry() {

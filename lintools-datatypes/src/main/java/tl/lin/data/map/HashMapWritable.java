@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -51,9 +51,6 @@ import org.apache.hadoop.io.Writable;
  *
  * @param <K> type of the key
  * @param <V> type of the value
- *
- * @author Jimmy Lin
- * @author Tamer Elsayed
  */
 public class HashMapWritable<K extends Writable, V extends Writable> extends HashMap<K, V> implements Writable {
   private static final long serialVersionUID = -7549423384046548469L;

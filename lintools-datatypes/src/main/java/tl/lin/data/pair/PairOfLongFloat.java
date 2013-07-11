@@ -1,5 +1,5 @@
 /*
- * Cloud9: A Hadoop toolkit for working with big data
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -28,8 +28,6 @@ import org.apache.hadoop.io.WritableComparator;
  * The elements in the pair are referred to as the left and right elements. The
  * natural sort order is: first by the left element, and then by
  * the right element.
- * 
- * @author Jimmy Lin
  */
 public class PairOfLongFloat implements WritableComparable<PairOfLongFloat> {
 	private long leftElement;

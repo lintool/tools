@@ -1,6 +1,6 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
- * 
+ * Lintools: tools by @lintool
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
  * obtain a copy of the License at
@@ -32,8 +32,6 @@ import org.apache.hadoop.io.WritableComparable;
  * Writable representing a map from keys of arbitrary WritableComparable to floats.
  *
  * @param <K> type of key
- *
- * @author Jimmy Lin
  */
 public class HMapKFW<K extends WritableComparable<?>> extends HMapKF<K> implements Writable {
 	private static final long serialVersionUID = 1343885977770942281L;

@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -21,8 +21,6 @@ import tl.lin.data.pair.PairOfLongInt;
 
 /**
  * A frequency distribution where events are longs and counts are ints.
- *
- * @author Jimmy Lin
  */
 public interface Long2IntFrequencyDistribution extends SortableEntries<PairOfLongInt> {
 

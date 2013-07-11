@@ -1,6 +1,6 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
- * 
+ * Lintools: tools by @lintool
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
  * obtain a copy of the License at
@@ -30,8 +30,6 @@ import org.apache.hadoop.io.Writable;
  * Writable representing a map where keys are Strings and values are floats.
  * This class is specialized for String objects to avoid the overhead that comes
  * with wrapping Strings inside <code>Text</code> objects.
- *
- * @author Jimmy Lin
  */
 public class HMapSFW extends HMapKF<String> implements Writable {
 	private static final long serialVersionUID = 3804087604196020037L;

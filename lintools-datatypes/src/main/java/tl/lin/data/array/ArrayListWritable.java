@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -24,17 +24,11 @@ import java.util.ArrayList;
 import org.apache.hadoop.io.Writable;
 
 /**
- * <p>
  * Writable extension of a Java ArrayList. Elements in the list must be homogeneous and must
  * implement Hadoop's Writable interface.
- * </p>
  *
  * @param <E> type of list element
- *
- * @author Jimmy Lin
- * @author Tamer Elsayed
  */
-
 public class ArrayListWritable<E extends Writable> extends ArrayList<E> implements Writable {
   private static final long serialVersionUID = 4911321393319821791L;
 

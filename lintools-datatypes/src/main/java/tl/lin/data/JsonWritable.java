@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -32,8 +32,6 @@ import com.google.gson.JsonParser;
 
 /**
  * Writable representing a JSON object.
- *
- * @author Jimmy Lin
  */
 public class JsonWritable implements Writable {
   private static final Gson GSON = new Gson();
@@ -79,7 +77,7 @@ public class JsonWritable implements Writable {
 
   /**
    * Returns the serialized representation of this object as a byte array.
-   * 
+   *
    * @return byte array representing the serialized representation of this object
    * @throws IOException
    */
