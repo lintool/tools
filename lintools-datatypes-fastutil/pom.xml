@@ -68,14 +68,14 @@
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes</artifactId>
-      <version>0.9.1-SNAPSHOT</version>
+      <version>0.9.1</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes</artifactId>
-      <version>0.9.1-SNAPSHOT</version>
+      <version>0.9.1</version>
     </dependency>
     <dependency>
       <groupId>it.unimi.dsi</groupId>
