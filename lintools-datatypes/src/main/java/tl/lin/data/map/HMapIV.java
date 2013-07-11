@@ -31,7 +31,6 @@ import java.util.Set;
  * version 1.73, 03/13/07. See <a href="{@docRoot}/../content/map.html">this
  * benchmark</a> for an efficiency comparison.
  */
-
 public class HMapIV<V> implements MapIV<V>, Cloneable, Serializable {
 
 	/**

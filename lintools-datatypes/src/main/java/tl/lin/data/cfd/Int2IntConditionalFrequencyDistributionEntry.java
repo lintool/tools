@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -24,16 +24,15 @@ import tl.lin.data.map.HMapIV;
 import tl.lin.data.pair.PairOfInts;
 
 /**
- * Implementation of {@link Int2IntConditionalFrequencyDistribution} based on
- * {@link HMapII}.
- *
- * @author Jimmy Lin
- *
+ * Implementation of {@link Int2IntConditionalFrequencyDistribution} based on {@link HMapII}.
  */
-public class Int2IntConditionalFrequencyDistributionEntry implements Int2IntConditionalFrequencyDistribution {
+public class Int2IntConditionalFrequencyDistributionEntry
+    implements Int2IntConditionalFrequencyDistribution {
 
-  private final HMapIV<Int2IntFrequencyDistribution> distributions = new HMapIV<Int2IntFrequencyDistribution>();
-  private final Int2LongFrequencyDistributionEntry marginals = new Int2LongFrequencyDistributionEntry();
+  private final HMapIV<Int2IntFrequencyDistribution> distributions =
+      new HMapIV<Int2IntFrequencyDistribution>();
+  private final Int2LongFrequencyDistributionEntry marginals = 
+      new Int2LongFrequencyDistributionEntry();
 
   private long sumOfAllFrequencies = 0;
 

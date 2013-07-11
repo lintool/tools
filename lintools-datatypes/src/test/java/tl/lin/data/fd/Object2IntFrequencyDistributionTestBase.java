@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -26,23 +26,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
-
 import tl.lin.data.SortableEntries.Order;
 import tl.lin.data.pair.PairOfObjectInt;
 
-public class Object2IntFrequencyDistributionTest {
-
-  @Test
-  public void test1Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    test1Common(fd);
-  }
-
-  private void test1Common(Object2IntFrequencyDistribution<String> fd) {
+public class Object2IntFrequencyDistributionTestBase {
+  protected void test1Common(Object2IntFrequencyDistribution<String> fd) {
     assertEquals(0, fd.get("a"));
 
     fd.increment("a");
@@ -106,14 +94,7 @@ public class Object2IntFrequencyDistributionTest {
     assertTrue(set.contains("c"));
   }
 
-  @Test
-  public void test2Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    test2Common(fd);
-  }
-
-  private void test2Common(Object2IntFrequencyDistribution<String> fd) {
+  protected void test2Common(Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a");
     fd.increment("a");
     fd.increment("b");
@@ -169,14 +150,7 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(5, fd.get("d"));
   }
 
-  @Test
-  public void test3Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    test3Common(fd);
-  }
-
-  private void test3Common(Object2IntFrequencyDistribution<String> fd) {
+  protected void test3Common(Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a");
     fd.increment("a");
     fd.increment("b");
@@ -194,14 +168,7 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(0, fd.getSumOfCounts());
   }
 
-  @Test(expected = RuntimeException.class)
-  public void testFailedDecrement1Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testFailedDecrement1Common(fd);
-  }
-
-  private void testFailedDecrement1Common(
+  protected void testFailedDecrement1Common(
       Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a");
 
@@ -218,14 +185,7 @@ public class Object2IntFrequencyDistributionTest {
     fd.decrement("a");
   }
 
-  @Test(expected = RuntimeException.class)
-  public void testFailedDecrement2Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testFailedDecrement2Common(fd);
-  }
-
-  private void testFailedDecrement2Common(
+  protected void testFailedDecrement2Common(
       Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a", 1000);
 
@@ -249,14 +209,7 @@ public class Object2IntFrequencyDistributionTest {
     fd.decrement("a", 4);
   }
 
-  @Test
-  public void testMultiIncrementDecrementEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testMultiIncrementDecrementCommon(fd);
-  }
-
-  private void testMultiIncrementDecrementCommon(
+  protected void testMultiIncrementDecrementCommon(
       Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a", 2);
     fd.increment("b", 3);
@@ -279,14 +232,7 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(4, fd.get("c"));
   }
 
-  @Test
-  public void testGetFrequencySortedEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testGetFrequencySortedCommon(fd);
-  }
-
-  private void testGetFrequencySortedCommon(
+  protected void testGetFrequencySortedCommon(
       Object2IntFrequencyDistribution<String> fd) {
     fd.set("a", 5);
     fd.set("d", 2);
@@ -359,14 +305,7 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(5, list.get(3).getRightElement());
   }
 
-  @Test
-  public void testGetSortedEventsEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testGetSortedEventsCommon(fd);
-  }
-
-  private void testGetSortedEventsCommon(
+  protected void testGetSortedEventsCommon(
       Object2IntFrequencyDistribution<String> fd) {
     fd.set("a", 1);
     fd.set("d", 3);
@@ -439,14 +378,7 @@ public class Object2IntFrequencyDistributionTest {
     assertEquals(2, list.get(3).getRightElement());
   }
 
-  @Test
-  public void testIterableEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
-    testIterableCommon(fd);
-  }
-
-  private void testIterableCommon(Object2IntFrequencyDistribution<String> fd) {
+  protected void testIterableCommon(Object2IntFrequencyDistribution<String> fd) {
     fd.set("a", 1);
     fd.set("d", 3);
     fd.set("b", 4);
@@ -484,9 +416,5 @@ public class Object2IntFrequencyDistributionTest {
     e = iter.next();
     assertEquals("f", e.getLeftElement());
     assertEquals(9, e.getRightElement());
-  }
-
-  public static junit.framework.Test suite() {
-    return new JUnit4TestAdapter(Object2IntFrequencyDistributionTest.class);
   }
 }

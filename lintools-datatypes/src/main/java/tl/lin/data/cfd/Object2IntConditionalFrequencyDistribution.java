@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -21,9 +21,6 @@ import tl.lin.data.fd.Object2IntFrequencyDistribution;
 /**
  * A conditional frequency distribution where events are arbitrary objects and
  * counts are ints.
- *
- * @author Jimmy Lin
- *
  */
 public interface Object2IntConditionalFrequencyDistribution<K extends Comparable<K>> {
 

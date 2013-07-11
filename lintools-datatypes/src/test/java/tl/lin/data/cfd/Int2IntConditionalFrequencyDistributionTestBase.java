@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -17,19 +17,9 @@
 package tl.lin.data.cfd;
 
 import static org.junit.Assert.assertEquals;
-import junit.framework.JUnit4TestAdapter;
 
-import org.junit.Test;
-
-public class Int2IntConditionalFrequencyDistributionTest {
-
-  @Test
-  public void test1Entry() {
-    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
-    test1Common(cfd);
-  }
-
-  private void test1Common(Int2IntConditionalFrequencyDistribution cfd) {
+public class Int2IntConditionalFrequencyDistributionTestBase {
+  protected void test1Common(Int2IntConditionalFrequencyDistribution cfd) {
     cfd.set(1, 1, 2);
     cfd.check();
 
@@ -70,13 +60,7 @@ public class Int2IntConditionalFrequencyDistributionTest {
     assertEquals(19, cfd.getSumOfAllCounts());
   }
 
-  @Test
-  public void test2Entry() {
-    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
-    test2Common(cfd);
-  }
-
-  private void test2Common(Int2IntConditionalFrequencyDistribution cfd) {
+  protected void test2Common(Int2IntConditionalFrequencyDistribution cfd) {
     cfd.set(1, 1, 2);
     cfd.check();
 
@@ -107,13 +91,7 @@ public class Int2IntConditionalFrequencyDistributionTest {
     assertEquals(16, cfd.getSumOfAllCounts());
   }
 
-  @Test
-  public void test3Entry() {
-    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
-    test3Common(cfd);
-  }
-
-  private void test3Common(Int2IntConditionalFrequencyDistribution cfd) {
+  protected void test3Common(Int2IntConditionalFrequencyDistribution cfd) {
     cfd.set(1, 1, 2);
     cfd.set(1, 2, 5);
     cfd.set(1, 3, 6);
@@ -133,24 +111,12 @@ public class Int2IntConditionalFrequencyDistributionTest {
     assertEquals(30, cfd.getSumOfAllCounts());
   }
 
-  @Test
-  public void testLargeMarginalEntry() {
-    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
-    testLargeMarginalCommon(cfd);
-  }
-
-  private void testLargeMarginalCommon(
-      Int2IntConditionalFrequencyDistribution cfd) {
+  protected void testLargeMarginalCommon(Int2IntConditionalFrequencyDistribution cfd) {
     cfd.set(1, 2, 2000000000);
     cfd.set(1, 3, 2000000000);
     cfd.set(1, 5, 2000000000);
     cfd.set(1, 1, 2000000000);
 
     assertEquals(8000000000L, cfd.getMarginalCount(1));
-  }
-
-  public static junit.framework.Test suite() {
-    return new JUnit4TestAdapter(
-        Int2IntConditionalFrequencyDistributionTest.class);
   }
 }

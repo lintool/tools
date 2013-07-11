@@ -1,6 +1,6 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
- * 
+ * Lintools: tools by @lintool
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
  * obtain a copy of the License at
@@ -39,8 +39,6 @@ import org.apache.hadoop.io.Writable;
  * mode, the raw keys and values may be fetched by the {@link #getKeys()} and {@link #getValues()}
  * methods, respectively. The map can be subsequently populated with the {@link #decode()} method.
  * </p>
- * 
- * @author Jimmy Lin
  */
 public class HMapIDW extends HMapID implements Writable {
 

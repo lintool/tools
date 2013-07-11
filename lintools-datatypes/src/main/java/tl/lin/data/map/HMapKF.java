@@ -32,7 +32,6 @@ import java.util.Set;
  * @param <K>
  *            the type of keys maintained by this map
  */
-
 public class HMapKF<K extends Comparable<?>> implements MapKF<K>, Cloneable, Serializable {
 
 	/**

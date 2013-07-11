@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -26,8 +26,6 @@ import org.apache.hadoop.io.WritableComparable;
 /**
  * Writable extension of the {@code ArrayListOfInts} class. This class provides an efficient data
  * structure to store a list of ints for MapReduce jobs.
- *
- * @author Jimmy Lin
  */
 public class ArrayListOfIntsWritable extends ArrayListOfInts
     implements WritableComparable<ArrayListOfIntsWritable> {

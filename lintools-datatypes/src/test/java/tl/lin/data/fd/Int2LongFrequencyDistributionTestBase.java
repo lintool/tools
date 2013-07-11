@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -23,22 +23,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
-
 import tl.lin.data.SortableEntries.Order;
 import tl.lin.data.pair.PairOfIntLong;
 
-public class Int2LongFrequencyDistributionTest {
-
-  @Test
-  public void test1Entry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    test1Common(fd);
-  }
-
-  private void test1Common(Int2LongFrequencyDistribution fd) {
+public class Int2LongFrequencyDistributionTestBase {
+  protected void test1Common(Int2LongFrequencyDistribution fd) {
     assertEquals(0, fd.get(1));
 
     fd.increment(1);
@@ -96,13 +85,7 @@ public class Int2LongFrequencyDistributionTest {
     assertEquals(Math.log((double) 2 / 4), fd.computeLogRelativeFrequency(3), 10e-6);
   }
 
-  @Test
-  public void test2Entry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    test2Common(fd);
-  }
-
-  private void test2Common(Int2LongFrequencyDistribution fd) {
+  protected void test2Common(Int2LongFrequencyDistribution fd) {
     fd.increment(1);
     fd.increment(1);
     fd.increment(2);
@@ -158,13 +141,7 @@ public class Int2LongFrequencyDistributionTest {
     assertEquals(5, fd.get(4));
   }
 
-  @Test
-  public void test3Entry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    test3Common(fd);
-  }
-
-  private void test3Common(Int2LongFrequencyDistribution fd) {
+  protected void test3Common(Int2LongFrequencyDistribution fd) {
     fd.increment(1);
     fd.increment(1);
     fd.increment(2);
@@ -182,13 +159,7 @@ public class Int2LongFrequencyDistributionTest {
     assertEquals(0, fd.getSumOfCounts());
   }
 
-  @Test(expected = RuntimeException.class)
-  public void testFailedDecrement1Entry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    testFailedDecrement1Common(fd);
-  }
-
-  private void testFailedDecrement1Common(Int2LongFrequencyDistribution fd) {
+  protected void testFailedDecrement1Common(Int2LongFrequencyDistribution fd) {
     fd.increment(1);
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -204,13 +175,7 @@ public class Int2LongFrequencyDistributionTest {
     fd.decrement(1);
   }
 
-  @Test(expected = RuntimeException.class)
-  public void testFailedDecrement2Entry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    testFailedDecrement2Common(fd);
-  }
-
-  private void testFailedDecrement2Common(Int2LongFrequencyDistribution fd) {
+  protected void testFailedDecrement2Common(Int2LongFrequencyDistribution fd) {
     fd.increment(1, 1000);
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -233,13 +198,7 @@ public class Int2LongFrequencyDistributionTest {
     fd.decrement(1, 4);
   }
 
-  @Test
-  public void testMultiIncrementDecrementEntry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    testMultiIncrementDecrementCommon(fd);
-  }
-
-  private void testMultiIncrementDecrementCommon(
+  protected void testMultiIncrementDecrementCommon(
       Int2LongFrequencyDistribution fd) {
     fd.increment(1, 2);
     fd.increment(2, 3);
@@ -262,13 +221,7 @@ public class Int2LongFrequencyDistributionTest {
     assertEquals(4, fd.get(3));
   }
 
-  @Test
-  public void testGetFrequencySortedEventsEntry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    testGetFrequencySortedEventsCommon(fd);
-  }
-
-  private void testGetFrequencySortedEventsCommon(Int2LongFrequencyDistribution fd) {
+  protected void testGetFrequencySortedEventsCommon(Int2LongFrequencyDistribution fd) {
     fd.set(1, 5L);
     fd.set(4, 2L);
     fd.set(2, 5L);
@@ -340,13 +293,7 @@ public class Int2LongFrequencyDistributionTest {
     assertEquals(5, list.get(3).getRightElement());
   }
 
-  @Test
-  public void testGetSortedEventsEntry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    testGetSortedEventsCommon(fd);
-  }
-
-  private void testGetSortedEventsCommon(Int2LongFrequencyDistribution fd) {
+  protected void testGetSortedEventsCommon(Int2LongFrequencyDistribution fd) {
     fd.set(1, 1L);
     fd.set(4, 3L);
     fd.set(2, 4L);
@@ -418,13 +365,7 @@ public class Int2LongFrequencyDistributionTest {
     assertEquals(2, list.get(3).getRightElement());
   }
 
-  @Test
-  public void testIterableEntry() {
-    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
-    testIterableCommon(fd);
-  }
-
-  private void testIterableCommon(Int2LongFrequencyDistribution fd) {
+  protected void testIterableCommon(Int2LongFrequencyDistribution fd) {
     fd.set(1, 1L);
     fd.set(4, 3L);
     fd.set(2, 4L);
@@ -462,9 +403,5 @@ public class Int2LongFrequencyDistributionTest {
     e = iter.next();
     assertEquals(6, e.getLeftElement());
     assertEquals(9, e.getRightElement());
-  }
-
-  public static junit.framework.Test suite() {
-    return new JUnit4TestAdapter(Int2LongFrequencyDistributionTest.class);
   }
 }
