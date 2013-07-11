@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -33,8 +33,6 @@ import com.google.common.collect.Lists;
 /**
  * Implementation of {@link Int2IntFrequencyDistribution} based on
  * {@link Int2IntOpenHashMap}.
- *
- * @author Jimmy Lin
  */
 public class Int2IntFrequencyDistributionFastutil implements Int2IntFrequencyDistribution {
 	private Int2IntOpenHashMap counts = new Int2IntOpenHashMap();
@@ -166,7 +164,8 @@ public class Int2IntFrequencyDistributionFastutil implements Int2IntFrequencyDis
 	 */
 	public Iterator<PairOfInts> iterator() {
 		return new Iterator<PairOfInts>() {
-			private Iterator<Int2IntMap.Entry> iter = Int2IntFrequencyDistributionFastutil.this.counts.int2IntEntrySet().iterator();
+			private Iterator<Int2IntMap.Entry> iter = 
+			    Int2IntFrequencyDistributionFastutil.this.counts.int2IntEntrySet().iterator();
 			private final PairOfInts pair = new PairOfInts();
 
 			@Override

@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -26,15 +26,14 @@ import tl.lin.data.pair.PairOfInts;
 /**
  * Implementation of {@link Int2IntConditionalFrequencyDistribution} based on
  * {@link Int2IntOpenHashMap}.
- *
- * @author Jimmy Lin
- *
  */
 public class Int2IntConditionalFrequencyDistributionFastutil implements
     Int2IntConditionalFrequencyDistribution {
 
-  private final Int2ObjectMap<Int2IntFrequencyDistributionFastutil> distributions = new Int2ObjectOpenHashMap<Int2IntFrequencyDistributionFastutil>();
-  private final Int2LongFrequencyDistributionFastutil marginals = new Int2LongFrequencyDistributionFastutil();
+  private final Int2ObjectMap<Int2IntFrequencyDistributionFastutil> distributions =
+      new Int2ObjectOpenHashMap<Int2IntFrequencyDistributionFastutil>();
+  private final Int2LongFrequencyDistributionFastutil marginals =
+      new Int2LongFrequencyDistributionFastutil();
 
   private long sumOfAllFrequencies = 0;
 

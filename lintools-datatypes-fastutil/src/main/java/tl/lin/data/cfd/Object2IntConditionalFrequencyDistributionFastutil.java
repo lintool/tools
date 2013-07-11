@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -29,22 +29,22 @@ import tl.lin.data.pair.PairOfObjectInt;
  * events, backed by a fastutil open hash map. This class keeps track of
  * frequencies using ints, so beware when dealing with a large number of
  * observations.
- *
- * @author Jimmy Lin
- *
  */
 public class Object2IntConditionalFrequencyDistributionFastutil<K extends Comparable<K>>
     implements Object2IntConditionalFrequencyDistribution<K> {
 
-  private final Object2ObjectMap<K, Object2IntFrequencyDistribution<K>> distributions = new Object2ObjectOpenHashMap<K, Object2IntFrequencyDistribution<K>>();
-  private final Object2LongFrequencyDistribution<K> marginals = new Object2LongFrequencyDistributionFastutil<K>();
+  private final Object2ObjectMap<K, Object2IntFrequencyDistribution<K>> distributions =
+      new Object2ObjectOpenHashMap<K, Object2IntFrequencyDistribution<K>>();
+  private final Object2LongFrequencyDistribution<K> marginals =
+      new Object2LongFrequencyDistributionFastutil<K>();
 
   private long sumOfAllCounts = 0;
 
   @Override
   public void set(K k, K cond, int v) {
     if (!distributions.containsKey(cond)) {
-      Object2IntFrequencyDistributionFastutil<K> fd = new Object2IntFrequencyDistributionFastutil<K>();
+      Object2IntFrequencyDistributionFastutil<K> fd =
+          new Object2IntFrequencyDistributionFastutil<K>();
       fd.set(k, v);
       distributions.put(cond, fd);
       marginals.increment(k, v);

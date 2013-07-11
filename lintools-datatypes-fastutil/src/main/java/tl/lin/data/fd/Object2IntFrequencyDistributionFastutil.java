@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -33,8 +33,6 @@ import com.google.common.collect.Lists;
 /**
  * Implementation of {@link Object2IntFrequencyDistribution} based on
  * {@link Object2IntOpenHashMap}.
- *
- * @author Jimmy Lin
  */
 public class Object2IntFrequencyDistributionFastutil<K extends Comparable<K>>
     implements Object2IntFrequencyDistribution<K> {

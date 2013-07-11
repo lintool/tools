@@ -1,5 +1,5 @@
 /*
- * Cloud9: A MapReduce Library for Hadoop
+ * Lintools: tools by @lintool
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you
  * may not use this file except in compliance with the License. You may
@@ -32,8 +32,6 @@ import com.google.common.collect.Lists;
 
 /**
  * Implementation of {@link Int2LongFrequencyDistribution} based on {@link Int2LongOpenHashMap}.
- *
- * @author Jimmy Lin
  */
 public class Int2LongFrequencyDistributionFastutil implements Int2LongFrequencyDistribution {
 	private Int2LongOpenHashMap counts = new Int2LongOpenHashMap();
