@@ -23,18 +23,18 @@ import java.util.Arrays;
 
 import org.apache.hadoop.io.Writable;
 
-public class IntArrayWritable implements Writable {
-  private int[] array;
+public class DoubleArrayWritable implements Writable {
+  private double[] array;
   private int length = 0;
 
-  public IntArrayWritable() {}
+  public DoubleArrayWritable() {}
 
   /**
    * Constructor with array as input.
    *
    * @param array input array
    */
-  public IntArrayWritable(int[] array) {
+  public DoubleArrayWritable(double[] array) {
     this.array = array;
     this.length = array.length;
   }
@@ -45,7 +45,7 @@ public class IntArrayWritable implements Writable {
    * @param array input array
    * @param length length
    */
-  public IntArrayWritable(int[] array, int length) {
+  public DoubleArrayWritable(double[] array, int length) {
     this.array = array;
     this.length = length;
   }
@@ -55,16 +55,16 @@ public class IntArrayWritable implements Writable {
    *
    * @param size array size
    */
-  public IntArrayWritable(int size) {
-    array = new int[size];
+  public DoubleArrayWritable(int size) {
+    array = new double[size];
   }
 
   @Override
   public void readFields(DataInput in) throws IOException {
     this.length = in.readInt();
-    array = new int[length];
+    array = new double[length];
     for (int i = 0; i < length; i++) {
-      array[i] = in.readInt();
+      array[i] = in.readDouble();
     }
   }
 
@@ -72,7 +72,7 @@ public class IntArrayWritable implements Writable {
   public void write(DataOutput out) throws IOException {
     out.writeInt(length);
     for (int i = 0; i < length; i++) {
-      out.writeInt(array[i]);
+      out.writeDouble(array[i]);
     }
   }
 
@@ -80,8 +80,8 @@ public class IntArrayWritable implements Writable {
    * Returns a deep copy of the array. The length of the returned array will always be the value
    * {@link #size()}. That is, trailing unused space in the underlying array will be trimmed.
    */
-  public int[] getClone() {
-    int[] copy = new int[length];
+  public double[] getClone() {
+    double[] copy = new double[length];
     System.arraycopy(array, 0, copy, 0, length);
     return copy;
   }
@@ -90,16 +90,16 @@ public class IntArrayWritable implements Writable {
    * Returns a reference to the underlying array. Note that the underlying array may have length
    * longer than the value of {@link #size()}.
    */
-  public int[] getArray() {
+  public double[] getArray() {
     return array;
   }
 
   /**
    * Sets the underlying array.
    */
-  public void setArray(int[] array) {
+  public void setArray(double[] array) {
     if (array == null) {
-      this.array = new int[0];
+      this.array = new double[0];
       this.length = 0;
       return;
     }
@@ -111,7 +111,7 @@ public class IntArrayWritable implements Writable {
   /**
    * Sets the underlying array and a specified length.
    */
-  public void setArray(int[] array, int length) {
+  public void setArray(double[] array, int length) {
     this.array = array;
     this.length = length;
   }
@@ -120,7 +120,7 @@ public class IntArrayWritable implements Writable {
    * Returns the value at index <i>i</i>. Note that no bounds checking is performed.
    * @param i index position
    */
-  public int get(int i) {
+  public double get(int i) {
     return array[i];
   }
 
@@ -130,7 +130,7 @@ public class IntArrayWritable implements Writable {
    * @param i position in array
    * @param v value
    */
-  public void set(int i, int v) {
+  public void set(int i, double v) {
     array[i] = v;
   }
 
