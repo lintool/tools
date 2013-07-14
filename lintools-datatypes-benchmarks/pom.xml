@@ -68,7 +68,7 @@
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes-fastutil</artifactId>
-      <version>0.9.2-SNAPSHOT</version>
+      <version>0.9.2</version>
     </dependency>
     <!-- Make Hadoop optional so clients can pull in their own verisons -->
     <dependency>
