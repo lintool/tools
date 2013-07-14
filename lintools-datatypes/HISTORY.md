@@ -1,3 +1,9 @@
+Version 0.9.2
+=============
+July 14, 2013
+
++ Added {Double,Float,Int,Long,Short}ArrayWritable
+
 Version 0.9.1
 =============
 July 11, 2013
