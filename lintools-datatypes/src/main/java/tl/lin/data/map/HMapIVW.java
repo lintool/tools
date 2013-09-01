@@ -29,11 +29,11 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
 /**
- * Writable representing a map from ints to values of arbitrary WritableComparable.
+ * Writable representing a map from ints to values of arbitrary Writables.
  *
  * @param <V> type of value
  */
-public class HMapIVW<V extends WritableComparable<?>> extends HMapIV<V> implements Writable {
+public class HMapIVW<V extends Writable> extends HMapIV<V> implements Writable {
 	private static final long serialVersionUID = 2532109344100674110L;
 
 	/**

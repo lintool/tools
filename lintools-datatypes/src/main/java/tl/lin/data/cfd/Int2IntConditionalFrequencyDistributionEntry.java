@@ -16,11 +16,15 @@
 
 package tl.lin.data.cfd;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+
 import tl.lin.data.fd.Int2IntFrequencyDistribution;
 import tl.lin.data.fd.Int2IntFrequencyDistributionEntry;
 import tl.lin.data.fd.Int2LongFrequencyDistributionEntry;
 import tl.lin.data.map.HMapII;
-import tl.lin.data.map.HMapIV;
+import tl.lin.data.map.HMapIVW;
 import tl.lin.data.pair.PairOfInts;
 
 /**
@@ -29,12 +33,12 @@ import tl.lin.data.pair.PairOfInts;
 public class Int2IntConditionalFrequencyDistributionEntry
     implements Int2IntConditionalFrequencyDistribution {
 
-  private final HMapIV<Int2IntFrequencyDistribution> distributions =
-      new HMapIV<Int2IntFrequencyDistribution>();
+  private final HMapIVW<Int2IntFrequencyDistribution> distributions =
+      new HMapIVW<Int2IntFrequencyDistribution>();
   private final Int2LongFrequencyDistributionEntry marginals = 
       new Int2LongFrequencyDistributionEntry();
 
-  private long sumOfAllFrequencies = 0;
+  private long sumOfAllCounts = 0;
 
   @Override
   public void set(int k, int cond, int v) {
@@ -44,7 +48,7 @@ public class Int2IntConditionalFrequencyDistributionEntry
       distributions.put(cond, fd);
       marginals.increment(k, v);
 
-      sumOfAllFrequencies += v;
+      sumOfAllCounts += v;
     } else {
       Int2IntFrequencyDistribution fd = distributions.get(cond);
       int rv = fd.get(k);
@@ -53,7 +57,7 @@ public class Int2IntConditionalFrequencyDistributionEntry
       distributions.put(cond, fd);
       marginals.increment(k, -rv + v);
 
-      sumOfAllFrequencies = sumOfAllFrequencies - rv + v;
+      sumOfAllCounts = sumOfAllCounts - rv + v;
     }
   }
 
@@ -97,7 +101,7 @@ public class Int2IntConditionalFrequencyDistributionEntry
 
   @Override
   public long getSumOfAllCounts() {
-    return sumOfAllFrequencies;
+    return sumOfAllCounts;
   }
 
   @Override
@@ -134,5 +138,19 @@ public class Int2IntConditionalFrequencyDistributionEntry
         throw new RuntimeException("Internal Error!");
       }
     }
+  }
+
+  @Override
+  public void readFields(DataInput in) throws IOException {
+    marginals.readFields(in);
+    distributions.readFields(in);
+    sumOfAllCounts = in.readLong();
+  }
+
+  @Override
+  public void write(DataOutput out) throws IOException {
+    marginals.write(out);
+    distributions.write(out);
+    out.writeLong(sumOfAllCounts);
   }
 }

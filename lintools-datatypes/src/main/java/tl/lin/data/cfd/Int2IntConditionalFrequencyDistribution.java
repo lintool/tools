@@ -16,12 +16,14 @@
 
 package tl.lin.data.cfd;
 
+import org.apache.hadoop.io.Writable;
+
 import tl.lin.data.fd.Int2IntFrequencyDistribution;
 
 /**
  * A conditional frequency distribution where events are ints and counts are ints.
  */
-public interface Int2IntConditionalFrequencyDistribution {
+public interface Int2IntConditionalFrequencyDistribution extends Writable {
 
 	/**
 	 * Sets the observed count of <code>k</code> conditioned on <code>cond</code> to <code>v</code>.
