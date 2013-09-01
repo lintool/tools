@@ -16,12 +16,16 @@
 
 package tl.lin.data.fd;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import tl.lin.data.map.HMapII;
+import tl.lin.data.map.HMapIIW;
 import tl.lin.data.map.MapII;
 import tl.lin.data.pair.PairOfInts;
 
@@ -31,8 +35,8 @@ import com.google.common.collect.Lists;
  * Implementation of {@link Int2IntFrequencyDistribution} based on {@link HMapII}.
  */
 public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistribution {
-	private HMapII counts = new HMapII();
-	private long sumOfFrequencies = 0;
+	private HMapIIW counts = new HMapIIW();
+	private long sumOfCounts = 0;
 
 	@Override
 	public void increment(int key) {
@@ -97,7 +101,7 @@ public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistri
 	@Override
 	public int set(int key, int cnt) {
 		int rv = counts.put(key, cnt);
-		sumOfFrequencies = sumOfFrequencies - rv + cnt;
+		sumOfCounts = sumOfCounts - rv + cnt;
 
 		return rv;
 	}
@@ -105,7 +109,7 @@ public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistri
 	@Override
 	public int remove(int key) {
 		int rv = counts.remove(key);
-		sumOfFrequencies -= rv;
+		sumOfCounts -= rv;
 
 		return rv;
 	}
@@ -113,7 +117,7 @@ public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistri
 	@Override
 	public void clear() {
 		counts.clear();
-		sumOfFrequencies = 0;
+		sumOfCounts = 0;
 	}
 
 	@Override
@@ -123,7 +127,7 @@ public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistri
 
 	@Override
 	public long getSumOfCounts() {
-		return sumOfFrequencies;
+		return sumOfCounts;
 	}
 
 	/**
@@ -265,5 +269,17 @@ public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistri
   private List<PairOfInts> getEntriesSorted(Comparator<PairOfInts> comparator, int n) {
     List<PairOfInts> list = getEntriesSorted(comparator);
     return list.subList(0, n);
+  }
+
+  @Override
+  public void readFields(DataInput in) throws IOException {
+    sumOfCounts = in.readLong();
+    counts.readFields(in);
+  }
+
+  @Override
+  public void write(DataOutput out) throws IOException {
+    out.writeLong(sumOfCounts);
+    counts.write(out);
   }
 }

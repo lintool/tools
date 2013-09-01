@@ -82,41 +82,41 @@ public class HMapILTest {
   public void testBasic() throws IOException {
     HMapIL m = new HMapIL();
 
-    m.put(1, 5L);
-    m.put(2, 22L);
+    m.put(1, Integer.MAX_VALUE + 5L);
+    m.put(2, Integer.MAX_VALUE + 22L);
 
     long value;
 
     assertEquals(2, m.size());
 
     value = m.get(1);
-    assertEquals(5L, value);
+    assertEquals(Integer.MAX_VALUE + 5L, value);
 
     value = m.remove(1);
     assertEquals(m.size(), 1);
 
     value = m.get(2);
-    assertEquals(22L, value);
+    assertEquals(Integer.MAX_VALUE + 22L, value);
   }
 
   @Test
   public void testPlus() throws IOException {
     HMapIL m1 = new HMapIL();
 
-    m1.put(1, 5L);
-    m1.put(2, 22L);
+    m1.put(1, Integer.MAX_VALUE + 5L);
+    m1.put(2, Integer.MAX_VALUE + 22L);
 
     HMapIL m2 = new HMapIL();
 
     m2.put(1, 4L);
-    m2.put(3, 5L);
+    m2.put(3, Integer.MAX_VALUE + 5L);
 
     m1.plus(m2);
 
     assertEquals(m1.size(), 3);
-    assertTrue(m1.get(1) == 9L);
-    assertTrue(m1.get(2) == 22L);
-    assertTrue(m1.get(3) == 5L);
+    assertTrue(m1.get(1) == Integer.MAX_VALUE + 9L);
+    assertTrue(m1.get(2) == Integer.MAX_VALUE + 22L);
+    assertTrue(m1.get(3) == Integer.MAX_VALUE + 5L);
   }
 
   @Test

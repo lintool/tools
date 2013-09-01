@@ -16,13 +16,14 @@
 
 package tl.lin.data.fd;
 
-import tl.lin.data.SortableEntries;
+import org.apache.hadoop.io.Writable;
+
 import tl.lin.data.pair.PairOfLongs;
 
 /**
  * A frequency distribution where events are longs and counts are longs.
  */
-public interface Long2LongFrequencyDistribution extends SortableEntries<PairOfLongs> {
+public interface Long2LongFrequencyDistribution extends SortableEntries<PairOfLongs>, Writable {
 
   /**
    * Increments the count of an event {@code key}.

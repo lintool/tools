@@ -90,8 +90,8 @@ public class HMapIIWTest {
 		assertTrue(keys[0] == 3);
 		assertTrue(keys[1] == 4);
 
-		assertTrue(values[0] == 5.0f);
-		assertTrue(values[1] == 22.0f);
+		assertTrue(values[0] == 5);
+		assertTrue(values[1] == 22);
 
 		assertFalse(m2.isDecoded());
 		assertEquals(m2.size(), 2);
@@ -99,17 +99,17 @@ public class HMapIIWTest {
 		m2.decode();
 		assertTrue(m2.isDecoded());
 
-		float value;
+		int value;
 		assertEquals(m2.size(), 2);
 
 		value = m2.get(3);
-		assertTrue(value == 5.0f);
+		assertTrue(value == 5);
 
 		value = m2.remove(3);
 		assertEquals(m2.size(), 1);
 
 		value = m2.get(4);
-		assertTrue(value == 22.0f);
+		assertTrue(value == 22);
 	}
 
 	@Test

@@ -17,13 +17,18 @@
 package tl.lin.data.fd;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import tl.lin.data.SortableEntries.Order;
+import tl.lin.data.fd.SortableEntries.Order;
 import tl.lin.data.pair.PairOfInts;
 
 public class Int2IntFrequencyDistributionTestBase {
@@ -403,5 +408,36 @@ public class Int2IntFrequencyDistributionTestBase {
     e = iter.next();
     assertEquals(6, e.getLeftElement());
     assertEquals(9, e.getRightElement());
+  }
+
+  protected void testSerialization(Int2IntFrequencyDistribution fd,
+      Class<? extends Int2IntFrequencyDistribution> cls) throws Exception {
+    fd.set(1, 1);
+    fd.set(4, 3);
+    fd.set(2, 4);
+    fd.set(5, 7);
+    fd.set(6, 9);
+    fd.set(3, 2);
+
+    assertEquals(6, fd.getNumberOfEvents());
+    assertEquals(26, fd.getSumOfCounts());
+
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    fd.write(dataOut);
+
+    Int2IntFrequencyDistribution reconstructed = cls.newInstance();
+    reconstructed.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
+
+    assertFalse(fd == reconstructed);
+    assertEquals(1, reconstructed.get(1));
+    assertEquals(3, reconstructed.get(4));
+    assertEquals(4, reconstructed.get(2));
+    assertEquals(7, reconstructed.get(5));
+    assertEquals(9, reconstructed.get(6));
+    assertEquals(2, reconstructed.get(3));
+
+    assertEquals(6, reconstructed.getNumberOfEvents());
+    assertEquals(26, reconstructed.getSumOfCounts());
   }
 }

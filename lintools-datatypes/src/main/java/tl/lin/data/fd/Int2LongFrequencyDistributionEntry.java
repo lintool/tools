@@ -16,12 +16,16 @@
 
 package tl.lin.data.fd;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import tl.lin.data.map.HMapIL;
+import tl.lin.data.map.HMapILW;
 import tl.lin.data.map.MapIL;
 import tl.lin.data.pair.PairOfIntLong;
 
@@ -31,7 +35,7 @@ import com.google.common.collect.Lists;
  * Implementation of {@link Int2LongFrequencyDistribution} based on {@link HMapIL}.
  */
 public class Int2LongFrequencyDistributionEntry implements Int2LongFrequencyDistribution {
-  private HMapIL counts = new HMapIL();
+  private HMapILW counts = new HMapILW();
   private long sumOfCounts = 0;
 
   @Override
@@ -278,5 +282,18 @@ public class Int2LongFrequencyDistributionEntry implements Int2LongFrequencyDist
   private List<PairOfIntLong> getEntriesSorted(Comparator<PairOfIntLong> comparator, int n) {
     List<PairOfIntLong> list = getEntriesSorted(comparator);
     return list.subList(0, n);
+  }
+
+
+  @Override
+  public void readFields(DataInput in) throws IOException {
+    sumOfCounts = in.readLong();
+    counts.readFields(in);
+  }
+
+  @Override
+  public void write(DataOutput out) throws IOException {
+    out.writeLong(sumOfCounts);
+    counts.write(out);
   }
 }

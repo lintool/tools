@@ -77,6 +77,12 @@ public class Int2LongFrequencyDistributionEntryTest
     testIterableCommon(fd);
   }
 
+  @Test
+  public void testSerialization() throws Exception {
+    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionEntry();
+    testSerialization(fd, Int2LongFrequencyDistributionEntry.class);
+  }
+
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(Int2LongFrequencyDistributionEntryTest.class);
   }
