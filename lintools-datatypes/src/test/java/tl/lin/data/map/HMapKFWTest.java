@@ -30,81 +30,80 @@ import org.junit.Test;
 
 public class HMapKFWTest {
 
-	@Test
-	public void testBasic() throws IOException {
-		HMapKFW<Text> m = new HMapKFW<Text>();
+  @Test
+  public void testBasic() throws IOException {
+    HMapKFW<Text> m = new HMapKFW<Text>();
 
-		m.put(new Text("hi"), 5.0f);
-		m.put(new Text("there"), 22.0f);
+    m.put(new Text("hi"), 5.0f);
+    m.put(new Text("there"), 22.0f);
 
-		Text key;
-		float value;
+    Text key;
+    float value;
 
-		assertEquals(m.size(), 2);
+    assertEquals(m.size(), 2);
 
-		key = new Text("hi");
-		value = m.get(key);
-		assertTrue(value == 5.0f);
+    key = new Text("hi");
+    value = m.get(key);
+    assertTrue(value == 5.0f);
 
-		value = m.remove(key);
-		assertEquals(m.size(), 1);
+    value = m.remove(key);
+    assertEquals(m.size(), 1);
 
-		key = new Text("there");
-		value = m.get(key);
-		assertTrue(value == 22.0f);
-	}
+    key = new Text("there");
+    value = m.get(key);
+    assertTrue(value == 22.0f);
+  }
 
-	@Test
-	public void testSerialize1() throws IOException {
-		HMapKFW<Text> m1 = new HMapKFW<Text>();
+  @Test
+  public void testSerialize1() throws IOException {
+    HMapKFW<Text> m1 = new HMapKFW<Text>();
 
-		m1.put(new Text("hi"), 5.0f);
-		m1.put(new Text("there"), 22.0f);
+    m1.put(new Text("hi"), 5.0f);
+    m1.put(new Text("there"), 22.0f);
 
-		HMapKFW<Text> n2 = HMapKFW.<Text> create(m1.serialize());
+    HMapKFW<Text> n2 = HMapKFW.<Text> create(m1.serialize());
 
-		Text key;
-		float value;
+    Text key;
+    float value;
 
-		assertEquals(n2.size(), 2);
+    assertEquals(n2.size(), 2);
 
-		key = new Text("hi");
-		value = n2.get(key);
-		assertTrue(value == 5.0f);
+    key = new Text("hi");
+    value = n2.get(key);
+    assertTrue(value == 5.0f);
 
-		value = n2.remove(key);
-		assertEquals(n2.size(), 1);
+    value = n2.remove(key);
+    assertEquals(n2.size(), 1);
 
-		key = new Text("there");
-		value = n2.get(key);
-		assertTrue(value == 22.0f);
-	}
+    key = new Text("there");
+    value = n2.get(key);
+    assertTrue(value == 22.0f);
+  }
 
-	@Test(expected = IOException.class)
-	public void testTypeSafety() throws IOException {
-		HMapKFW<WritableComparable<?>> m1 = new HMapKFW<WritableComparable<?>>();
+  @Test(expected = IOException.class)
+  public void testTypeSafety() throws IOException {
+    HMapKFW<WritableComparable<?>> m1 = new HMapKFW<WritableComparable<?>>();
 
-		m1.put(new Text("hi"), 4.0f);
-		m1.put(new IntWritable(0), 76.0f);
+    m1.put(new Text("hi"), 4.0f);
+    m1.put(new IntWritable(0), 76.0f);
 
-		HMapKFW<Text> m2 = HMapKFW.<Text> create(m1.serialize());
+    HMapKFW<Text> m2 = HMapKFW.<Text> create(m1.serialize());
 
-		m2.size();
-	}
+    m2.size();
+  }
 
-	@Test
-	public void testSerializeEmpty() throws IOException {
-		HMapKFW<WritableComparable<?>> m1 = new HMapKFW<WritableComparable<?>>();
+  @Test
+  public void testSerializeEmpty() throws IOException {
+    HMapKFW<WritableComparable<?>> m1 = new HMapKFW<WritableComparable<?>>();
 
-		assertTrue(m1.size() == 0);
+    assertTrue(m1.size() == 0);
 
-		HMapKFW<Text> m2 = HMapKFW.<Text> create(m1.serialize());
+    HMapKFW<Text> m2 = HMapKFW.<Text> create(m1.serialize());
 
-		assertTrue(m2.size() == 0);
-	}
+    assertTrue(m2.size() == 0);
+  }
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(HMapKFWTest.class);
-	}
-
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(HMapKFWTest.class);
+  }
 }

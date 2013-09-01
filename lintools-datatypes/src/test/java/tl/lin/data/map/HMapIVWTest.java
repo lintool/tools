@@ -28,61 +28,60 @@ import org.junit.Test;
 
 public class HMapIVWTest {
 
-	@Test
-	public void testBasic() throws IOException {
-		HMapIVW<Text> m = new HMapIVW<Text>();
+  @Test
+  public void testBasic() throws IOException {
+    HMapIVW<Text> m = new HMapIVW<Text>();
 
-		m.put(5, new Text("hi"));
-		m.put(22, new Text("there"));
+    m.put(5, new Text("hi"));
+    m.put(22, new Text("there"));
 
-		assertEquals(m.size(), 2);
+    assertEquals(m.size(), 2);
 
-		Text value = m.get(5);
-		assertEquals(new Text("hi"), value);
+    Text value = m.get(5);
+    assertEquals(new Text("hi"), value);
 
-		value = m.remove(5);
-		assertEquals(new Text("hi"), value);
-		assertEquals(m.size(), 1);
+    value = m.remove(5);
+    assertEquals(new Text("hi"), value);
+    assertEquals(m.size(), 1);
 
-		value = m.get(22);
-		assertEquals(new Text("there"), value);
-	}
+    value = m.get(22);
+    assertEquals(new Text("there"), value);
+  }
 
-	@Test
-	public void testSerialize1() throws IOException {
-		HMapIVW<Text> m1 = new HMapIVW<Text>();
+  @Test
+  public void testSerialize1() throws IOException {
+    HMapIVW<Text> m1 = new HMapIVW<Text>();
 
-		m1.put(5, new Text("hi"));
-		m1.put(22, new Text("there"));
+    m1.put(5, new Text("hi"));
+    m1.put(22, new Text("there"));
 
-		HMapIVW<Text> m2 = HMapIVW.<Text> create(m1.serialize());
+    HMapIVW<Text> m2 = HMapIVW.<Text> create(m1.serialize());
 
-		assertEquals(m2.size(), 2);
+    assertEquals(m2.size(), 2);
 
-		Text value = m2.get(5);
-		assertEquals(new Text("hi"), value);
+    Text value = m2.get(5);
+    assertEquals(new Text("hi"), value);
 
-		value = m2.remove(5);
-		assertEquals(new Text("hi"), value);
-		assertEquals(m2.size(), 1);
+    value = m2.remove(5);
+    assertEquals(new Text("hi"), value);
+    assertEquals(m2.size(), 1);
 
-		value = m2.get(22);
-		assertEquals(new Text("there"), value);
-	}
+    value = m2.get(22);
+    assertEquals(new Text("there"), value);
+  }
 
-	@Test
-	public void testSerializeEmpty() throws IOException {
-		HMapIVW<Text> m1 = new HMapIVW<Text>();
+  @Test
+  public void testSerializeEmpty() throws IOException {
+    HMapIVW<Text> m1 = new HMapIVW<Text>();
 
-		assertTrue(m1.size() == 0);
+    assertTrue(m1.size() == 0);
 
-		HMapIVW<Text> m2 = HMapIVW.<Text> create(m1.serialize());
+    HMapIVW<Text> m2 = HMapIVW.<Text> create(m1.serialize());
 
-		assertTrue(m2.size() == 0);
-	}
+    assertTrue(m2.size() == 0);
+  }
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(HMapIVWTest.class);
-	}
-
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(HMapIVWTest.class);
+  }
 }
