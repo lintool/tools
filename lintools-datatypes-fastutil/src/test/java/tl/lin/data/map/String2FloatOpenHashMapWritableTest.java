@@ -89,8 +89,8 @@ public class String2FloatOpenHashMapWritableTest {
   @Test
   public void testJp() throws IOException {
     String2FloatOpenHashMapWritable map1 = new String2FloatOpenHashMapWritable();
-    BufferedReader in = new BufferedReader(new InputStreamReader(
-        new FileInputStream("src/test/resources/jp-sample.txt"), "UTF8"));
+    BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(
+        "src/test/resources/jp-sample.txt"), "UTF8"));
 
     List<String> list = Lists.newArrayList();
     int cnt = 0;

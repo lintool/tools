@@ -21,80 +21,83 @@ import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntCollection;
 import it.unimi.dsi.fastutil.ints.IntSet;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import tl.lin.data.map.Int2IntOpenHashMapWritable;
 import tl.lin.data.pair.PairOfInts;
 
 import com.google.common.collect.Lists;
 
 /**
- * Implementation of {@link Int2IntFrequencyDistribution} based on
- * {@link Int2IntOpenHashMap}.
+ * Implementation of {@link Int2IntFrequencyDistribution} based on {@link Int2IntOpenHashMap}.
  */
 public class Int2IntFrequencyDistributionFastutil implements Int2IntFrequencyDistribution {
-	private Int2IntOpenHashMap counts = new Int2IntOpenHashMap();
-	private long sumOfCounts = 0;
+  private Int2IntOpenHashMapWritable counts = new Int2IntOpenHashMapWritable();
+  private long sumOfCounts = 0;
 
-	@Override
-	public void increment(int key) {
-		if (contains(key)) {
-			set(key, get(key) + 1);
-		} else {
-			set(key, 1);
-		}
-	}
+  @Override
+  public void increment(int key) {
+    if (contains(key)) {
+      set(key, get(key) + 1);
+    } else {
+      set(key, 1);
+    }
+  }
 
-	@Override
-	public void increment(int key, int cnt) {
-		if (contains(key)) {
-			set(key, get(key) + cnt);
-		} else {
-			set(key, cnt);
-		}
-	}
+  @Override
+  public void increment(int key, int cnt) {
+    if (contains(key)) {
+      set(key, get(key) + cnt);
+    } else {
+      set(key, cnt);
+    }
+  }
 
-	@Override
-	public void decrement(int key) {
-		if (contains(key)) {
-			int v = get(key);
-			if (v == 1) {
-				remove(key);
-			} else {
-				set(key, v - 1);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(int key) {
+    if (contains(key)) {
+      int v = get(key);
+      if (v == 1) {
+        remove(key);
+      } else {
+        set(key, v - 1);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public void decrement(int key, int cnt) {
-		if (contains(key)) {
-			int v = get(key);
-			if (v < cnt) {
-				throw new RuntimeException("Can't decrement past zero!");
-			} else if (v == cnt) {
-				remove(key);
-			} else {
-				set(key, v - cnt);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(int key, int cnt) {
+    if (contains(key)) {
+      int v = get(key);
+      if (v < cnt) {
+        throw new RuntimeException("Can't decrement past zero!");
+      } else if (v == cnt) {
+        remove(key);
+      } else {
+        set(key, v - cnt);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public boolean contains(int key) {
-		return counts.containsKey(key);
-	}
+  @Override
+  public boolean contains(int key) {
+    return counts.containsKey(key);
+  }
 
-	@Override
-	public int get(int key) {
-		return counts.get(key);
-	}
+  @Override
+  public int get(int key) {
+    return counts.get(key);
+  }
 
   @Override
   public double computeRelativeFrequency(int k) {
@@ -106,90 +109,90 @@ public class Int2IntFrequencyDistributionFastutil implements Int2IntFrequencyDis
     return Math.log(counts.get(k)) - Math.log(getSumOfCounts());
   }
 
-	@Override
-	public int set(int key, int cnt) {
-		int rv = counts.put(key, cnt);
-		sumOfCounts = sumOfCounts - rv + cnt;
+  @Override
+  public int set(int key, int cnt) {
+    int rv = counts.put(key, cnt);
+    sumOfCounts = sumOfCounts - rv + cnt;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public int remove(int key) {
-		int rv = counts.remove(key);
-		sumOfCounts -= rv;
+  @Override
+  public int remove(int key) {
+    int rv = counts.remove(key);
+    sumOfCounts -= rv;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public void clear() {
-		counts.clear();
-		sumOfCounts = 0;
-	}
+  @Override
+  public void clear() {
+    counts.clear();
+    sumOfCounts = 0;
+  }
 
-	/**
-	 * Exposes efficient method for accessing keys in this map.
-	 */
-	public IntSet keySet() {
-		return counts.keySet();
-	}
+  /**
+   * Exposes efficient method for accessing keys in this map.
+   */
+  public IntSet keySet() {
+    return counts.keySet();
+  }
 
-	/**
-	 * Exposes efficient method for accessing values in this map.
-	 */
-	public IntCollection values() {
-		return counts.values();
-	}
+  /**
+   * Exposes efficient method for accessing values in this map.
+   */
+  public IntCollection values() {
+    return counts.values();
+  }
 
-	/**
-	 * Exposes efficient method for accessing mappings in this map.
-	 */
-	public Int2IntMap.FastEntrySet entrySet() {
-		return counts.int2IntEntrySet();
-	}
+  /**
+   * Exposes efficient method for accessing mappings in this map.
+   */
+  public Int2IntMap.FastEntrySet entrySet() {
+    return counts.int2IntEntrySet();
+  }
 
-	@Override
-	public int getNumberOfEvents() {
-		return counts.size();
-	}
+  @Override
+  public int getNumberOfEvents() {
+    return counts.size();
+  }
 
-	@Override
-	public long getSumOfCounts() {
-		return sumOfCounts;
-	}
+  @Override
+  public long getSumOfCounts() {
+    return sumOfCounts;
+  }
 
-	/**
-	 * Iterator returns the same object every time, just with a different payload.
-	 */
-	public Iterator<PairOfInts> iterator() {
-		return new Iterator<PairOfInts>() {
-			private Iterator<Int2IntMap.Entry> iter = 
-			    Int2IntFrequencyDistributionFastutil.this.counts.int2IntEntrySet().iterator();
-			private final PairOfInts pair = new PairOfInts();
+  /**
+   * Iterator returns the same object every time, just with a different payload.
+   */
+  public Iterator<PairOfInts> iterator() {
+    return new Iterator<PairOfInts>() {
+      private Iterator<Int2IntMap.Entry> iter = Int2IntFrequencyDistributionFastutil.this.counts
+          .int2IntEntrySet().iterator();
+      private final PairOfInts pair = new PairOfInts();
 
-			@Override
-			public boolean hasNext() {
-				return iter.hasNext();
-			}
+      @Override
+      public boolean hasNext() {
+        return iter.hasNext();
+      }
 
-			@Override
-			public PairOfInts next() {
-				if (!hasNext()) {
-					return null;
-				}
+      @Override
+      public PairOfInts next() {
+        if (!hasNext()) {
+          return null;
+        }
 
-				Int2IntMap.Entry entry = iter.next();
-				pair.set(entry.getIntKey(), entry.getIntValue());
-				return pair;
-			}
+        Int2IntMap.Entry entry = iter.next();
+        pair.set(entry.getIntKey(), entry.getIntValue());
+        return pair;
+      }
 
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
+  }
 
   @Override
   public List<PairOfInts> getEntries(Order ordering) {
@@ -203,7 +206,8 @@ public class Int2IntFrequencyDistributionFastutil implements Int2IntFrequencyDis
       return getEntriesSorted(comparatorLeftDescending);
     }
     // Should never get here.
-    return null;  }
+    return null;
+  }
 
   @Override
   public List<PairOfInts> getEntries(Order ordering, int n) {
