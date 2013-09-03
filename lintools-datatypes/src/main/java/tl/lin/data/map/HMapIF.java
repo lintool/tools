@@ -354,23 +354,6 @@ public class HMapIF implements MapIF, Cloneable, Serializable {
 		}
 	}
 
-  /**
-   * Increments the key by some value. If the key does not exist in the map, its value is
-   * set to the parameter value.
-   * 
-   * @param key
-   *            key to increment
-   * @param value
-   *            increment value
-   */
-  public void increment(int key, float value) {
-    if (this.containsKey(key)) {
-      this.put(key, (float) this.get(key) + value);
-    } else {
-      this.put(key, value);
-    }
-  }
-
 	// doc copied from interface
 	public float remove(int key) {
 		Entry e = removeEntryForKey(key);
@@ -832,12 +815,7 @@ public class HMapIF implements MapIF, Cloneable, Serializable {
 
 	// methods not part of a standard HashMap
 
-	/**
-	 * Adds values of keys from another map to this map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
+  @Override
 	public void plus(MapIF m) {
 		for (MapIF.Entry e : m.entrySet()) {
 			int key = e.getKey();
@@ -850,14 +828,9 @@ public class HMapIF implements MapIF, Cloneable, Serializable {
 		}
 	}
 
-	/**
-	 * Computes the dot product of this map with another map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
-	public float dot(MapIF m) {
-		float s = 0.0f;
+  @Override
+	public double dot(MapIF m) {
+		double s = 0.0f;
 
 		for (MapIF.Entry e : m.entrySet()) {
 			int key = e.getKey();
@@ -869,6 +842,24 @@ public class HMapIF implements MapIF, Cloneable, Serializable {
 
 		return s;
 	}
+
+  @Override
+  public void increment(int key) {
+    if (this.containsKey(key)) {
+      this.put(key, (float) this.get(key) + 1.0f);
+    } else {
+      this.put(key, 1.0f);
+    }
+  }
+
+  @Override
+  public void increment(int key, float value) {
+    if (this.containsKey(key)) {
+      this.put(key, (float) this.get(key) + value);
+    } else {
+      this.put(key, value);
+    }
+  }
 
 	/**
 	 * Returns the length of the vector represented by this map.

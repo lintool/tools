@@ -337,21 +337,6 @@ public class HMapID implements MapID, Cloneable, Serializable {
     }
   }
 
-  /**
-   * Increments the key by some value. If the key does not exist in the map, its value is set to the
-   * parameter value.
-   * 
-   * @param key key to increment
-   * @param value increment value
-   */
-  public void increment(int key, double value) {
-    if (this.containsKey(key)) {
-      this.put(key, this.get(key) + value);
-    } else {
-      this.put(key, value);
-    }
-  }
-
   // doc copied from interface
   public double remove(int key) {
     Entry e = removeEntryForKey(key);
@@ -807,11 +792,7 @@ public class HMapID implements MapID, Cloneable, Serializable {
 
   // methods not part of a standard HashMap
 
-  /**
-   * Adds values of keys from another map to this map.
-   * 
-   * @param m the other map
-   */
+  @Override
   public void plus(MapID m) {
     for (MapID.Entry e : m.entrySet()) {
       int key = e.getKey();
@@ -824,11 +805,7 @@ public class HMapID implements MapID, Cloneable, Serializable {
     }
   }
 
-  /**
-   * Computes the dot product of this map with another map.
-   * 
-   * @param m the other map
-   */
+  @Override
   public double dot(MapID m) {
     double s = 0.0f;
 
@@ -841,6 +818,24 @@ public class HMapID implements MapID, Cloneable, Serializable {
     }
 
     return s;
+  }
+
+  @Override
+  public void increment(int key) {
+    if (this.containsKey(key)) {
+      this.put(key, this.get(key) + 1.0);
+    } else {
+      this.put(key, 1.0);
+    }
+  }
+
+  @Override
+  public void increment(int key, double value) {
+    if (this.containsKey(key)) {
+      this.put(key, this.get(key) + value);
+    } else {
+      this.put(key, value);
+    }
   }
 
   /**

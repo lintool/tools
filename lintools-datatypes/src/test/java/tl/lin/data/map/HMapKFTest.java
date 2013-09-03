@@ -28,9 +28,8 @@ import org.apache.hadoop.io.Text;
 import org.junit.Test;
 
 public class HMapKFTest {
-
   @Test
-  public void testBasic1() {
+  public void testRandomInsert1() {
     int size = 100000;
     Random r = new Random();
     float[] floats = new float[size];
@@ -51,7 +50,7 @@ public class HMapKFTest {
   }
 
   @Test
-  public void testBasic2() {
+  public void testRandomInsert2() {
     int size = 100000;
     Random r = new Random();
     float[] floats = new float[size];
@@ -75,7 +74,7 @@ public class HMapKFTest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testRandomUpdate() {
     int size = 100000;
     Random r = new Random();
     float[] floats = new float[size];
@@ -161,9 +160,25 @@ public class HMapKFTest {
     m2.put(new Text("there"), 4.3f);
     m2.put(new Text("test"), 5.0f);
 
-    float s = m1.dot(m2);
+    assertEquals(10.93, m1.dot(m2), 10e-6);
+  }
 
-    assertTrue(s == 10.93f);
+
+  @Test
+  public void testIncrement() {
+    HMapKF<String> m = new HMapKF<String>();
+    assertEquals(0.0f, m.get("one"), 10E-6);
+
+    m.increment("one", 0.5f);
+    assertEquals(0.5f, m.get("one"), 10E-6);
+
+    m.increment("one", 1.0f);
+    m.increment("two", 0.0f);
+    m.increment("three", -0.5f);
+
+    assertEquals(1.5f, m.get("one"), 10E-6);
+    assertEquals(0.0f, m.get("two"), 10E-6);
+    assertEquals(-0.5f, m.get("three"), 10E-6);
   }
 
   @Test
@@ -257,23 +272,6 @@ public class HMapKFTest {
     e = entries[1];
     assertEquals(new Text("c"), e.getKey());
     assertEquals(3.0f, e.getValue(), 10E-6);
-  }
-
-  @Test
-  public void testIncrement() {
-    HMapKF<String> m = new HMapKF<String>();
-    assertEquals(0.0f, m.get("one"), 10E-6);
-
-    m.increment("one", 0.5f);
-    assertEquals(0.5f, m.get("one"), 10E-6);
-
-    m.increment("one", 1.0f);
-    m.increment("two", 0.0f);
-    m.increment("three", -0.5f);
-
-    assertEquals(1.5f, m.get("one"), 10E-6);
-    assertEquals(0.0f, m.get("two"), 10E-6);
-    assertEquals(-0.5f, m.get("three"), 10E-6);
   }
 
   public static junit.framework.Test suite() {

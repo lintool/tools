@@ -27,9 +27,8 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class HMapIFTest {
-
   @Test
-  public void testBasic1() {
+  public void testRandomInsert() {
     int size = 100000;
     Random r = new Random();
     float[] floats = new float[size];
@@ -50,7 +49,7 @@ public class HMapIFTest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testRandomUpdate() {
     int size = 100000;
     Random r = new Random();
     float[] floats = new float[size];
@@ -133,9 +132,24 @@ public class HMapIFTest {
     m2.put(2, 4.3f);
     m2.put(4, 5.0f);
 
-    float s = m1.dot(m2);
+    assertEquals(10.93, m1.dot(m2), 10e-6);
+  }
 
-    assertTrue(s == 10.93f);
+  @Test
+  public void testIncrement() {
+    HMapIF m = new HMapIF();
+    assertEquals(0.0f, m.get(1), 10E-6);
+
+    m.increment(1, 0.5f);
+    assertEquals(0.5f, m.get(1), 10E-6);
+
+    m.increment(1);
+    m.increment(2, 0.0f);
+    m.increment(3, -0.5f);
+
+    assertEquals(1.5f, m.get(1), 10E-6);
+    assertEquals(0.0f, m.get(2), 10E-6);
+    assertEquals(-0.5f, m.get(3), 10E-6);
   }
 
   @Test
@@ -245,23 +259,6 @@ public class HMapIFTest {
 
     MapIF.Entry[] e = m.getEntriesSortedByValue();
     assertTrue(e == null);
-  }
-
-  @Test
-  public void testIncrement() {
-    HMapIF m = new HMapIF();
-    assertEquals(0.0f, m.get(1), 10E-6);
-
-    m.increment(1, 0.5f);
-    assertEquals(0.5f, m.get(1), 10E-6);
-
-    m.increment(1, 1.0f);
-    m.increment(2, 0.0f);
-    m.increment(3, -0.5f);
-
-    assertEquals(1.5f, m.get(1), 10E-6);
-    assertEquals(0.0f, m.get(2), 10E-6);
-    assertEquals(-0.5f, m.get(3), 10E-6);
   }
 
   public static junit.framework.Test suite() {

@@ -199,4 +199,34 @@ public interface MapKI<K> {
    * @return the hash code value for this map
    */
   int hashCode();
+
+  /**
+   * Adds values of keys from another map to this map.
+   *
+   * @param map the other map
+   */
+  void plus(MapKI<K> map);
+
+  /**
+   * Computes the dot product of this map with another map.
+   *
+   * @param map the other map
+   */
+  long dot(MapKI<K> map);
+
+  /**
+   * Increments the key. If the key does not exist in the map, its value is set to one.
+   *
+   * @param key key to increment
+   */
+  void increment(K key);
+  
+  /**
+   * Increments the key by some value. If the key does not exist in the map, its value is
+   * set to the parameter value.
+   *
+   * @param key key to increment
+   * @param value increment value
+   */
+  void increment(K key, int value);
 }

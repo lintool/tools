@@ -24,8 +24,7 @@ import java.util.Set;
  * a specialized variant the standard Java {@link Map} interface, except that
  * the values are hard coded as floats for efficiency reasons (keys can be
  * arbitrary objects). This implementation was adapted from {@link HashMap}
- * version 1.73, 03/13/07. See <a href="{@docRoot}/../content/map.html">this
- * benchmark</a> for an efficiency comparison.
+ * version 1.73, 03/13/07.
  * 
  * @param <K>
  *            the type of keys maintained by this map
@@ -246,38 +245,6 @@ public class HMapKL<K> implements MapKL<K>, Cloneable, Serializable {
 		}
 		return null;
 	}
-
-	 /**
-   * Increments the key. If the key does not exist in the map, its value is
-   * set to one.
-   * 
-   * @param key
-   *            key to increment
-   */
-  public void increment(K key) {
-    if (this.containsKey(key)) {
-      this.put(key, (long) this.get(key) + 1);
-    } else {
-      this.put(key, (long) 1);
-    }
-  }
-
-  /**
-   * Increments the key by some value. If the key does not exist in the map, its value is
-   * set to the parameter value.
-   * 
-   * @param key
-   *            key to increment
-   * @param value
-   *            increment value
-   */
-  public void increment(K key, long value) {
-    if (this.containsKey(key)) {
-      this.put(key, (long) this.get(key) + value);
-    } else {
-      this.put(key, value);
-    }
-  }
 
 	// doc copied from interface
 	public long put(K key, long value) {
@@ -901,4 +868,51 @@ public class HMapKL<K> implements MapKL<K>, Cloneable, Serializable {
 		}
 	}
 
+	 // methods not part of a standard HashMap
+
+  @Override
+  public void plus(MapKL<K> m) {
+    for (MapKL.Entry<K> e : m.entrySet()) {
+      K key = e.getKey();
+
+      if (this.containsKey(key)) {
+        this.put(key, (long) (this.get(key) + e.getValue()));
+      } else {
+        this.put(key, e.getValue());
+      }
+    }
+  }
+
+  @Override
+  public long dot(MapKL<K> m) {
+    long s = 0;
+
+    for (MapKL.Entry<K> e : m.entrySet()) {
+      K key = e.getKey();
+
+      if (this.containsKey(key)) {
+        s += this.get(key) * e.getValue();
+      }
+    }
+
+    return s;
+  }
+
+  @Override
+  public void increment(K key) {
+    if (this.containsKey(key)) {
+      this.put(key, (long) this.get(key) + 1L);
+    } else {
+      this.put(key, (long) 1L);
+    }
+  }
+
+  @Override
+  public void increment(K key, long value) {
+    if (this.containsKey(key)) {
+      this.put(key, (long) this.get(key) + value);
+    } else {
+      this.put(key, value);
+    }
+  }
 }

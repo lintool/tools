@@ -284,7 +284,6 @@ public class Int2LongFrequencyDistributionEntry implements Int2LongFrequencyDist
     return list.subList(0, n);
   }
 
-
   @Override
   public void readFields(DataInput in) throws IOException {
     sumOfCounts = in.readLong();

@@ -27,9 +27,8 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class HMapIITest {
-
   @Test
-  public void testBasic1() {
+  public void testRandomInsert() {
     int size = 100000;
     Random r = new Random();
     int[] ints = new int[size];
@@ -47,11 +46,10 @@ public class HMapIITest {
       assertEquals(ints[i], v);
       assertTrue(map.containsKey(i));
     }
-
   }
 
   @Test
-  public void testUpdate() {
+  public void testRandomUpdate() {
     int size = 100000;
     Random r = new Random();
     int[] ints = new int[size];
@@ -134,9 +132,25 @@ public class HMapIITest {
     m2.put(2, 4);
     m2.put(4, 5);
 
-    int s = m1.dot(m2);
+    assertEquals(6, m1.dot(m2));
+  }
 
-    assertTrue(s == 6);
+  @Test
+  public void testIncrement() {
+    HMapII m = new HMapII();
+    // When we put a value, we should get back the old value.
+
+    assertEquals(0, m.get(1));
+    m.increment(1);
+
+    assertEquals(1, m.get(1));
+    m.increment(1, 5);
+    m.increment(2, 0);
+    m.increment(3, 2);
+
+    assertEquals(6, m.get(1));
+    assertEquals(0, m.get(2));
+    assertEquals(2, m.get(3));
   }
 
   @Test
@@ -224,24 +238,6 @@ public class HMapIITest {
     assertEquals(5, m.put(1, 6));
     assertEquals(6, m.put(1, 2));
     assertEquals(2, m.get(1));
-  }
-
-  @Test
-  public void testIncrement() {
-    HMapII m = new HMapII();
-    // When we put a value, we should get back the old value.
-
-    assertEquals(0, m.get(1));
-    m.increment(1);
-
-    assertEquals(1, m.get(1));
-    m.increment(1, 5);
-    m.increment(2, 0);
-    m.increment(3, 2);
-
-    assertEquals(6, m.get(1));
-    assertEquals(0, m.get(2));
-    assertEquals(2, m.get(3));
   }
 
   public static junit.framework.Test suite() {
