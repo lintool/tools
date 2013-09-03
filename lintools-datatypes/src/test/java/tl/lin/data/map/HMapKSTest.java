@@ -102,7 +102,6 @@ public class HMapKSTest {
     }
   }
 
-
   @Test
   public void testBasic() throws IOException {
     HMapKS<Text> m = new HMapKS<Text>();

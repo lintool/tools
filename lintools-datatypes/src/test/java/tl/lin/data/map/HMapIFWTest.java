@@ -316,7 +316,7 @@ public class HMapIFWTest {
     assertTrue(m2.size() == 0);
   }
 
-  //TODO: Should add a test case for lazy add
+  // TODO: Should add a test case for lazy add
 
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(HMapIFWTest.class);

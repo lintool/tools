@@ -163,7 +163,6 @@ public class HMapKFTest {
     assertEquals(10.93, m1.dot(m2), 10e-6);
   }
 
-
   @Test
   public void testIncrement() {
     HMapKF<String> m = new HMapKF<String>();
