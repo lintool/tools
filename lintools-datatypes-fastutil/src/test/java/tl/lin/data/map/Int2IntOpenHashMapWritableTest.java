@@ -301,7 +301,7 @@ public class Int2IntOpenHashMapWritableTest {
     m2.put(2, 4);
     m2.put(4, 5);
 
-    int s = m1.dot(m2);
+    long s = m1.dot(m2);
 
     assertEquals(6, s);
   }

@@ -303,4 +303,16 @@ public class Int2IntFrequencyDistributionFastutil implements Int2IntFrequencyDis
     List<PairOfInts> list = getEntriesSorted(comparator);
     return list.subList(0, n);
   }
+
+  @Override
+  public void readFields(DataInput in) throws IOException {
+    sumOfCounts = in.readLong();
+    counts.readFields(in);
+  }
+
+  @Override
+  public void write(DataOutput out) throws IOException {
+    out.writeLong(sumOfCounts);
+    counts.write(out);
+  }
 }

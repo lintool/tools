@@ -79,6 +79,12 @@ public class Int2IntConditionalFrequencyDistributionFastutilTest extends
     testLargeMarginalCommon(cfd);
   }
 
+  @Test
+  public void testSerialization() throws Exception {
+    Int2IntConditionalFrequencyDistribution fd = new Int2IntConditionalFrequencyDistributionFastutil();
+    testSerialization(fd, Int2IntConditionalFrequencyDistributionFastutil.class);
+  }
+
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(
         Int2IntConditionalFrequencyDistributionFastutilTest.class);

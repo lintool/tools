@@ -16,8 +16,8 @@
 
 package tl.lin.data.map;
 
-import it.unimi.dsi.fastutil.ints.Int2IntMap;
-import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2LongMap;
+import it.unimi.dsi.fastutil.ints.Int2LongOpenHashMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -31,23 +31,27 @@ import java.util.Comparator;
 
 import org.apache.hadoop.io.Writable;
 
-public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Writable {
-  private static final long serialVersionUID = 1255879065743242L;
+public class Int2LongOpenHashMapWritable extends Int2LongOpenHashMap implements Writable {
+  private static final long serialVersionUID = 1029363828020488531L;
 
   private static boolean LAZY_DECODE = false;
 
   private int numEntries = 0;
   private int[] keys = null;
-  private int[] values = null;
+  private long[] values = null;
 
   /**
    * Creates an <code>Int2IntOpenHashMapWritable</code> object.
    */
-  public Int2IntOpenHashMapWritable() {
+  public Int2LongOpenHashMapWritable() {
     super();
   }
 
-  @Override
+  /**
+   * Deserializes the map.
+   *
+   * @param in source for raw byte representation
+   */
   public void readFields(DataInput in) throws IOException {
     this.clear();
 
@@ -58,16 +62,16 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
     if (LAZY_DECODE) {
       // Lazy initialization; read into arrays.
       keys = new int[numEntries];
-      values = new int[numEntries];
+      values = new long[numEntries];
 
       for (int i = 0; i < numEntries; i++) {
         keys[i] = in.readInt();
-        values[i] = in.readInt();
+        values[i] = in.readLong();
       }
     } else {
       // Normal initialization; populate the map.
       for (int i = 0; i < numEntries; i++) {
-        put(in.readInt(), in.readInt());
+        put(in.readInt(), in.readLong());
       }
     }
   }
@@ -90,7 +94,11 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
     return keys == null;
   }
 
-  @Override
+  /**
+   * Serializes the map.
+   *
+   * @param out where to write the raw byte representation
+   */
   public void write(DataOutput out) throws IOException {
     // Check to see if we're in lazy decode mode, and this object hasn't
     // been decoded yet.
@@ -101,15 +109,15 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
         return;
 
       // Then write out each key/value pair.
-      for (Int2IntMap.Entry e : int2IntEntrySet()) {
+      for (Int2LongMap.Entry e : int2LongEntrySet()) {
         out.writeInt(e.getIntKey());
-        out.writeInt(e.getIntValue());
+        out.writeLong(e.getLongValue());
       }
     } else {
       out.writeInt(numEntries);
       for (int i = 0; i < numEntries; i++) {
         out.writeInt(keys[i]);
-        out.writeInt(values[i]);
+        out.writeLong(values[i]);
       }
     }
   }
@@ -135,8 +143,8 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    * @return newly-created object
    * @throws IOException
    */
-  public static Int2IntOpenHashMapWritable create(DataInput in) throws IOException {
-    Int2IntOpenHashMapWritable m = new Int2IntOpenHashMapWritable();
+  public static Int2LongOpenHashMapWritable create(DataInput in) throws IOException {
+    Int2LongOpenHashMapWritable m = new Int2LongOpenHashMapWritable();
     m.readFields(in);
 
     return m;
@@ -149,7 +157,7 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    * @return newly-created object
    * @throws IOException
    */
-  public static Int2IntOpenHashMapWritable create(byte[] bytes) throws IOException {
+  public static Int2LongOpenHashMapWritable create(byte[] bytes) throws IOException {
     return create(new DataInputStream(new ByteArrayInputStream(bytes)));
   }
 
@@ -158,10 +166,10 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    *
    * @param m the other map
    */
-  public void plus(Int2IntOpenHashMapWritable m) {
-    for (Int2IntMap.Entry e : m.int2IntEntrySet()) {
+  public void plus(Int2LongOpenHashMapWritable m) {
+    for (Int2LongMap.Entry e : m.int2LongEntrySet()) {
       int key = e.getIntKey();
-      int value = e.getIntValue();
+      long value = e.getLongValue();
 
       if (this.containsKey(key)) {
         this.put(key, this.get(key) + value);
@@ -176,14 +184,14 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    *
    * @param m the other map
    */
-  public long dot(Int2IntOpenHashMapWritable m) {
+  public long dot(Int2LongOpenHashMapWritable m) {
     int s = 0;
 
-    for (Int2IntMap.Entry e : m.int2IntEntrySet()) {
+    for (Int2LongMap.Entry e : m.int2LongEntrySet()) {
       int key = e.getIntKey();
 
       if (this.containsKey(key)) {
-        s += this.get(key) * e.getIntValue();
+        s += this.get(key) * e.getLongValue();
       }
     }
 
@@ -205,7 +213,7 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    * @param key key to increment
    * @param n amount to increment
    */
-  public void increment(int key, int n) {
+  public void increment(int key, long n) {
     if (this.containsKey(key)) {
       this.put(key, this.get(key) + n);
     } else {
@@ -247,7 +255,7 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    *
    * @return an array of all the values
    */
-  public int[] getValues() {
+  public long[] getValues() {
     return values;
   }
 
@@ -257,9 +265,9 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    *
    * @param m the other map
    */
-  public void lazyplus(Int2IntOpenHashMapWritable m) {
+  public void lazyplus(Int2LongOpenHashMapWritable m) {
     int[] k = m.getKeys();
-    int[] v = m.getValues();
+    long[] v = m.getValues();
 
     for (int i = 0; i < k.length; i++) {
       if (this.containsKey(k[i])) {
@@ -275,19 +283,19 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    *
    * @return entries sorted by descending value
    */
-  public Int2IntMap.Entry[] getEntriesSortedByValue() {
+  public Int2LongMap.Entry[] getEntriesSortedByValue() {
     if (this.size() == 0)
       return null;
 
-    Int2IntMap.Entry[] entries = new Int2IntMap.Entry[this.size()];
-    entries = this.int2IntEntrySet().toArray(entries);
+    Int2LongMap.Entry[] entries = new Int2LongMap.Entry[this.size()];
+    entries = this.int2LongEntrySet().toArray(entries);
 
     // sort the entries
-    Arrays.sort(entries, new Comparator<Int2IntMap.Entry>() {
-      public int compare(Int2IntMap.Entry e1, Int2IntMap.Entry e2) {
-        if (e1.getIntValue() > e2.getIntValue()) {
+    Arrays.sort(entries, new Comparator<Int2LongMap.Entry>() {
+      public int compare(Int2LongMap.Entry e1, Int2LongMap.Entry e2) {
+        if (e1.getLongValue() > e2.getLongValue()) {
           return -1;
-        } else if (e1.getIntValue() < e2.getIntValue()) {
+        } else if (e1.getLongValue() < e2.getLongValue()) {
           return 1;
         }
 
@@ -307,8 +315,8 @@ public class Int2IntOpenHashMapWritable extends Int2IntOpenHashMap implements Wr
    * @param k number of entries to return
    * @return top <i>k</i> entries sorted by descending value
    */
-  public Int2IntMap.Entry[] getEntriesSortedByValue(int k) {
-    Int2IntMap.Entry[] entries = getEntriesSortedByValue();
+  public Int2LongMap.Entry[] getEntriesSortedByValue(int k) {
+    Int2LongMap.Entry[] entries = getEntriesSortedByValue();
 
     if (entries == null)
       return null;

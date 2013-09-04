@@ -146,12 +146,10 @@ public class Int2FloatOpenHashMapWritableTest {
     m1.put(3, 5);
     m1.put(4, 22);
 
-    // Object m2 should not have been decoded, size lazy decode flag is
-    // true.
+    // Object m2 should not have been decoded, size lazy decode flag is true.
     Int2FloatOpenHashMapWritable m2 = Int2FloatOpenHashMapWritable.create(m1.serialize());
 
-    // Even though m2 hasn't be decoded, we should be able to properly
-    // serialize it.
+    // Even though m2 hasn't be decoded, we should be able to properly serialize it.
     Int2FloatOpenHashMapWritable m3 = Int2FloatOpenHashMapWritable.create(m2.serialize());
 
     assertEquals(0, m3.size());

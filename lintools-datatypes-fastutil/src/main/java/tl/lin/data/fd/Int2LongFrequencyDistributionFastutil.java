@@ -21,11 +21,15 @@ import it.unimi.dsi.fastutil.ints.Int2LongOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import tl.lin.data.map.Int2LongOpenHashMapWritable;
 import tl.lin.data.pair.PairOfIntLong;
 
 import com.google.common.collect.Lists;
@@ -34,7 +38,7 @@ import com.google.common.collect.Lists;
  * Implementation of {@link Int2LongFrequencyDistribution} based on {@link Int2LongOpenHashMap}.
  */
 public class Int2LongFrequencyDistributionFastutil implements Int2LongFrequencyDistribution {
-	private Int2LongOpenHashMap counts = new Int2LongOpenHashMap();
+	private Int2LongOpenHashMapWritable counts = new Int2LongOpenHashMapWritable();
 	private long sumOfCounts = 0;
 
 	@Override
@@ -302,5 +306,17 @@ public class Int2LongFrequencyDistributionFastutil implements Int2LongFrequencyD
   private List<PairOfIntLong> getEntriesSorted(Comparator<PairOfIntLong> comparator, int n) {
     List<PairOfIntLong> list = getEntriesSorted(comparator);
     return list.subList(0, n);
+  }
+
+  @Override
+  public void readFields(DataInput in) throws IOException {
+    sumOfCounts = in.readLong();
+    counts.readFields(in);
+  }
+
+  @Override
+  public void write(DataOutput out) throws IOException {
+    out.writeLong(sumOfCounts);
+    counts.write(out);
   }
 }

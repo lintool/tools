@@ -77,6 +77,12 @@ public class Int2IntFrequencyDistributionFastutilTest extends
     testIterableCommon(fd);
   }
 
+  @Test
+  public void testSerialization() throws Exception {
+    Int2IntFrequencyDistribution fd = new Int2IntFrequencyDistributionFastutil();
+    testSerialization(fd, Int2IntFrequencyDistributionFastutil.class);
+  }
+
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(Int2IntFrequencyDistributionFastutilTest.class);
   }

@@ -68,7 +68,7 @@
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes</artifactId>
-      <version>0.9.2</version>
+      <version>0.9.3-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
       <optional>true</optional>
@@ -76,7 +76,7 @@
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes</artifactId>
-      <version>0.9.2</version>
+      <version>0.9.3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>it.unimi.dsi</groupId>
