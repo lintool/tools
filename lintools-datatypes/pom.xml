@@ -3,7 +3,7 @@
   <groupId>tl.lin</groupId>
   <artifactId>lintools-datatypes</artifactId>
   <packaging>jar</packaging>
-  <version>0.9.3</version>
+  <version>0.9.3-SNAPSHOT</version>
   <name>lintools-datatypes</name>
   <description>Lintools (core datatypes)</description>
   <url>http://lin.tl/</url>
