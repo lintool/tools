@@ -31,19 +31,38 @@ public class TopScoredObjects<K extends Comparable<K>> {
     @Override
     @SuppressWarnings("unchecked")
     protected boolean lessThan(Object obj0, Object obj1) {
+      // If equal scores, break tie by object descending.
+      if (((PairOfObjectFloat<K>) obj0).getRightElement() == 
+          ((PairOfObjectFloat<K>) obj1).getRightElement()) {
+        return ((PairOfObjectFloat<K>) obj0).getLeftElement().compareTo(
+            ((PairOfObjectFloat<K>) obj1).getLeftElement()) < 0 ? true : false;
+      }
+
       return ((PairOfObjectFloat<K>) obj0).getRightElement() < 
           ((PairOfObjectFloat<K>) obj1).getRightElement() ? true : false;
     }
   }
 
   private final ScoredObjectPriorityQueue queue;
+  private final int maxElements;
+
+  // TODO: Add the option to control how to break scoring ties
 
   public TopScoredObjects(int n) {
     queue = new ScoredObjectPriorityQueue(n);
+    maxElements = n;
   }
 
   public void add(K obj, float f) {
     queue.insert(new PairOfObjectFloat<K>(obj, f));
+  }
+
+  public int getMaxElements() {
+    return maxElements;
+  }
+
+  public int size() {
+    return queue.size();
   }
 
   @SuppressWarnings("unchecked")

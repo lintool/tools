@@ -1,5 +1,5 @@
 /*
- * @(#)Map.java	1.56 06/04/21
+ * @(#)Map.java 1.56 06/04/21
  *
  * Copyright 2006 Sun Microsystems, Inc. All rights reserved.
  * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
@@ -12,10 +12,12 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * Map from ints to shorts.
+ * Map from arbitrary objects to doubles.
+ *
+ * @param <K> type of the keys
  */
-public interface MapIS {
-  public static final short DEFAULT_VALUE = 0;
+public interface MapKD<K> {
+  public static final double DEFAULT_VALUE = 0.0f;
 
   // Query Operations
 
@@ -39,7 +41,7 @@ public interface MapIS {
    * @param key key whose presence in this map is to be tested
    * @return <tt>true</tt> if this map contains a mapping for the specified key
    */
-  boolean containsKey(int key);
+  boolean containsKey(K key);
 
   /**
    * Returns <tt>true</tt> if this map contains one or more mappings with the specified value.
@@ -47,7 +49,7 @@ public interface MapIS {
    * @param value value whose presence in this map is to be tested
    * @return <tt>true</tt> this map contains one or more mappings with the specified value
    */
-  boolean containsValue(short value);
+  boolean containsValue(double value);
 
   /**
    * Returns the value to which the specified key is mapped, or throws
@@ -57,7 +59,7 @@ public interface MapIS {
    * @return the value to which the specified key is mapped
    * @throws NoSuchElementException if the key is not contained in this map
    */
-  short get(int key);
+  double get(K key);
 
   // Modification Operations
 
@@ -67,8 +69,9 @@ public interface MapIS {
    *
    * @param key key with which the specified value is to be associated
    * @param value value to be associated with the specified key
+   * @return the previous value of the key (or the default value, if none)
    */
-  short put(int key, short value);
+  double put(K key, double value);
 
   /**
    * Removes the mapping for a key from this map if it is present. No action is performed if this
@@ -76,7 +79,7 @@ public interface MapIS {
    *
    * @param key key whose mapping is to be removed from the map
    */
-  short remove(int key);
+  double remove(K key);
 
   // Bulk Operations
 
@@ -85,7 +88,7 @@ public interface MapIS {
    *
    * @param m mappings to be stored in this map
    */
-  void putAll(MapIS m);
+  void putAll(MapKD<? extends K> m);
 
   /**
    * Removes all of the mappings from this map. The map will be empty after this call returns.
@@ -95,24 +98,22 @@ public interface MapIS {
   // Views
 
   /**
-   * Returns a {@link Set} view of the keys contained in this map. Note that this is a inefficient
-   * operation since it triggers autoboxing of the int keys, which is exactly what this
-   * implementation is trying to avoid. Unlike a standard Java <tt>Map</tt>, values in the backing
-   * map cannot be altered with this collection view.
+   * Returns a {@link Set} view of the keys contained in this map. The set is backed by the map, so
+   * changes to the map are reflected in the set, and vice-versa.
    *
    * @return a set view of the keys contained in this map
    */
-  Set<Integer> keySet();
+  Set<K> keySet();
 
   /**
    * Returns a {@link Collection} view of the values contained in this map. Note that this is a
-   * inefficient operation since it triggers autoboxing of the int values, which is exactly what
+   * inefficient operation since it triggers autoboxing of the double values, which is exactly what
    * this implementation is trying to avoid. Unlike a standard Java <tt>Map</tt>, values in the
    * backing map cannot be altered with this collection view.
    *
    * @return a collection view of the values contained in this map
    */
-  Collection<Short> values();
+  Collection<Double> values();
 
   /**
    * Returns a {@link Set} view of the mappings contained in this map. The set is backed by the map,
@@ -120,24 +121,24 @@ public interface MapIS {
    *
    * @return a set view of the mappings contained in this map
    */
-  Set<MapIS.Entry> entrySet();
+  Set<MapKD.Entry<K>> entrySet();
 
   /**
-   * A map entry (key-value pair) for <tt>MapIS</tt>. The <tt>MapIS.entrySet</tt> method returns a
+   * A map entry (key-value pair) for <tt>MapKF</tt>. The <tt>MapKF.entrySet</tt> method returns a
    * collection-view of the map, whose elements are of this class. The <i>only</i> way to obtain a
    * reference to a map entry is from the iterator of this collection-view. These
-   * <tt>MapIS.Entry</tt> objects are valid <i>only</i> for the duration of the iteration; more
+   * <tt>MapKF.Entry</tt> objects are valid <i>only</i> for the duration of the iteration; more
    * formally, the behavior of a map entry is undefined if the backing map has been modified after
    * the entry was returned by the iterator, except through the <tt>setValue</tt> operation on the
    * map entry.
    */
-  interface Entry {
+  interface Entry<K> {
     /**
      * Returns the key corresponding to this entry.
      *
      * @return the key corresponding to this entry
      */
-    int getKey();
+    K getKey();
 
     /**
      * Returns the value corresponding to this entry. If the mapping has been removed from the
@@ -146,7 +147,7 @@ public interface MapIS {
      *
      * @return the value corresponding to this entry
      */
-    short getValue();
+    double getValue();
 
     /**
      * Replaces the value corresponding to this entry with the specified value, and write through to
@@ -156,7 +157,7 @@ public interface MapIS {
      * @param value new value to be stored in this entry
      * @return old value corresponding to the entry
      */
-    short setValue(short value);
+    double setValue(double value);
 
     /**
      * Compares the specified object with this entry for equality. Returns <tt>true</tt> if the
@@ -182,7 +183,7 @@ public interface MapIS {
    * object is also a map and the two maps represent the same mappings. More formally, two maps
    * <tt>m1</tt> and <tt>m2</tt> represent the same mappings if
    * <tt>m1.entrySet().equals(m2.entrySet())</tt>. This ensures that the <tt>equals</tt> method
-   * works properly across different implementations of the <tt>MapIS</tt> interface.
+   * works properly across different implementations of the <tt>MapKF</tt> interface.
    *
    * @param o object to be compared for equality with this map
    * @return <tt>true</tt> if the specified object is equal to this map
@@ -204,21 +205,21 @@ public interface MapIS {
    *
    * @param map the other map
    */
-  void plus(MapIS map);
+  void plus(MapKD<K> map);
 
   /**
    * Computes the dot product of this map with another map.
    *
    * @param map the other map
    */
-  long dot(MapIS map);
+  double dot(MapKD<K> map);
 
   /**
    * Increments the key. If the key does not exist in the map, its value is set to one.
    *
    * @param key key to increment
    */
-  void increment(int key);
+  void increment(K key);
   
   /**
    * Increments the key by some value. If the key does not exist in the map, its value is
@@ -227,5 +228,5 @@ public interface MapIS {
    * @param key key to increment
    * @param value increment value
    */
-  void increment(int key, short value);
+  void increment(K key, double value);
 }

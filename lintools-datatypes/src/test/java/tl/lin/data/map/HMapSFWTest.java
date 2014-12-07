@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -91,7 +90,7 @@ public class HMapSFWTest {
   public void testJp() throws IOException {
     HMapSFW map1 = new HMapSFW();
     BufferedReader in = new BufferedReader(new InputStreamReader(
-        new FileInputStream("src/test/resources/jp-sample.txt"), "UTF8"));
+        this.getClass().getClassLoader().getResourceAsStream("jp-sample.txt"), "UTF8"));
 
     List<String> list = Lists.newArrayList();
     int cnt = 0;
@@ -121,44 +120,44 @@ public class HMapSFWTest {
     in.close();
   }
 
-	@Test
-	public void testSerialize1() throws IOException {
-		HMapSFW m1 = new HMapSFW();
+  @Test
+  public void testSerialize1() throws IOException {
+    HMapSFW m1 = new HMapSFW();
 
-		m1.put("hi", 5.0f);
-		m1.put("there", 22.0f);
+    m1.put("hi", 5.0f);
+    m1.put("there", 22.0f);
 
-		HMapSFW n2 = HMapSFW.create(m1.serialize());
+    HMapSFW n2 = HMapSFW.create(m1.serialize());
 
-		String key;
-		float value;
+    String key;
+    float value;
 
-		assertEquals(n2.size(), 2);
+    assertEquals(n2.size(), 2);
 
-		key = "hi";
-		value = n2.get(key);
-		assertTrue(value == 5.0f);
+    key = "hi";
+    value = n2.get(key);
+    assertTrue(value == 5.0f);
 
-		value = n2.remove(key);
-		assertEquals(n2.size(), 1);
+    value = n2.remove(key);
+    assertEquals(n2.size(), 1);
 
-		key = "there";
-		value = n2.get(key);
-		assertTrue(value == 22.0f);
-	}
+    key = "there";
+    value = n2.get(key);
+    assertTrue(value == 22.0f);
+  }
 
-	@Test
-	public void testSerializeEmpty() throws IOException {
-		HMapSFW m1 = new HMapSFW();
+  @Test
+  public void testSerializeEmpty() throws IOException {
+    HMapSFW m1 = new HMapSFW();
 
-		assertTrue(m1.size() == 0);
+    assertTrue(m1.size() == 0);
 
-		HMapSFW m2 = HMapSFW.create(m1.serialize());
+    HMapSFW m2 = HMapSFW.create(m1.serialize());
 
-		assertTrue(m2.size() == 0);
-	}
+    assertTrue(m2.size() == 0);
+  }
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(HMapSFWTest.class);
-	}
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(HMapSFWTest.class);
+  }
 }

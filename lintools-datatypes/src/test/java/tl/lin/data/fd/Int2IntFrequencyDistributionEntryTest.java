@@ -77,6 +77,12 @@ public class Int2IntFrequencyDistributionEntryTest
     testIterableCommon(fd);
   }
 
+  @Test
+  public void testSerialization() throws Exception {
+    Int2IntFrequencyDistribution fd = new Int2IntFrequencyDistributionEntry();
+    testSerialization(fd, Int2IntFrequencyDistributionEntry.class);
+  }
+
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(Int2IntFrequencyDistributionEntryTest.class);
   }

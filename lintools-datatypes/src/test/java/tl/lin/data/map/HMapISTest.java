@@ -27,9 +27,8 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class HMapISTest {
-
   @Test
-  public void testBasic1() {
+  public void testRandomInsert() {
     int size = 10000;
     Random r = new Random();
     short[] shorts = new short[size];
@@ -50,7 +49,7 @@ public class HMapISTest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testRandomUpdate() {
     int size = 10000;
     Random r = new Random();
     short[] shorts = new short[size];
@@ -133,9 +132,26 @@ public class HMapISTest {
     m2.put(2, (short) 4);
     m2.put(4, (short) 5);
 
-    int s = m1.dot(m2);
+    long s = m1.dot(m2);
 
     assertEquals(6, s);
+  }
+
+  @Test
+  public void testIncrement() {
+    HMapIS m = new HMapIS();
+    assertEquals(0, m.get(1));
+
+    m.increment(1, (short) 1);
+    assertEquals(1, m.get(1));
+
+    m.increment(1);
+    m.increment(2, (short) 0);
+    m.increment(3, (short) -1);
+
+    assertEquals(2, m.get(1));
+    assertEquals(0, m.get(2));
+    assertEquals(-1, m.get(3));
   }
 
   @Test
@@ -212,23 +228,6 @@ public class HMapISTest {
 
     MapIS.Entry[] e = m.getEntriesSortedByValue();
     assertTrue(e == null);
-  }
-
-  @Test
-  public void testIncrement() {
-    HMapIS m = new HMapIS();
-    assertEquals(0, m.get(1));
-
-    m.increment(1, (short) 1);
-    assertEquals(1, m.get(1));
-
-    m.increment(1, (short) 1);
-    m.increment(2, (short) 0);
-    m.increment(3, (short) -1);
-
-    assertEquals(2, m.get(1));
-    assertEquals(0, m.get(2));
-    assertEquals(-1, m.get(3));
   }
 
   public static junit.framework.Test suite() {

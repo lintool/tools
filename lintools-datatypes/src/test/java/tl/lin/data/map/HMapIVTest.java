@@ -28,154 +28,154 @@ import org.junit.Test;
 
 public class HMapIVTest {
 
-	@Test
-	public void testBasic1() {
-		int size = 100000;
-		Random r = new Random();
-		String[] strings = new String[size];
+  @Test
+  public void testBasic1() {
+    int size = 100000;
+    Random r = new Random();
+    String[] strings = new String[size];
 
-		MapIV<String> map = new HMapIV<String>();
-		for (int i = 0; i < size; i++) {
-			String s = new Integer(r.nextInt(size)).toString();
-			map.put(i, s);
-			strings[i] = s;
-		}
+    MapIV<String> map = new HMapIV<String>();
+    for (int i = 0; i < size; i++) {
+      String s = new Integer(r.nextInt(size)).toString();
+      map.put(i, s);
+      strings[i] = s;
+    }
 
-		for (int i = 0; i < size; i++) {
-			String v = map.get(i);
+    for (int i = 0; i < size; i++) {
+      String v = map.get(i);
 
-			assertEquals(strings[i], v);
-			assertTrue(map.containsKey(i));
-		}
-	}
+      assertEquals(strings[i], v);
+      assertTrue(map.containsKey(i));
+    }
+  }
 
-	@Test
-	public void testUpdate() {
-		int size = 100000;
-		Random r = new Random();
-		String[] strings = new String[size];
+  @Test
+  public void testUpdate() {
+    int size = 100000;
+    Random r = new Random();
+    String[] strings = new String[size];
 
-		MapIV<String> map = new HMapIV<String>();
-		for (int i = 0; i < size; i++) {
-			String s = new Integer(r.nextInt(size)).toString();
-			map.put(i, s);
-			strings[i] = s;
-		}
+    MapIV<String> map = new HMapIV<String>();
+    for (int i = 0; i < size; i++) {
+      String s = new Integer(r.nextInt(size)).toString();
+      map.put(i, s);
+      strings[i] = s;
+    }
 
-		assertEquals(size, map.size());
+    assertEquals(size, map.size());
 
-		for (int i = 0; i < size; i++) {
-			map.put(i, new Integer(Integer.parseInt(strings[i]) + 1).toString());
-		}
+    for (int i = 0; i < size; i++) {
+      map.put(i, new Integer(Integer.parseInt(strings[i]) + 1).toString());
+    }
 
-		assertEquals(size, map.size());
+    assertEquals(size, map.size());
 
-		for (int i = 0; i < size; i++) {
-			String v = map.get(i);
+    for (int i = 0; i < size; i++) {
+      String v = map.get(i);
 
-			assertEquals(new Integer(Integer.parseInt(strings[i]) + 1).toString(), v);
-			assertTrue(map.containsKey(i));
-		}
-	}
-	
-	@Test
-	public void testBasic() throws IOException {
-		HMapIV<String> m = new HMapIV<String>();
+      assertEquals(new Integer(Integer.parseInt(strings[i]) + 1).toString(), v);
+      assertTrue(map.containsKey(i));
+    }
+  }
 
-		m.put(1, "5");
-		m.put(2, "22");
+  @Test
+  public void testBasic() throws IOException {
+    HMapIV<String> m = new HMapIV<String>();
 
-		String value;
+    m.put(1, "5");
+    m.put(2, "22");
 
-		assertEquals(2, m.size());
+    String value;
 
-		value = m.get(1);
-		assertEquals("5", m.get(1));
+    assertEquals(2, m.size());
 
-		value = m.remove(1);
-		assertEquals(1, m.size());
+    value = m.get(1);
+    assertEquals("5", m.get(1));
 
-		value = m.get(2);
-		assertEquals("22", value);
-	}
+    value = m.remove(1);
+    assertEquals(1, m.size());
 
-	@Test
-	public void testSortedEntries1() {
-		HMapIV<String> m = new HMapIV<String>();
+    value = m.get(2);
+    assertEquals("22", value);
+  }
 
-		m.put(1, "5");
-		m.put(2, "2");
-		m.put(3, "3");
-		m.put(4, "3");
-		m.put(5, "1");
+  @Test
+  public void testSortedEntries1() {
+    HMapIV<String> m = new HMapIV<String>();
 
-		MapIV.Entry<String>[] e = m.getEntriesSortedByValue();
-		assertEquals(5, e.length);
+    m.put(1, "5");
+    m.put(2, "2");
+    m.put(3, "3");
+    m.put(4, "3");
+    m.put(5, "1");
 
-		assertEquals(5, e[0].getKey());
-		assertEquals("1", e[0].getValue());
+    MapIV.Entry<String>[] e = m.getEntriesSortedByValue();
+    assertEquals(5, e.length);
 
-		assertEquals(2, e[1].getKey());
-		assertEquals("2", e[1].getValue());
+    assertEquals(5, e[0].getKey());
+    assertEquals("1", e[0].getValue());
 
-		assertEquals(3, e[2].getKey());
-		assertEquals("3", e[2].getValue());
+    assertEquals(2, e[1].getKey());
+    assertEquals("2", e[1].getValue());
 
-		assertEquals(4, e[3].getKey());
-		assertEquals("3", e[3].getValue());
+    assertEquals(3, e[2].getKey());
+    assertEquals("3", e[2].getValue());
 
-		assertEquals(1, e[4].getKey());
-		assertEquals("5", e[4].getValue());
-	}
+    assertEquals(4, e[3].getKey());
+    assertEquals("3", e[3].getValue());
 
-	@Test
-	public void testSortedEntries2() {
-		HMapIV<String> m = new HMapIV<String>();
+    assertEquals(1, e[4].getKey());
+    assertEquals("5", e[4].getValue());
+  }
 
-		m.put(1, "5");
-		m.put(2, "2");
-		m.put(3, "3");
-		m.put(4, "3");
-		m.put(5, "1");
+  @Test
+  public void testSortedEntries2() {
+    HMapIV<String> m = new HMapIV<String>();
 
-		MapIV.Entry<String>[] e = m.getEntriesSortedByValue(2);
+    m.put(1, "5");
+    m.put(2, "2");
+    m.put(3, "3");
+    m.put(4, "3");
+    m.put(5, "1");
 
-		assertEquals(2, e.length);
+    MapIV.Entry<String>[] e = m.getEntriesSortedByValue(2);
 
-		assertEquals(5, e[0].getKey());
-		assertEquals("1", e[0].getValue());
+    assertEquals(2, e.length);
 
-		assertEquals(2, e[1].getKey());
-		assertEquals("2", e[1].getValue());
-	}
+    assertEquals(5, e[0].getKey());
+    assertEquals("1", e[0].getValue());
 
-	@Test
-	public void testSortedEntries3() {
-		HMapIV<String> m = new HMapIV<String>();
+    assertEquals(2, e[1].getKey());
+    assertEquals("2", e[1].getValue());
+  }
 
-		m.put(1, "5");
-		m.put(2, "2");
+  @Test
+  public void testSortedEntries3() {
+    HMapIV<String> m = new HMapIV<String>();
 
-		MapIV.Entry<String>[] e = m.getEntriesSortedByValue(5);
+    m.put(1, "5");
+    m.put(2, "2");
 
-		assertEquals(2, e.length);
+    MapIV.Entry<String>[] e = m.getEntriesSortedByValue(5);
 
-		assertEquals(2, e[0].getKey());
-		assertEquals("2", e[0].getValue());
+    assertEquals(2, e.length);
 
-		assertEquals(1, e[1].getKey());
-		assertEquals("5", e[1].getValue());
-	}
+    assertEquals(2, e[0].getKey());
+    assertEquals("2", e[0].getValue());
 
-	@Test
-	public void testSortedEntries4() {
-		HMapIV<String> m = new HMapIV<String>();
+    assertEquals(1, e[1].getKey());
+    assertEquals("5", e[1].getValue());
+  }
 
-		MapIV.Entry<String>[] e = m.getEntriesSortedByValue();
-		assertTrue(e == null);
-	}
+  @Test
+  public void testSortedEntries4() {
+    HMapIV<String> m = new HMapIV<String>();
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(HMapIVTest.class);
-	}
+    MapIV.Entry<String>[] e = m.getEntriesSortedByValue();
+    assertTrue(e == null);
+  }
+
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(HMapIVTest.class);
+  }
 }

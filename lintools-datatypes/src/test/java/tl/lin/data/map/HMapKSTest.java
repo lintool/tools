@@ -19,16 +19,17 @@ package tl.lin.data.map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.Random;
 
 import junit.framework.JUnit4TestAdapter;
 
+import org.apache.hadoop.io.Text;
 import org.junit.Test;
 
 public class HMapKSTest {
-
   @Test
-  public void testBasic1() {
+  public void testRandomInsert1() {
     int size = 100000;
     Random r = new Random();
     short[] shorts = new short[size];
@@ -49,7 +50,7 @@ public class HMapKSTest {
   }
 
   @Test
-  public void testBasic2() {
+  public void testRandomInsert2() {
     int size = 100000;
     Random r = new Random();
     short[] shorts = new short[size];
@@ -73,7 +74,7 @@ public class HMapKSTest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testRandomUpdate() {
     int size = 100000;
     Random r = new Random();
     short[] shorts = new short[size];
@@ -99,6 +100,67 @@ public class HMapKSTest {
       assertEquals(shorts[i] + 1, v);
       assertTrue(map.containsKey(i));
     }
+  }
+
+  @Test
+  public void testBasic() throws IOException {
+    HMapKS<Text> m = new HMapKS<Text>();
+
+    m.put(new Text("hi"), (short) 5);
+    m.put(new Text("there"), (short) 22);
+
+    Text key;
+    int value;
+
+    assertEquals(m.size(), 2);
+
+    key = new Text("hi");
+    value = m.get(key);
+    assertEquals(value, 5);
+
+    value = m.remove(key);
+    assertEquals(m.size(), 1);
+
+    key = new Text("there");
+    value = m.get(key);
+    assertEquals(value, 22);
+  }
+
+  @Test
+  public void testPlus() throws IOException {
+    HMapKS<Text> m1 = new HMapKS<Text>();
+
+    m1.put(new Text("hi"), (short) 5);
+    m1.put(new Text("there"), (short) 22);
+
+    HMapKS<Text> m2 = new HMapKS<Text>();
+
+    m2.put(new Text("hi"), (short) 4);
+    m2.put(new Text("test"), (short) 5);
+
+    m1.plus(m2);
+
+    assertEquals(3, m1.size());
+    assertTrue(m1.get(new Text("hi")) == 9);
+    assertTrue(m1.get(new Text("there")) == 22);
+    assertTrue(m1.get(new Text("test")) == 5);
+  }
+
+  @Test
+  public void testDot() throws IOException {
+    HMapKS<Text> m1 = new HMapKS<Text>();
+
+    m1.put(new Text("hi"), (short) 5);
+    m1.put(new Text("there"), (short) 2);
+    m1.put(new Text("empty"), (short) 3);
+
+    HMapKS<Text> m2 = new HMapKS<Text>();
+
+    m2.put(new Text("hi"), (short) 4);
+    m2.put(new Text("there"), (short) 4);
+    m2.put(new Text("test"), (short) 5);
+
+    assertEquals(28, m1.dot(m2));
   }
 
   @Test

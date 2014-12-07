@@ -18,7 +18,6 @@ package tl.lin.data.fd;
 
 import java.util.Set;
 
-import tl.lin.data.SortableEntries;
 import tl.lin.data.pair.PairOfObjectInt;
 
 /**

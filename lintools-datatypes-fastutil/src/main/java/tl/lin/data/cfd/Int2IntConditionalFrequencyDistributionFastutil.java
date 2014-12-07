@@ -19,6 +19,11 @@ package tl.lin.data.cfd;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+
 import tl.lin.data.fd.Int2IntFrequencyDistributionFastutil;
 import tl.lin.data.fd.Int2LongFrequencyDistributionFastutil;
 import tl.lin.data.pair.PairOfInts;
@@ -136,6 +141,33 @@ public class Int2IntConditionalFrequencyDistributionFastutil implements
       if (e.getRightElement() != m.get(e.getLeftElement())) {
         throw new RuntimeException("Internal Error!");
       }
+    }
+  }
+
+  @Override
+  public void readFields(DataInput in) throws IOException {
+    sumOfAllFrequencies = in.readLong();
+    marginals.readFields(in);
+
+    int sz = in.readInt();
+    for (int i=0; i<sz; i++) {
+      int key = in.readInt();
+      Int2IntFrequencyDistributionFastutil map = new Int2IntFrequencyDistributionFastutil();
+      map.readFields(in);
+      distributions.put(key, map);
+    }
+  }
+
+  @Override
+  public void write(DataOutput out) throws IOException {
+    out.writeLong(sumOfAllFrequencies);
+    marginals.write(out);
+
+    out.writeInt(distributions.size());
+    for (Int2ObjectMap.Entry<Int2IntFrequencyDistributionFastutil> e :
+         distributions.int2ObjectEntrySet()) {
+      out.writeInt(e.getIntKey());
+      e.getValue().write(out);
     }
   }
 }

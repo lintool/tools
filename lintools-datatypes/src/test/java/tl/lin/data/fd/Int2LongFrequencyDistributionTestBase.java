@@ -17,13 +17,18 @@
 package tl.lin.data.fd;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import tl.lin.data.SortableEntries.Order;
+import tl.lin.data.fd.SortableEntries.Order;
 import tl.lin.data.pair.PairOfIntLong;
 
 public class Int2LongFrequencyDistributionTestBase {
@@ -203,9 +208,10 @@ public class Int2LongFrequencyDistributionTestBase {
     fd.increment(1, 2);
     fd.increment(2, 3);
     fd.increment(3, 4);
+    fd.increment(4, Integer.MAX_VALUE + 1L);
 
-    assertEquals(3, fd.getNumberOfEvents());
-    assertEquals(9, fd.getSumOfCounts());
+    assertEquals(4, fd.getNumberOfEvents());
+    assertEquals(Integer.MAX_VALUE + 10L, fd.getSumOfCounts());
 
     assertEquals(2, fd.get(1));
     assertEquals(3, fd.get(2));
@@ -213,12 +219,13 @@ public class Int2LongFrequencyDistributionTestBase {
 
     fd.decrement(2, 2);
 
-    assertEquals(3, fd.getNumberOfEvents());
-    assertEquals(7, fd.getSumOfCounts());
+    assertEquals(4, fd.getNumberOfEvents());
+    assertEquals(Integer.MAX_VALUE + 8L, fd.getSumOfCounts());
 
     assertEquals(2, fd.get(1));
     assertEquals(1, fd.get(2));
     assertEquals(4, fd.get(3));
+    assertEquals(Integer.MAX_VALUE + 1L, fd.get(4));
   }
 
   protected void testGetFrequencySortedEventsCommon(Int2LongFrequencyDistribution fd) {
@@ -403,5 +410,36 @@ public class Int2LongFrequencyDistributionTestBase {
     e = iter.next();
     assertEquals(6, e.getLeftElement());
     assertEquals(9, e.getRightElement());
+  }
+
+  protected void testSerialization(Int2LongFrequencyDistribution fd,
+      Class<? extends Int2LongFrequencyDistribution> cls) throws Exception {
+    fd.set(1, Integer.MAX_VALUE + 1L);
+    fd.set(4, Integer.MAX_VALUE + 3L);
+    fd.set(2, Integer.MAX_VALUE + 4L);
+    fd.set(5, Integer.MAX_VALUE + 7L);
+    fd.set(6, Integer.MAX_VALUE + 9L);
+    fd.set(3, Integer.MAX_VALUE + 2L);
+
+    assertEquals(6, fd.getNumberOfEvents());
+    assertEquals(Integer.MAX_VALUE * 6L + 26L, fd.getSumOfCounts());
+
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    fd.write(dataOut);
+
+    Int2LongFrequencyDistribution reconstructed = cls.newInstance();
+    reconstructed.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
+
+    assertFalse(fd == reconstructed);
+    assertEquals(Integer.MAX_VALUE + 1L, reconstructed.get(1));
+    assertEquals(Integer.MAX_VALUE + 3L, reconstructed.get(4));
+    assertEquals(Integer.MAX_VALUE + 4L, reconstructed.get(2));
+    assertEquals(Integer.MAX_VALUE + 7L, reconstructed.get(5));
+    assertEquals(Integer.MAX_VALUE + 9L, reconstructed.get(6));
+    assertEquals(Integer.MAX_VALUE + 2L, reconstructed.get(3));
+
+    assertEquals(6, reconstructed.getNumberOfEvents());
+    assertEquals(Integer.MAX_VALUE * 6L + 26L, reconstructed.getSumOfCounts());
   }
 }

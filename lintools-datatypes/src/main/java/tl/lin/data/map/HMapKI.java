@@ -26,8 +26,7 @@ import java.util.Set;
  * a specialized variant the standard Java {@link Map} interface, except that
  * the values are hard coded as ints for efficiency reasons (keys can be
  * arbitrary objects). This implementation was adapted from {@link HashMap}
- * version 1.73, 03/13/07. See <a href="{@docRoot}/../content/map.html">this
- * benchmark</a> for an efficiency comparison.
+ * version 1.73, 03/13/07.
  * 
  * @param <K>
  *            the type of keys maintained by this map
@@ -874,12 +873,7 @@ public class HMapKI<K extends Comparable<?>> implements MapKI<K>, Cloneable, Ser
 	
 	// methods not part of a standard HashMap
 
-	/**
-	 * Adds values of keys from another map to this map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
+	@Override
 	public void plus(MapKI<K> m) {
 		for (MapKI.Entry<K> e : m.entrySet()) {
 			K key = e.getKey();
@@ -892,13 +886,8 @@ public class HMapKI<K extends Comparable<?>> implements MapKI<K>, Cloneable, Ser
 		}
 	}
 
-	/**
-	 * Computes the dot product of this map with another map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
-	public int dot(MapKI<K> m) {
+  @Override
+	public long dot(MapKI<K> m) {
 		int s = 0;
 
 		for (MapKI.Entry<K> e : m.entrySet()) {
@@ -912,13 +901,7 @@ public class HMapKI<K extends Comparable<?>> implements MapKI<K>, Cloneable, Ser
 		return s;
 	}
 
-	/**
-	 * Increments the key. If the key does not exist in the map, its value is
-	 * set to one.
-	 * 
-	 * @param key
-	 *            key to increment
-	 */
+  @Override
 	public void increment(K key) {
 		if (this.containsKey(key)) {
 			this.put(key, this.get(key) + 1);
@@ -927,15 +910,7 @@ public class HMapKI<K extends Comparable<?>> implements MapKI<K>, Cloneable, Ser
 		}
 	}
 
-  /**
-   * Increments the key by some value. If the key does not exist in the map, its value is
-   * set to the parameter value.
-   * 
-   * @param key
-   *            key to increment
-   * @param value
-   *            increment value
-   */
+  @Override
   public void increment(K key, int value) {
     if (this.containsKey(key)) {
       this.put(key, this.get(key) + value);

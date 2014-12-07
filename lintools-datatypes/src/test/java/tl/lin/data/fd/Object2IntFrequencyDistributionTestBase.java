@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import tl.lin.data.SortableEntries.Order;
+import tl.lin.data.fd.SortableEntries.Order;
 import tl.lin.data.pair.PairOfObjectInt;
 
 public class Object2IntFrequencyDistributionTestBase {

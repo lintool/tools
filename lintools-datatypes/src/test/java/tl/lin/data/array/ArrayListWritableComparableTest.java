@@ -35,243 +35,210 @@ import org.junit.Test;
 
 public class ArrayListWritableComparableTest {
 
-	@Test
-	public void testBasic() throws IOException {
-		ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
+  @Test
+  public void testBasic() throws IOException {
+    ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
 
-		list.add(new Text("hi"));
-		list.add(new Text("there"));
+    list.add(new Text("hi"));
+    list.add(new Text("there"));
 
-		assertEquals(list.get(0).toString(), "hi");
-		assertEquals(list.get(1).toString(), "there");
-	}
+    assertEquals(list.get(0).toString(), "hi");
+    assertEquals(list.get(1).toString(), "there");
+  }
 
-	@Test
-	public void testSerialize1() throws IOException {
-		ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
-		list.add(new Text("hi"));
-		list.add(new Text("there"));
+  @Test
+  public void testSerialize1() throws IOException {
+    ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
+    list.add(new Text("hi"));
+    list.add(new Text("there"));
 
-		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
 
-		list.write(dataOut);
+    list.write(dataOut);
 
-		ArrayListWritableComparable<Text> newList = new ArrayListWritableComparable<Text>();
-		newList.readFields(new DataInputStream(new ByteArrayInputStream(
-				bytesOut.toByteArray())));
+    ArrayListWritableComparable<Text> newList = new ArrayListWritableComparable<Text>();
+    newList.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
-		assertEquals(newList.get(0).toString(), "hi");
-		assertEquals(newList.get(1).toString(), "there");
-	}
+    assertEquals(newList.get(0).toString(), "hi");
+    assertEquals(newList.get(1).toString(), "there");
+  }
 
-	@Test
-	public void testSerialize2() throws IOException {
-		ArrayListWritableComparable<FloatWritable> list = new ArrayListWritableComparable<FloatWritable>();
+  @Test
+  public void testSerialize2() throws IOException {
+    ArrayListWritableComparable<FloatWritable> list = new ArrayListWritableComparable<FloatWritable>();
 
-		list.add(new FloatWritable(0.3f));
-		list.add(new FloatWritable(3244.2f));
+    list.add(new FloatWritable(0.3f));
+    list.add(new FloatWritable(3244.2f));
 
-		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
 
-		list.write(dataOut);
+    list.write(dataOut);
 
-		ArrayListWritableComparable<FloatWritable> newList = new ArrayListWritableComparable<FloatWritable>();
-		newList.readFields(new DataInputStream(new ByteArrayInputStream(
-				bytesOut.toByteArray())));
+    ArrayListWritableComparable<FloatWritable> newList = new ArrayListWritableComparable<FloatWritable>();
+    newList.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
-		assertTrue(newList.get(0).get() == 0.3f);
-		assertTrue(newList.get(1).get() == 3244.2f);
-	}
+    assertTrue(newList.get(0).get() == 0.3f);
+    assertTrue(newList.get(1).get() == 3244.2f);
+  }
 
-	@Test
-	public void testToString() {
-		ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
+  @Test
+  public void testToString() {
+    ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
 
-		list.add(new Text("hi"));
-		list.add(new Text("there"));
+    list.add(new Text("hi"));
+    list.add(new Text("there"));
 
-		assertEquals(list.toString(), "[hi, there]");
-	}
+    assertEquals(list.toString(), "[hi, there]");
+  }
 
-	@Test
-	public void testClear() {
-		ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
+  @Test
+  public void testClear() {
+    ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
 
-		list.add(new Text("hi"));
-		list.add(new Text("there"));
-		list.clear();
-		
-		assertEquals(list.size(), 0);
-	}
+    list.add(new Text("hi"));
+    list.add(new Text("there"));
+    list.clear();
 
-	@Test
-	public void testEmpty() throws IOException {
-		ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
-		
-		assertTrue(list.size() == 0);
-		
-		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    assertEquals(list.size(), 0);
+  }
 
-		list.write(dataOut);
+  @Test
+  public void testEmpty() throws IOException {
+    ArrayListWritableComparable<Text> list = new ArrayListWritableComparable<Text>();
 
-		ArrayListWritableComparable<Text> newList = new ArrayListWritableComparable<Text>();
-		newList.readFields(new DataInputStream(new ByteArrayInputStream(
-				bytesOut.toByteArray())));
-		assertTrue(newList.size() == 0);
-		
-		newList.add(new Text("Hey"));
-		assertEquals(newList.get(0),new Text("Hey"));
+    assertTrue(list.size() == 0);
 
-	}
-	
-	/*@Test
-	public void testTypeSafety() {
-		ArrayListWritableComparable<WritableComparable> list = new ArrayListWritableComparable<WritableComparable> ();
-		list.add(new Text("Hello"));
-		list.add(new Text("Are you there"));
-		
-		try {
-			list.add(new IntWritable(5));
-			assertTrue(false); // should throw an exception before reaching this line.
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		
-		ArrayList<WritableComparable> otherList = new ArrayList<WritableComparable>();
-		otherList.add(new Text("Test"));
-		otherList.add(new Text("Test 2"));
-		
-		assertTrue(list.addAll(otherList));
-		
-		otherList.add(new IntWritable(6));
-		try {
-			list.addAll(otherList);
-			assertTrue(false);
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-	}*/
-	
-	@Test 
-	public void testListMethods() {
-		IntWritable a = new IntWritable(1);
-		IntWritable b = new IntWritable(2);
-		IntWritable c = new IntWritable(3);
-		IntWritable d = new IntWritable(4);
-		IntWritable e = new IntWritable(5);
-		
-		ArrayListWritableComparable<IntWritable> list = new ArrayListWritableComparable<IntWritable>();
-		assertTrue(list.isEmpty());
-		list.add(a);
-		list.add(b);
-		list.add(c);
-		list.add(d);
-		list.add(e);
-		
-		int pos = 0;
-		for (IntWritable i : list) {
-			assertEquals(i, list.get(pos));
-			++pos;
-		}
-		
-		assertTrue(list.indexOf(d) == 3);
-		list.add(2, a);
-		assertTrue(list.lastIndexOf(a) == 2);
-		assertEquals(list.get(2), list.get(0));
-		assertTrue(list.size() == 6);
-		
-		assertTrue(list.contains(c));
-		assertTrue(!list.contains(new IntWritable(123)));
-		
-		ArrayList<IntWritable> otherList = new ArrayList<IntWritable>();
-		otherList.add(a);
-		otherList.add(b);
-		otherList.add(c);
-		
-		assertTrue(list.containsAll(otherList));
-		
-		otherList.add(new IntWritable(200));
-		assertTrue(!list.containsAll(otherList));
-		
-		assertEquals(a, otherList.remove(0));
-		assertTrue(list.remove(d));
-		
-	}
-	
-	@Test
-	public void testSorting1() {
-		ArrayListWritableComparable<Text> list1 = new ArrayListWritableComparable<Text>();
-		ArrayListWritableComparable<Text> list2 = new ArrayListWritableComparable<Text>();
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
 
-		list1.add(new Text("a"));
+    list.write(dataOut);
 
-		assertTrue(list1.compareTo(list2) > 0);
-	}
-	
-	@Test
-	public void testSorting2() {
-		ArrayListWritableComparable<Text> list1 = new ArrayListWritableComparable<Text>();
-		ArrayListWritableComparable<Text> list2 = new ArrayListWritableComparable<Text>();
+    ArrayListWritableComparable<Text> newList = new ArrayListWritableComparable<Text>();
+    newList.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
+    assertTrue(newList.size() == 0);
 
-		list1.add(new Text("a"));
-		list2.add(new Text("b"));
+    newList.add(new Text("Hey"));
+    assertEquals(newList.get(0), new Text("Hey"));
+  }
 
-		assertTrue(list1.compareTo(list2) < 0);
-		assertTrue(list2.compareTo(list1) > 0);
-		
-		list2.clear();
-		list2.add(new Text("a"));
-		
-		assertTrue(list1.compareTo(list2) == 0);
-		
-		list1.add(new Text("a"));
-		list2.add(new Text("b"));
-		
-		// list 1 is now [a, a]
-		// list 2 is now [a, b]
-		assertTrue(list1.compareTo(list2) < 0);
-		assertTrue(list2.compareTo(list1) > 0);
+  @Test
+  public void testListMethods() {
+    IntWritable a = new IntWritable(1);
+    IntWritable b = new IntWritable(2);
+    IntWritable c = new IntWritable(3);
+    IntWritable d = new IntWritable(4);
+    IntWritable e = new IntWritable(5);
 
-		// list 1 is now [a, a, a]
-		list1.add(new Text("a"));
-		
-		assertTrue(list1.compareTo(list2) < 0);
-	}
+    ArrayListWritableComparable<IntWritable> list = new ArrayListWritableComparable<IntWritable>();
+    assertTrue(list.isEmpty());
+    list.add(a);
+    list.add(b);
+    list.add(c);
+    list.add(d);
+    list.add(e);
 
-	@Test
-	public void testSorting3() {
-		ArrayListWritableComparable<Text> list1 = new ArrayListWritableComparable<Text>();
-		ArrayListWritableComparable<Text> list2 = new ArrayListWritableComparable<Text>();
-		ArrayListWritableComparable<Text> list3 = new ArrayListWritableComparable<Text>();
+    int pos = 0;
+    for (IntWritable i : list) {
+      assertEquals(i, list.get(pos));
+      ++pos;
+    }
 
-		list1.add(new Text("a"));
-		
-		list2.add(new Text("a"));
-		list2.add(new Text("a"));
-		
-		list3.add(new Text("a"));
-		list3.add(new Text("a"));
-		
-		assertTrue(list2.compareTo(list3) == 0);
+    assertTrue(list.indexOf(d) == 3);
+    list.add(2, a);
+    assertTrue(list.lastIndexOf(a) == 2);
+    assertEquals(list.get(2), list.get(0));
+    assertTrue(list.size() == 6);
 
-		list3.add(new Text("a"));
-		
-		// list 1 is [a]
-		// list 2 is [a, a]
-		// list 3 is [a, a, a]
-		
-		assertTrue(list1.compareTo(list2) < 0);
-		assertTrue(list1.compareTo(list3) < 0);
-		assertTrue(list2.compareTo(list1) > 0);
-		assertTrue(list2.compareTo(list3) < 0);
-		assertTrue(list3.compareTo(list1) > 0);
-		assertTrue(list3.compareTo(list2) > 0);
-	}
+    assertTrue(list.contains(c));
+    assertTrue(!list.contains(new IntWritable(123)));
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(ArrayListWritableComparableTest.class);
-	}
+    ArrayList<IntWritable> otherList = new ArrayList<IntWritable>();
+    otherList.add(a);
+    otherList.add(b);
+    otherList.add(c);
+
+    assertTrue(list.containsAll(otherList));
+
+    otherList.add(new IntWritable(200));
+    assertTrue(!list.containsAll(otherList));
+
+    assertEquals(a, otherList.remove(0));
+    assertTrue(list.remove(d));
+  }
+
+  @Test
+  public void testSorting1() {
+    ArrayListWritableComparable<Text> list1 = new ArrayListWritableComparable<Text>();
+    ArrayListWritableComparable<Text> list2 = new ArrayListWritableComparable<Text>();
+
+    list1.add(new Text("a"));
+
+    assertTrue(list1.compareTo(list2) > 0);
+  }
+
+  @Test
+  public void testSorting2() {
+    ArrayListWritableComparable<Text> list1 = new ArrayListWritableComparable<Text>();
+    ArrayListWritableComparable<Text> list2 = new ArrayListWritableComparable<Text>();
+
+    list1.add(new Text("a"));
+    list2.add(new Text("b"));
+
+    assertTrue(list1.compareTo(list2) < 0);
+    assertTrue(list2.compareTo(list1) > 0);
+
+    list2.clear();
+    list2.add(new Text("a"));
+
+    assertTrue(list1.compareTo(list2) == 0);
+
+    list1.add(new Text("a"));
+    list2.add(new Text("b"));
+
+    // list 1 is now [a, a]
+    // list 2 is now [a, b]
+    assertTrue(list1.compareTo(list2) < 0);
+    assertTrue(list2.compareTo(list1) > 0);
+
+    // list 1 is now [a, a, a]
+    list1.add(new Text("a"));
+
+    assertTrue(list1.compareTo(list2) < 0);
+  }
+
+  @Test
+  public void testSorting3() {
+    ArrayListWritableComparable<Text> list1 = new ArrayListWritableComparable<Text>();
+    ArrayListWritableComparable<Text> list2 = new ArrayListWritableComparable<Text>();
+    ArrayListWritableComparable<Text> list3 = new ArrayListWritableComparable<Text>();
+
+    list1.add(new Text("a"));
+
+    list2.add(new Text("a"));
+    list2.add(new Text("a"));
+
+    list3.add(new Text("a"));
+    list3.add(new Text("a"));
+
+    assertTrue(list2.compareTo(list3) == 0);
+
+    list3.add(new Text("a"));
+
+    // list 1 is [a]
+    // list 2 is [a, a]
+    // list 3 is [a, a, a]
+
+    assertTrue(list1.compareTo(list2) < 0);
+    assertTrue(list1.compareTo(list3) < 0);
+    assertTrue(list2.compareTo(list1) > 0);
+    assertTrue(list2.compareTo(list3) < 0);
+    assertTrue(list3.compareTo(list1) > 0);
+    assertTrue(list3.compareTo(list2) > 0);
+  }
+
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(ArrayListWritableComparableTest.class);
+  }
 }

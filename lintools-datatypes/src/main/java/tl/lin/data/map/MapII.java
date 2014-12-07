@@ -198,4 +198,34 @@ public interface MapII {
    * @return the hash code value for this map
    */
   int hashCode();
+
+  /**
+   * Adds values of keys from another map to this map.
+   *
+   * @param map the other map
+   */
+  void plus(MapII map);
+
+  /**
+   * Computes the dot product of this map with another map.
+   *
+   * @param map the other map
+   */
+  long dot(MapII map);
+
+  /**
+   * Increments the key. If the key does not exist in the map, its value is set to one.
+   *
+   * @param key key to increment
+   */
+  void increment(int key);
+  
+  /**
+   * Increments the key by some value. If the key does not exist in the map, its value is
+   * set to the parameter value.
+   *
+   * @param key key to increment
+   * @param value increment value
+   */
+  void increment(int key, int value);
 }

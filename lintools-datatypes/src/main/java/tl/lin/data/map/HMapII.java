@@ -818,12 +818,7 @@ public class HMapII implements MapII, Cloneable, Serializable {
 	
 	// methods not part of a standard HashMap
 
-	/**
-	 * Adds values of keys from another map to this map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
+	@Override
 	public void plus(MapII m) {
 		for (MapII.Entry e : m.entrySet()) {
 			int key = e.getKey();
@@ -836,13 +831,8 @@ public class HMapII implements MapII, Cloneable, Serializable {
 		}
 	}
 
-	/**
-	 * Computes the dot product of this map with another map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
-	public int dot(MapII m) {
+  @Override
+	public long dot(MapII m) {
 		int s = 0;
 
 		for (MapII.Entry e : m.entrySet()) {
@@ -856,13 +846,7 @@ public class HMapII implements MapII, Cloneable, Serializable {
 		return s;
 	}
 
-	/**
-	 * Increments the key. If the key does not exist in the map, its value is
-	 * set to one.
-	 * 
-	 * @param key
-	 *            key to increment
-	 */
+  @Override
 	public void increment(int key) {
 		if (this.containsKey(key)) {
 			this.put(key, this.get(key) + 1);
@@ -871,15 +855,7 @@ public class HMapII implements MapII, Cloneable, Serializable {
 		}
 	}
 	
-  /**
-   * Increments the key by some value. If the key does not exist in the map, its value is
-   * set to the parameter value.
-   * 
-   * @param key
-   *            key to increment
-   * @param value
-   *            increment value
-   */
+  @Override
 	public void increment(int key, int value) {
 		if (this.containsKey(key)) {
 			this.put(key, this.get(key) + value);

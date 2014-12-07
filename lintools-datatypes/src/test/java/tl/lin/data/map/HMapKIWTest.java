@@ -30,81 +30,80 @@ import org.junit.Test;
 
 public class HMapKIWTest {
 
-	@Test
-	public void testBasic() throws IOException {
-		HMapKIW<Text> m = new HMapKIW<Text>();
+  @Test
+  public void testBasic() throws IOException {
+    HMapKIW<Text> m = new HMapKIW<Text>();
 
-		m.put(new Text("hi"), 5);
-		m.put(new Text("there"), 22);
+    m.put(new Text("hi"), 5);
+    m.put(new Text("there"), 22);
 
-		Text key;
-		int value;
+    Text key;
+    int value;
 
-		assertEquals(m.size(), 2);
+    assertEquals(m.size(), 2);
 
-		key = new Text("hi");
-		value = m.get(key);
-		assertEquals(value, 5);
+    key = new Text("hi");
+    value = m.get(key);
+    assertEquals(value, 5);
 
-		value = m.remove(key);
-		assertEquals(m.size(), 1);
+    value = m.remove(key);
+    assertEquals(m.size(), 1);
 
-		key = new Text("there");
-		value = m.get(key);
-		assertEquals(value, 22);
-	}
+    key = new Text("there");
+    value = m.get(key);
+    assertEquals(value, 22);
+  }
 
-	@Test
-	public void testSerialize1() throws IOException {
-		HMapKIW<Text> m1 = new HMapKIW<Text>();
+  @Test
+  public void testSerialize1() throws IOException {
+    HMapKIW<Text> m1 = new HMapKIW<Text>();
 
-		m1.put(new Text("hi"), 5);
-		m1.put(new Text("there"), 22);
+    m1.put(new Text("hi"), 5);
+    m1.put(new Text("there"), 22);
 
-		HMapKIW<Text> m2 = HMapKIW.<Text> create(m1.serialize());
+    HMapKIW<Text> m2 = HMapKIW.<Text> create(m1.serialize());
 
-		Text key;
-		int value;
+    Text key;
+    int value;
 
-		assertEquals(m2.size(), 2);
+    assertEquals(m2.size(), 2);
 
-		key = new Text("hi");
-		value = m2.get(key);
-		assertEquals(value, 5);
+    key = new Text("hi");
+    value = m2.get(key);
+    assertEquals(value, 5);
 
-		value = m2.remove(key);
-		assertEquals(m2.size(), 1);
+    value = m2.remove(key);
+    assertEquals(m2.size(), 1);
 
-		key = new Text("there");
-		value = m2.get(key);
-		assertEquals(value, 22);
-	}
+    key = new Text("there");
+    value = m2.get(key);
+    assertEquals(value, 22);
+  }
 
-	@Test(expected = IOException.class)
-	public void testTypeSafety() throws IOException {
-		HMapKIW<WritableComparable<?>> m1 = new HMapKIW<WritableComparable<?>>();
+  @Test(expected = IOException.class)
+  public void testTypeSafety() throws IOException {
+    HMapKIW<WritableComparable<?>> m1 = new HMapKIW<WritableComparable<?>>();
 
-		m1.put(new Text("hi"), 4);
-		m1.put(new IntWritable(0), 76);
+    m1.put(new Text("hi"), 4);
+    m1.put(new IntWritable(0), 76);
 
-		HMapKIW<Text> m2 = HMapKIW.<Text> create(m1.serialize());
+    HMapKIW<Text> m2 = HMapKIW.<Text> create(m1.serialize());
 
-		m2.size();
-	}
+    m2.size();
+  }
 
-	@Test
-	public void testSerializeEmpty() throws IOException {
-		HMapKIW<WritableComparable<?>> m1 = new HMapKIW<WritableComparable<?>>();
+  @Test
+  public void testSerializeEmpty() throws IOException {
+    HMapKIW<WritableComparable<?>> m1 = new HMapKIW<WritableComparable<?>>();
 
-		assertTrue(m1.size() == 0);
+    assertTrue(m1.size() == 0);
 
-		HMapKIW<Text> m2 = HMapKIW.<Text> create(m1.serialize());
+    HMapKIW<Text> m2 = HMapKIW.<Text> create(m1.serialize());
 
-		assertTrue(m2.size() == 0);
-	}
+    assertTrue(m2.size() == 0);
+  }
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(HMapKIWTest.class);
-	}
-
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(HMapKIWTest.class);
+  }
 }

@@ -17,6 +17,12 @@
 package tl.lin.data.cfd;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 public class Int2IntConditionalFrequencyDistributionTestBase {
   protected void test1Common(Int2IntConditionalFrequencyDistribution cfd) {
@@ -118,5 +124,34 @@ public class Int2IntConditionalFrequencyDistributionTestBase {
     cfd.set(1, 1, 2000000000);
 
     assertEquals(8000000000L, cfd.getMarginalCount(1));
+  }
+
+  protected void testSerialization(Int2IntConditionalFrequencyDistribution cfd,
+      Class<? extends Int2IntConditionalFrequencyDistribution> cls) throws Exception {
+    cfd.set(1, 1, 2);
+    cfd.set(1, 2, 5);
+    cfd.set(1, 3, 6);
+    cfd.set(1, 4, 4);
+    cfd.set(2, 1, 3);
+    cfd.set(3, 1, 7);
+    cfd.check();
+
+    assertEquals(17, cfd.getMarginalCount(1));
+    assertEquals(3, cfd.getMarginalCount(2));
+    assertEquals(7, cfd.getMarginalCount(3));
+    assertEquals(27, cfd.getSumOfAllCounts());
+
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    cfd.write(dataOut);
+
+    Int2IntConditionalFrequencyDistribution reconstructed = cls.newInstance();
+    reconstructed.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
+
+    assertFalse(cfd == reconstructed);
+    assertEquals(17, reconstructed.getMarginalCount(1));
+    assertEquals(3, reconstructed.getMarginalCount(2));
+    assertEquals(7, reconstructed.getMarginalCount(3));
+    assertEquals(27, reconstructed.getSumOfAllCounts());
   }
 }

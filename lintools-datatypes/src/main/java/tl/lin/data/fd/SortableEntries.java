@@ -14,11 +14,11 @@
  * permissions and limitations under the License.
  */
 
-package tl.lin.data;
+package tl.lin.data.fd;
 
 import java.util.List;
 
-public interface SortableEntries<T extends Comparable<T>> extends Iterable<T> {
+public interface SortableEntries<T extends Comparable<?>> extends Iterable<T> {
   public static enum Order {
     ByLeftElementAscending, ByLeftElementDescending,
     ByRightElementAscending, ByRightElementDescending

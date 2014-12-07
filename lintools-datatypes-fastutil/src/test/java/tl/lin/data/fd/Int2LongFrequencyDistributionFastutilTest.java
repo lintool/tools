@@ -77,6 +77,12 @@ public class Int2LongFrequencyDistributionFastutilTest extends
     testIterableCommon(fd);
   }
 
+  @Test
+  public void testSerialization() throws Exception {
+    Int2LongFrequencyDistribution fd = new Int2LongFrequencyDistributionFastutil();
+    testSerialization(fd, Int2LongFrequencyDistributionFastutil.class);
+  }
+
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(Int2LongFrequencyDistributionFastutilTest.class);
   }

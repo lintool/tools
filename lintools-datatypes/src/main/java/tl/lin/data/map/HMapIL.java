@@ -825,32 +825,22 @@ public class HMapIL implements MapIL, Cloneable, Serializable {
 	
 	// methods not part of a standard HashMap
 
-	/**
-	 * Adds values of keys from another map to this map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
+  @Override
 	public void plus(MapIL m) {
 		for (MapIL.Entry e : m.entrySet()) {
 			int key = e.getKey();
 
 			if (this.containsKey(key)) {
-				this.put(key, (long) (this.get(key) + e.getValue()));
+				this.put(key, this.get(key) + e.getValue());
 			} else {
 				this.put(key, e.getValue());
 			}
 		}
 	}
 
-	/**
-	 * Computes the dot product of this map with another map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
-	public int dot(MapIL m) {
-		int s = 0;
+  @Override
+	public long dot(MapIL m) {
+		long s = 0;
 
 		for (MapIL.Entry e : m.entrySet()) {
 			int key = e.getKey();
@@ -863,13 +853,7 @@ public class HMapIL implements MapIL, Cloneable, Serializable {
 		return s;
 	}
 
-	/**
-	 * Increments the key. If the key does not exist in the map, its value is
-	 * set to one.
-	 * 
-	 * @param key
-	 *            key to increment
-	 */
+  @Override
 	public void increment(int key) {
 		if (this.containsKey(key)) {
 			this.put(key, (long) (this.get(key) + 1));
@@ -878,18 +862,10 @@ public class HMapIL implements MapIL, Cloneable, Serializable {
 		}
 	}
 	
-  /**
-   * Increments the key by some value. If the key does not exist in the map, its value is
-   * set to the parameter value.
-   * 
-   * @param key
-   *            key to increment
-   * @param value
-   *            increment value
-   */
+  @Override
 	public void increment(int key, long value) {
 		if (this.containsKey(key)) {
-			this.put(key, (long) (this.get(key) + value));
+			this.put(key, this.get(key) + value);
 		} else {
 			this.put(key, value);
 		}

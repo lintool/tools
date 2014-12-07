@@ -26,9 +26,8 @@ import java.util.Set;
  * a specialized variant the standard Java {@link Map} interface, except that
  * the values are hard coded as floats for efficiency reasons (keys can be
  * arbitrary objects). This implementation was adapted from {@link HashMap}
- * version 1.73, 03/13/07. See <a href="{@docRoot}/../content/map.html">this
- * benchmark</a> for an efficiency comparison.
- * 
+ * version 1.73, 03/13/07.
+ *
  * @param <K>
  *            the type of keys maintained by this map
  */
@@ -402,23 +401,6 @@ public class HMapKF<K extends Comparable<?>> implements MapKF<K>, Cloneable, Ser
 			put(e.getKey(), e.getValue());
 		}
 	}
-
-  /**
-   * Increments the key by some value. If the key does not exist in the map, its value is
-   * set to the parameter value.
-   * 
-   * @param key
-   *            key to increment
-   * @param value
-   *            increment value
-   */
-  public void increment(K key, float value) {
-    if (this.containsKey(key)) {
-      this.put(key, (float) this.get(key) + value);
-    } else {
-      this.put(key, value);
-    }
-  }
 
 	// doc copied from interface
 	public float remove(K key) {
@@ -890,12 +872,7 @@ public class HMapKF<K extends Comparable<?>> implements MapKF<K>, Cloneable, Ser
 	
 	// methods not part of a standard HashMap
 
-	/**
-	 * Adds values of keys from another map to this map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
+  @Override
 	public void plus(MapKF<K> m) {
 		for (MapKF.Entry<K> e : m.entrySet()) {
 			K key = e.getKey();
@@ -908,14 +885,9 @@ public class HMapKF<K extends Comparable<?>> implements MapKF<K>, Cloneable, Ser
 		}
 	}
 
-	/**
-	 * Computes the dot product of this map with another map.
-	 * 
-	 * @param m
-	 *            the other map
-	 */
-	public float dot(MapKF<K> m) {
-		float s = 0.0f;
+  @Override
+	public double dot(MapKF<K> m) {
+		double s = 0.0f;
 
 		for (MapKF.Entry<K> e : m.entrySet()) {
 			K key = e.getKey();
@@ -927,6 +899,24 @@ public class HMapKF<K extends Comparable<?>> implements MapKF<K>, Cloneable, Ser
 
 		return s;
 	}
+
+  @Override
+  public void increment(K key) {
+    if (this.containsKey(key)) {
+      this.put(key, (float) this.get(key) + 1.0f);
+    } else {
+      this.put(key, 1.0f);
+    }
+  }
+
+  @Override
+  public void increment(K key, float value) {
+    if (this.containsKey(key)) {
+      this.put(key, (float) this.get(key) + value);
+    } else {
+      this.put(key, value);
+    }
+  }
 
 	/**
 	 * Returns the length of the vector represented by this map.

@@ -28,106 +28,105 @@ import org.junit.Test;
 
 public class HMapIIWTest {
 
-	@Test
-	public void testBasic() throws IOException {
-		HMapIIW m = new HMapIIW();
+  @Test
+  public void testBasic() throws IOException {
+    HMapIIW m = new HMapIIW();
 
-		m.put(2, 5);
-		m.put(1, 22);
+    m.put(2, 5);
+    m.put(1, 22);
 
-		int value;
+    int value;
 
-		assertEquals(m.size(), 2);
+    assertEquals(m.size(), 2);
 
-		value = m.get(2);
-		assertEquals(5, value);
+    value = m.get(2);
+    assertEquals(5, value);
 
-		value = m.remove(2);
-		assertEquals(m.size(), 1);
+    value = m.remove(2);
+    assertEquals(m.size(), 1);
 
-		value = m.get(1);
-		assertEquals(22, value);
-	}
+    value = m.get(1);
+    assertEquals(22, value);
+  }
 
-	@Test
-	public void testSerialize1() throws IOException {
-		HMapIIW m1 = new HMapIIW();
+  @Test
+  public void testSerialize1() throws IOException {
+    HMapIIW m1 = new HMapIIW();
 
-		m1.put(3, 5);
-		m1.put(4, 22);
+    m1.put(3, 5);
+    m1.put(4, 22);
 
-		HMapIIW n2 = HMapIIW.create(m1.serialize());
+    HMapIIW n2 = HMapIIW.create(m1.serialize());
 
-		int value;
+    int value;
 
-		assertEquals(n2.size(), 2);
+    assertEquals(n2.size(), 2);
 
-		value = n2.get(3);
-		assertEquals(5, value);
+    value = n2.get(3);
+    assertEquals(5, value);
 
-		value = n2.remove(3);
-		assertEquals(n2.size(), 1);
+    value = n2.remove(3);
+    assertEquals(n2.size(), 1);
 
-		value = n2.get(4);
-		assertEquals(value, 22);
-	}
+    value = n2.get(4);
+    assertEquals(value, 22);
+  }
 
-	@Test
-	public void testSerializeLazy1() throws IOException {
-		HMapIIW.setLazyDecodeFlag(true);
-		HMapIIW m1 = new HMapIIW();
+  @Test
+  public void testSerializeLazy1() throws IOException {
+    HMapIIW.setLazyDecodeFlag(true);
+    HMapIIW m1 = new HMapIIW();
 
-		m1.put(3, 5);
-		m1.put(4, 22);
+    m1.put(3, 5);
+    m1.put(4, 22);
 
-		HMapIIW m2 = HMapIIW.create(m1.serialize());
+    HMapIIW m2 = HMapIIW.create(m1.serialize());
 
-		assertEquals(2, m2.size());
+    assertEquals(2, m2.size());
 
-		int[] keys = m2.getKeys();
-		int[] values = m2.getValues();
+    int[] keys = m2.getKeys();
+    int[] values = m2.getValues();
 
-		assertTrue(keys[0] == 3);
-		assertTrue(keys[1] == 4);
+    assertTrue(keys[0] == 3);
+    assertTrue(keys[1] == 4);
 
-		assertTrue(values[0] == 5.0f);
-		assertTrue(values[1] == 22.0f);
+    assertTrue(values[0] == 5);
+    assertTrue(values[1] == 22);
 
-		assertFalse(m2.isDecoded());
-		assertEquals(m2.size(), 2);
+    assertFalse(m2.isDecoded());
+    assertEquals(m2.size(), 2);
 
-		m2.decode();
-		assertTrue(m2.isDecoded());
+    m2.decode();
+    assertTrue(m2.isDecoded());
 
-		float value;
-		assertEquals(m2.size(), 2);
+    int value;
+    assertEquals(m2.size(), 2);
 
-		value = m2.get(3);
-		assertTrue(value == 5.0f);
+    value = m2.get(3);
+    assertTrue(value == 5);
 
-		value = m2.remove(3);
-		assertEquals(m2.size(), 1);
+    value = m2.remove(3);
+    assertEquals(m2.size(), 1);
 
-		value = m2.get(4);
-		assertTrue(value == 22.0f);
-	}
+    value = m2.get(4);
+    assertTrue(value == 22);
+  }
 
-	@Test
-	public void testSerializeEmpty() throws IOException {
-		HMapIIW m1 = new HMapIIW();
+  @Test
+  public void testSerializeEmpty() throws IOException {
+    HMapIIW m1 = new HMapIIW();
 
-		// make sure this does nothing
-		m1.decode();
+    // make sure this does nothing
+    m1.decode();
 
-		assertTrue(m1.size() == 0);
+    assertTrue(m1.size() == 0);
 
-		HMapIFW m2 = HMapIFW.create(m1.serialize());
+    HMapIFW m2 = HMapIFW.create(m1.serialize());
 
-		assertTrue(m2.size() == 0);
-	}
+    assertTrue(m2.size() == 0);
+  }
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(HMapIIWTest.class);
-	}
-
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(HMapIIWTest.class);
+  }
 }

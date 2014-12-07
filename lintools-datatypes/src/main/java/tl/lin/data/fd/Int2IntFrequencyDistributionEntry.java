@@ -16,12 +16,16 @@
 
 package tl.lin.data.fd;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import tl.lin.data.map.HMapII;
+import tl.lin.data.map.HMapIIW;
 import tl.lin.data.map.MapII;
 import tl.lin.data.pair.PairOfInts;
 
@@ -31,58 +35,58 @@ import com.google.common.collect.Lists;
  * Implementation of {@link Int2IntFrequencyDistribution} based on {@link HMapII}.
  */
 public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistribution {
-	private HMapII counts = new HMapII();
-	private long sumOfFrequencies = 0;
+  private HMapIIW counts = new HMapIIW();
+  private long sumOfCounts = 0;
 
-	@Override
-	public void increment(int key) {
-		set(key, get(key) + 1);
-	}
+  @Override
+  public void increment(int key) {
+    set(key, get(key) + 1);
+  }
 
-	@Override
-	public void increment(int key, int cnt) {
-		set(key, get(key) + cnt);
-	}
+  @Override
+  public void increment(int key, int cnt) {
+    set(key, get(key) + cnt);
+  }
 
-	@Override
-	public void decrement(int key) {
-		if (contains(key)) {
-			int v = get(key);
-			if (v == 1) {
-				remove(key);
-			} else {
-				set(key, v - 1);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(int key) {
+    if (contains(key)) {
+      int v = get(key);
+      if (v == 1) {
+        remove(key);
+      } else {
+        set(key, v - 1);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public void decrement(int key, int cnt) {
-		if (contains(key)) {
-			int v = get(key);
-			if (v < cnt) {
-				throw new RuntimeException("Can't decrement past zero!");
-			} else if (v == cnt) {
-				remove(key);
-			} else {
-				set(key, v - cnt);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(int key, int cnt) {
+    if (contains(key)) {
+      int v = get(key);
+      if (v < cnt) {
+        throw new RuntimeException("Can't decrement past zero!");
+      } else if (v == cnt) {
+        remove(key);
+      } else {
+        set(key, v - cnt);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public boolean contains(int key) {
-		return counts.containsKey(key);
-	}
+  @Override
+  public boolean contains(int key) {
+    return counts.containsKey(key);
+  }
 
-	@Override
-	public int get(int key) {
-		return counts.get(key);
-	}
+  @Override
+  public int get(int key) {
+    return counts.get(key);
+  }
 
   @Override
   public double computeRelativeFrequency(int k) {
@@ -94,68 +98,69 @@ public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistri
     return Math.log(counts.get(k)) - Math.log(getSumOfCounts());
   }
 
-	@Override
-	public int set(int key, int cnt) {
-		int rv = counts.put(key, cnt);
-		sumOfFrequencies = sumOfFrequencies - rv + cnt;
+  @Override
+  public int set(int key, int cnt) {
+    int rv = counts.put(key, cnt);
+    sumOfCounts = sumOfCounts - rv + cnt;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public int remove(int key) {
-		int rv = counts.remove(key);
-		sumOfFrequencies -= rv;
+  @Override
+  public int remove(int key) {
+    int rv = counts.remove(key);
+    sumOfCounts -= rv;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public void clear() {
-		counts.clear();
-		sumOfFrequencies = 0;
-	}
+  @Override
+  public void clear() {
+    counts.clear();
+    sumOfCounts = 0;
+  }
 
-	@Override
-	public int getNumberOfEvents() {
-		return counts.size();
-	}
+  @Override
+  public int getNumberOfEvents() {
+    return counts.size();
+  }
 
-	@Override
-	public long getSumOfCounts() {
-		return sumOfFrequencies;
-	}
+  @Override
+  public long getSumOfCounts() {
+    return sumOfCounts;
+  }
 
-	/**
-	 * Iterator returns the same object every time, just with a different payload.
-	 */
-	public Iterator<PairOfInts> iterator() {
-		return new Iterator<PairOfInts>() {
-			private Iterator<MapII.Entry> iter = Int2IntFrequencyDistributionEntry.this.counts.entrySet().iterator();
-			private final PairOfInts pair = new PairOfInts();
+  /**
+   * Iterator returns the same object every time, just with a different payload.
+   */
+  public Iterator<PairOfInts> iterator() {
+    return new Iterator<PairOfInts>() {
+      private Iterator<MapII.Entry> iter = Int2IntFrequencyDistributionEntry.this.counts.entrySet()
+          .iterator();
+      private final PairOfInts pair = new PairOfInts();
 
-			@Override
-			public boolean hasNext() {
-				return iter.hasNext();
-			}
+      @Override
+      public boolean hasNext() {
+        return iter.hasNext();
+      }
 
-			@Override
-			public PairOfInts next() {
-				if (!hasNext()) {
-					return null;
-				}
+      @Override
+      public PairOfInts next() {
+        if (!hasNext()) {
+          return null;
+        }
 
-				MapII.Entry entry = iter.next();
-				pair.set(entry.getKey(), entry.getValue());
-				return pair;
-			}
+        MapII.Entry entry = iter.next();
+        pair.set(entry.getKey(), entry.getValue());
+        return pair;
+      }
 
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
+  }
 
   @Override
   public List<PairOfInts> getEntries(Order ordering) {
@@ -265,5 +270,17 @@ public class Int2IntFrequencyDistributionEntry implements Int2IntFrequencyDistri
   private List<PairOfInts> getEntriesSorted(Comparator<PairOfInts> comparator, int n) {
     List<PairOfInts> list = getEntriesSorted(comparator);
     return list.subList(0, n);
+  }
+
+  @Override
+  public void readFields(DataInput in) throws IOException {
+    sumOfCounts = in.readLong();
+    counts.readFields(in);
+  }
+
+  @Override
+  public void write(DataOutput out) throws IOException {
+    out.writeLong(sumOfCounts);
+    counts.write(out);
   }
 }

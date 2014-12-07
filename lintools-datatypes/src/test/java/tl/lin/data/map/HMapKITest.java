@@ -28,9 +28,8 @@ import org.apache.hadoop.io.Text;
 import org.junit.Test;
 
 public class HMapKITest {
-
   @Test
-  public void testBasic1() {
+  public void testRandomInsert1() {
     int size = 100000;
     Random r = new Random();
     int[] ints = new int[size];
@@ -51,7 +50,7 @@ public class HMapKITest {
   }
 
   @Test
-  public void testBasic2() {
+  public void testRandomInsert2() {
     int size = 100000;
     Random r = new Random();
     int[] ints = new int[size];
@@ -75,7 +74,7 @@ public class HMapKITest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testRandomUpdate() {
     int size = 100000;
     Random r = new Random();
     int[] ints = new int[size];
@@ -101,16 +100,6 @@ public class HMapKITest {
       assertEquals(ints[i] + 1, v);
       assertTrue(map.containsKey(i));
     }
-  }
-
-  @Test
-  public void testToString() throws IOException {
-    HMapKI<String> m1 = new HMapKI<String>();
-
-    m1.put("hi", 5);
-    m1.put("there", 22);
-
-    assertEquals("{there=22, hi=5}", m1.toString());
   }
 
   @Test
@@ -171,9 +160,34 @@ public class HMapKITest {
     m2.put(new Text("there"), 4);
     m2.put(new Text("test"), 5);
 
-    int s = m1.dot(m2);
+    assertEquals(28, m1.dot(m2));
+  }
 
-    assertEquals(s, 28);
+  @Test
+  public void testIncrement() {
+    HMapKI<String> m = new HMapKI<String>();
+    assertEquals(0, m.get("one"));
+
+    m.increment("one");
+    assertEquals(1, m.get("one"));
+
+    m.increment("one", 5);
+    m.increment("two", 0);
+    m.increment("three", 2);
+
+    assertEquals(6, m.get("one"));
+    assertEquals(0, m.get("two"));
+    assertEquals(2, m.get("three"));
+  }
+
+  @Test
+  public void testToString() throws IOException {
+    HMapKI<String> m1 = new HMapKI<String>();
+
+    m1.put("hi", 5);
+    m1.put("there", 22);
+
+    assertEquals("{there=22, hi=5}", m1.toString());
   }
 
   @Test
@@ -294,23 +308,6 @@ public class HMapKITest {
     e = entries[1];
     assertEquals(new Text("b"), e.getKey());
     assertEquals(2, (int) e.getValue());
-  }
-
-  @Test
-  public void testIncrement() {
-    HMapKI<String> m = new HMapKI<String>();
-    assertEquals(0, m.get("one"));
-
-    m.increment("one");
-    assertEquals(1, m.get("one"));
-
-    m.increment("one", 5);
-    m.increment("two", 0);
-    m.increment("three", 2);
-
-    assertEquals(6, m.get("one"));
-    assertEquals(0, m.get("two"));
-    assertEquals(2, m.get("three"));
   }
 
   public static junit.framework.Test suite() {

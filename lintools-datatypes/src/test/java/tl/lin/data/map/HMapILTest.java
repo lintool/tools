@@ -27,9 +27,8 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class HMapILTest {
-
   @Test
-  public void testBasic1() {
+  public void testRandomInsert() {
     int size = 100000;
     Random r = new Random();
     long[] longs = new long[size];
@@ -37,8 +36,8 @@ public class HMapILTest {
     MapIL map = new HMapIL();
     for (int i = 0; i < size; i++) {
       int k = r.nextInt(size);
-      map.put(i, k * 2);
-      longs[i] = k * 2;
+      map.put(i, k * Integer.MAX_VALUE);
+      longs[i] = k * Integer.MAX_VALUE;
     }
 
     for (int i = 0; i < size; i++) {
@@ -50,7 +49,7 @@ public class HMapILTest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testRandomUpdate() {
     int size = 100000;
     Random r = new Random();
     long[] longs = new long[size];
@@ -58,14 +57,14 @@ public class HMapILTest {
     MapIL map = new HMapIL();
     for (int i = 0; i < size; i++) {
       int k = r.nextInt(size);
-      map.put(i, k + 10L);
-      longs[i] = k + 10L;
+      map.put(i, k + (long) Integer.MAX_VALUE);
+      longs[i] = k + (long) Integer.MAX_VALUE;
     }
 
     assertEquals(size, map.size());
 
     for (int i = 0; i < size; i++) {
-      map.put(i, longs[i] + 10L);
+      map.put(i, longs[i] + (long) Integer.MAX_VALUE);
     }
 
     assertEquals(size, map.size());
@@ -73,7 +72,7 @@ public class HMapILTest {
     for (int i = 0; i < size; i++) {
       long v = map.get(i);
 
-      assertEquals(longs[i] + 10L, v);
+      assertEquals(longs[i] + (long) Integer.MAX_VALUE, v);
       assertTrue(map.containsKey(i));
     }
   }
@@ -82,41 +81,44 @@ public class HMapILTest {
   public void testBasic() throws IOException {
     HMapIL m = new HMapIL();
 
-    m.put(1, 5L);
-    m.put(2, 22L);
+    m.put(1, Integer.MAX_VALUE + 5L);
+    m.put(2, Integer.MAX_VALUE + 22L);
 
     long value;
 
     assertEquals(2, m.size());
 
     value = m.get(1);
-    assertEquals(5L, value);
+    assertEquals(Integer.MAX_VALUE + 5L, value);
 
     value = m.remove(1);
     assertEquals(m.size(), 1);
 
     value = m.get(2);
-    assertEquals(22L, value);
+    assertEquals(Integer.MAX_VALUE + 22L, value);
   }
 
   @Test
   public void testPlus() throws IOException {
     HMapIL m1 = new HMapIL();
 
-    m1.put(1, 5L);
-    m1.put(2, 22L);
+    m1.put(1, Integer.MAX_VALUE + 5L);
+    m1.put(2, Integer.MAX_VALUE + 22L);
+    m1.put(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
     HMapIL m2 = new HMapIL();
 
     m2.put(1, 4L);
-    m2.put(3, 5L);
+    m2.put(3, Integer.MAX_VALUE + 5L);
+    m2.put(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
     m1.plus(m2);
 
-    assertEquals(m1.size(), 3);
-    assertTrue(m1.get(1) == 9L);
-    assertTrue(m1.get(2) == 22L);
-    assertTrue(m1.get(3) == 5L);
+    assertEquals(m1.size(), 4);
+    assertTrue(m1.get(1) == Integer.MAX_VALUE + 9L);
+    assertTrue(m1.get(2) == Integer.MAX_VALUE + 22L);
+    assertTrue(m1.get(3) == Integer.MAX_VALUE + 5L);
+    assertTrue(m1.get(Integer.MAX_VALUE) == 2L * Integer.MAX_VALUE);
   }
 
   @Test
@@ -126,16 +128,42 @@ public class HMapILTest {
     m1.put(1, 2L);
     m1.put(2, 1L);
     m1.put(3, 3L);
+    m1.put(Integer.MAX_VALUE, (long) Integer.MAX_VALUE);
 
     HMapIL m2 = new HMapIL();
 
     m2.put(1, 1L);
     m2.put(2, 4L);
     m2.put(4, 5L);
+    m2.put(Integer.MAX_VALUE, (long) Integer.MAX_VALUE);
 
     long s = m1.dot(m2);
 
-    assertEquals(6L, s);
+    assertTrue(s > Integer.MAX_VALUE);
+    assertEquals((long) Integer.MAX_VALUE * Integer.MAX_VALUE + 6L, s);
+  }
+
+  @Test
+  public void testIncrement() {
+    HMapIL m = new HMapIL();
+    assertEquals(0L, m.get(1));
+
+    m.increment(1, 1L);
+    assertEquals(1L, m.get(1));
+
+    m.increment(1, 1L);
+    m.increment(2, 0L);
+    m.increment(3, -1L);
+
+    assertEquals(2L, m.get(1));
+    assertEquals(0L, m.get(2));
+    assertEquals(-1L, m.get(3));
+
+    m.increment(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    assertEquals((long) Integer.MAX_VALUE, m.get(Integer.MAX_VALUE));
+
+    m.increment(Integer.MAX_VALUE);
+    assertEquals(1L + Integer.MAX_VALUE, m.get(Integer.MAX_VALUE));
   }
 
   @Test
@@ -212,23 +240,6 @@ public class HMapILTest {
 
     MapIL.Entry[] e = m.getEntriesSortedByValue();
     assertTrue(e == null);
-  }
-
-  @Test
-  public void testIncrement() {
-    HMapIL m = new HMapIL();
-    assertEquals(0, m.get(1));
-
-    m.increment(1, 1);
-    assertEquals(1, m.get(1));
-
-    m.increment(1, 1);
-    m.increment(2, 0);
-    m.increment(3, -1);
-
-    assertEquals(2, m.get(1));
-    assertEquals(0, m.get(2));
-    assertEquals(-1, m.get(3));
   }
 
   public static junit.framework.Test suite() {
