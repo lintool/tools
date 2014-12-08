@@ -26,56 +26,57 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class ArrayListOfShortsTest {
-  short neg_one=-1, zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, nine=9;
+  short neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6,
+      seven = 7, nine = 9;
 
   @Test
-  public void testRemoveWithinBounds(){
+  public void testRemoveWithinBounds() {
     ArrayListOfShorts a = new ArrayListOfShorts();
     a.add(one).add(three).add(five).add(seven);
-    
+
     assertTrue(one == a.remove(0));
 
     assertTrue(three == a.get(0));
     assertTrue(five == a.get(1));
-    
+
     assertTrue(five == a.remove(1));
     assertTrue(seven == a.get(2));
   }
-  
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds(){
+
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds() {
     ArrayListOfShorts a = new ArrayListOfShorts();
     a.add(one).add(three).add(five).add(seven);
 
     a.remove(4);
   }
 
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds2(){
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds2() {
     ArrayListOfShorts a = new ArrayListOfShorts();
     a.add(neg_one);
     a.remove(-1);
   }
-  
-	@Test
-	public void testBasic1() {
-		int size = 10000;
-		Random r = new Random();
-		short[] shorts = new short[size];
 
-		ArrayListOfShorts list = new ArrayListOfShorts();
-		for (int i = 0; i < size; i++) {
-			short k = (short) r.nextInt(size);
-			list.add(k);
-			shorts[i] = k;
-		}
+  @Test
+  public void testBasic1() {
+    int size = 10000;
+    Random r = new Random();
+    short[] shorts = new short[size];
 
-		for (int i = 0; i < size; i++) {
-			int v = list.get(i);
+    ArrayListOfShorts list = new ArrayListOfShorts();
+    for (int i = 0; i < size; i++) {
+      short k = (short) r.nextInt(size);
+      list.add(k);
+      shorts[i] = k;
+    }
 
-			assertEquals(shorts[i], v);
-		}
-	}
+    for (int i = 0; i < size; i++) {
+      int v = list.get(i);
+
+      assertEquals(shorts[i], v);
+    }
+  }
 
   @Test
   public void testArrayConstructor() {
@@ -93,130 +94,130 @@ public class ArrayListOfShortsTest {
     assertEquals(5, arr[4]);
   }
 
-	@Test
-	public void testRemove() {
-		ArrayListOfShorts list = new ArrayListOfShorts();
-		for ( int i=0; i<10; i++) {
-			list.add((short) i);
-		}
+  @Test
+  public void testRemove() {
+    ArrayListOfShorts list = new ArrayListOfShorts();
+    for (int i = 0; i < 10; i++) {
+      list.add((short) i);
+    }
 
-		list.remove(list.indexOf((short) 5));
-		assertEquals(9, list.size());
-		assertEquals(0, list.get(0));
-		assertEquals(1, list.get(1));
-		assertEquals(2, list.get(2));
-		assertEquals(3, list.get(3));
-		assertEquals(4, list.get(4));
-		assertEquals(6, list.get(5));
-		assertEquals(7, list.get(6));
-		assertEquals(8, list.get(7));
-		assertEquals(9, list.get(8));
+    list.remove(list.indexOf((short) 5));
+    assertEquals(9, list.size());
+    assertEquals(0, list.get(0));
+    assertEquals(1, list.get(1));
+    assertEquals(2, list.get(2));
+    assertEquals(3, list.get(3));
+    assertEquals(4, list.get(4));
+    assertEquals(6, list.get(5));
+    assertEquals(7, list.get(6));
+    assertEquals(8, list.get(7));
+    assertEquals(9, list.get(8));
 
-		list.remove(list.indexOf((short) 9));
-		assertEquals(8, list.size);
-		assertEquals(0, list.get(0));
-		assertEquals(1, list.get(1));
-		assertEquals(2, list.get(2));
-		assertEquals(3, list.get(3));
-		assertEquals(4, list.get(4));
-		assertEquals(6, list.get(5));
-		assertEquals(7, list.get(6));
-		assertEquals(8, list.get(7));
-	}
+    list.remove(list.indexOf((short) 9));
+    assertEquals(8, list.size);
+    assertEquals(0, list.get(0));
+    assertEquals(1, list.get(1));
+    assertEquals(2, list.get(2));
+    assertEquals(3, list.get(3));
+    assertEquals(4, list.get(4));
+    assertEquals(6, list.get(5));
+    assertEquals(7, list.get(6));
+    assertEquals(8, list.get(7));
+  }
 
-	@Test
-	public void testUpdate() {
-		int size = 10000;
-		Random r = new Random();
-		short[] shorts = new short[size];
+  @Test
+  public void testUpdate() {
+    int size = 10000;
+    Random r = new Random();
+    short[] shorts = new short[size];
 
-		ArrayListOfShorts list = new ArrayListOfShorts();
-		for (int i = 0; i < size; i++) {
-			short k = (short) r.nextInt(size);
-			list.add(k);
-			shorts[i] = k;
-		}
+    ArrayListOfShorts list = new ArrayListOfShorts();
+    for (int i = 0; i < size; i++) {
+      short k = (short) r.nextInt(size);
+      list.add(k);
+      shorts[i] = k;
+    }
 
-		assertEquals(size, list.size());
+    assertEquals(size, list.size());
 
-		for (int i = 0; i < size; i++) {
-			list.set(i, (short) (shorts[i] + 1));
-		}
+    for (int i = 0; i < size; i++) {
+      list.set(i, (short) (shorts[i] + 1));
+    }
 
-		assertEquals(size, list.size());
+    assertEquals(size, list.size());
 
-		for (int i = 0; i < size; i++) {
-			int v = list.get(i);
+    for (int i = 0; i < size; i++) {
+      int v = list.get(i);
 
-			assertEquals(shorts[i] + 1, v);
-		}
+      assertEquals(shorts[i] + 1, v);
+    }
 
-	}
+  }
 
-	@Test
-	public void testTrim1() {
-		int size = 89;
-		Random r = new Random();
-		short[] shorts = new short[size];
+  @Test
+  public void testTrim1() {
+    int size = 89;
+    Random r = new Random();
+    short[] shorts = new short[size];
 
-		ArrayListOfShorts list = new ArrayListOfShorts();
-		for (int i = 0; i < size; i++) {
-			short k = (short) r.nextInt(size);
-			list.add(k);
-			shorts[i] = k;
-		}
+    ArrayListOfShorts list = new ArrayListOfShorts();
+    for (int i = 0; i < size; i++) {
+      short k = (short) r.nextInt(size);
+      list.add(k);
+      shorts[i] = k;
+    }
 
-		for (int i = 0; i < size; i++) {
-			int v = list.get(i);
+    for (int i = 0; i < size; i++) {
+      int v = list.get(i);
 
-			assertEquals(shorts[i], v);
-		}
+      assertEquals(shorts[i], v);
+    }
 
-		short[] rawArray = list.getArray();
-		int lenBefore = rawArray.length;
+    short[] rawArray = list.getArray();
+    int lenBefore = rawArray.length;
 
-		list.trimToSize();
-		short[] rawArrayAfter = list.getArray();
-		int lenAfter = rawArrayAfter.length;
+    list.trimToSize();
+    short[] rawArrayAfter = list.getArray();
+    int lenAfter = rawArrayAfter.length;
 
-		assertEquals(89, lenAfter);
-		assertTrue(lenBefore > lenAfter);
-	}
+    assertEquals(89, lenAfter);
+    assertTrue(lenBefore > lenAfter);
+  }
 
-	@Test
-	public void testClone() {
-		int size = 10000;
-		Random r = new Random();
-		int[] shorts = new int[size];
+  @Test
+  public void testClone() {
+    int size = 10000;
+    Random r = new Random();
+    int[] shorts = new int[size];
 
-		ArrayListOfShorts list1 = new ArrayListOfShorts();
-		for (int i = 0; i < size; i++) {
-			short k = (short) r.nextInt(size);
-			list1.add(k);
-			shorts[i] = k;
-		}
+    ArrayListOfShorts list1 = new ArrayListOfShorts();
+    for (int i = 0; i < size; i++) {
+      short k = (short) r.nextInt(size);
+      list1.add(k);
+      shorts[i] = k;
+    }
 
-		ArrayListOfShorts list2 = list1.clone();
+    ArrayListOfShorts list2 = list1.clone();
 
-		assertEquals(size, list1.size());
-		assertEquals(size, list2.size());
+    assertEquals(size, list1.size());
+    assertEquals(size, list2.size());
 
-		for (int i = 0; i < size; i++) {
-			list2.set(i, (short) (shorts[i] + 1));
-		}
+    for (int i = 0; i < size; i++) {
+      list2.set(i, (short) (shorts[i] + 1));
+    }
 
-		// values in old list should not have changed
-		assertEquals(size, list1.size());
-		for (int i = 0; i < size; i++) {
-			assertEquals(shorts[i], list1.get(i));
-		}
+    // values in old list should not have changed
+    assertEquals(size, list1.size());
+    for (int i = 0; i < size; i++) {
+      assertEquals(shorts[i], list1.get(i));
+    }
 
-		// however, values in new list should have changed
-		assertEquals(size, list1.size());
-		for (int i = 0; i < size; i++) {
-			assertEquals(shorts[i] + 1, list2.get(i));
-		}
-	}
+    // however, values in new list should have changed
+    assertEquals(size, list1.size());
+    for (int i = 0; i < size; i++) {
+      assertEquals(shorts[i] + 1, list2.get(i));
+    }
+  }
 
   @Test
   public void testToString1() {
@@ -225,34 +226,33 @@ public class ArrayListOfShortsTest {
     assertEquals("[1, 2, 3, 4, 5 ... (5 more) ]",
         new ArrayListOfShorts((short) 1, (short) 11).toString(5));
 
-    assertEquals("[1, 2, 3, 4, 5]",
-        new ArrayListOfShorts((short) 1, (short) 6).toString());
+    assertEquals("[1, 2, 3, 4, 5]", new ArrayListOfShorts((short) 1, (short) 6).toString());
     assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
         new ArrayListOfShorts((short) 1, (short) 12).toString(11));
 
     assertEquals("[]", new ArrayListOfShorts().toString());
   }
 
-	@Test
-	public void testToString2() {
-		int size = 10;
-		Random r = new Random();
+  @Test
+  public void testToString2() {
+    int size = 10;
+    Random r = new Random();
 
-		ArrayListOfShorts list = new ArrayListOfShorts();
-		while (list.size < size) {
-		  short next = (short) r.nextInt(30000);
-		  if (!list.contains(next)) {
-		    list.add(next);
-		  }
-		}
+    ArrayListOfShorts list = new ArrayListOfShorts();
+    while (list.size < size) {
+      short next = (short) r.nextInt(30000);
+      if (!list.contains(next)) {
+        list.add(next);
+      }
+    }
 
-		String out = list.toString();
-		for (int i = 0; i < size; i++) {
-			short v = list.get(i);
+    String out = list.toString();
+    for (int i = 0; i < size; i++) {
+      short v = list.get(i);
 
-			// Make sure the first 10 elements are printed out.
-			assertTrue(out.indexOf(new Short(v).toString()) != -1);
-		}
+      // Make sure the first 10 elements are printed out.
+      assertTrue(out.indexOf(new Short(v).toString()) != -1);
+    }
 
     while (list.size < size * 2) {
       short next = (short) r.nextInt(30000);
@@ -261,56 +261,57 @@ public class ArrayListOfShortsTest {
       }
     }
 
-		out = list.toString();
-		for (int i = size; i < size+size; i++) {
-			short v = list.get(i);
+    out = list.toString();
+    for (int i = size; i < size + size; i++) {
+      short v = list.get(i);
 
-			// Make sure these elements are not printed out.
-			assertTrue(out.indexOf(new Short(v).toString()) == -1);
-		}
+      // Make sure these elements are not printed out.
+      assertTrue(out.indexOf(new Short(v).toString()) == -1);
+    }
 
-		assertTrue(out.indexOf(size + " more") != -1);
-	}
+    assertTrue(out.indexOf(size + " more") != -1);
+  }
 
-	@Test
-	public void testIterable() {
-		int size = 1000;
-		Random r = new Random();
-		short[] shorts = new short[size];
+  @Test
+  public void testIterable() {
+    int size = 1000;
+    Random r = new Random();
+    short[] shorts = new short[size];
 
-		ArrayListOfShorts list = new ArrayListOfShorts();
-		for (int i = 0; i < size; i++) {
-			short k = (short) r.nextInt(size);
-			list.add(k);
-			shorts[i] = k;
-		}
+    ArrayListOfShorts list = new ArrayListOfShorts();
+    for (int i = 0; i < size; i++) {
+      short k = (short) r.nextInt(size);
+      list.add(k);
+      shorts[i] = k;
+    }
 
-		int i=0;
-		for ( Short v : list) {
-			assertEquals(shorts[i++], (short) v);
-		}
+    int i = 0;
+    for (Short v : list) {
+      assertEquals(shorts[i++], (short) v);
+    }
 
-	}
+  }
 
-	@Test
-	public void testSetSize() {
-		ArrayListOfShorts list = new ArrayListOfShorts();
+  @Test
+  public void testSetSize() {
+    ArrayListOfShorts list = new ArrayListOfShorts();
 
-		list.add((short) 5);
-		assertEquals(1, list.size);
-		assertEquals(5, list.get(0));
+    list.add((short) 5);
+    assertEquals(1, list.size);
+    assertEquals(5, list.get(0));
 
-		list.setSize(5);
-		assertEquals(5, list.size);
-		assertEquals(0, list.get(1));
-		assertEquals(0, list.get(2));
-		assertEquals(0, list.get(3));
-		assertEquals(0, list.get(4));
+    list.setSize(5);
+    assertEquals(5, list.size);
+    assertEquals(0, list.get(1));
+    assertEquals(0, list.get(2));
+    assertEquals(0, list.get(3));
+    assertEquals(0, list.get(4));
 
-		list.add((short) 12);
-		assertEquals(6, list.size);
-		assertEquals(12, list.get(5));
-	}
+    list.add((short) 12);
+    assertEquals(6, list.size);
+    assertEquals(12, list.get(5));
+  }
+
   @Test
   public void testSort() {
     ArrayListOfShorts a = new ArrayListOfShorts();
@@ -401,10 +402,10 @@ public class ArrayListOfShortsTest {
 
     assertEquals(0, c.size());
   }
-  
+
   @Test
   public void testMerge1() {
-    //CASE: interleaved
+    // CASE: interleaved
 
     ArrayListOfShorts a = new ArrayListOfShorts();
     a.add((short) 3);
@@ -427,13 +428,13 @@ public class ArrayListOfShortsTest {
     assertEquals(10, c.get(5));
 
     // c should be same as c2
-    ArrayListOfShorts c2 = b.merge(a); 
+    ArrayListOfShorts c2 = b.merge(a);
     assertEquals(c, c2);
   }
 
   @Test
   public void testMerge2() {
-    //CASE: append
+    // CASE: append
 
     ArrayListOfShorts a = new ArrayListOfShorts();
     a.add((short) 3);
@@ -457,29 +458,29 @@ public class ArrayListOfShortsTest {
 
     ArrayListOfShorts c2 = b.merge(a);
     assertEquals(c, c2);
- }
+  }
 
   @Test
   public void testMerge3() {
-    //CASE: one of the lists are empty
-    
+    // CASE: one of the lists are empty
+
     ArrayListOfShorts a = new ArrayListOfShorts();
     a.add((short) 3);
     a.add((short) 7);
     a.add((short) 10);
-    
+
     ArrayListOfShorts b = new ArrayListOfShorts();
 
     ArrayListOfShorts c = a.merge(b);
     assertEquals(c, a);
-    
+
     ArrayListOfShorts c2 = b.merge(a);
-    assertEquals(c, c2);   
+    assertEquals(c, c2);
   }
 
   @Test
   public void testSubList() {
-    ArrayListOfShorts a = new ArrayListOfShorts(new short[] {1, 2, 3, 4, 5, 6, 7});
+    ArrayListOfShorts a = new ArrayListOfShorts(new short[] { 1, 2, 3, 4, 5, 6, 7 });
     ArrayListOfShorts b = a.subList(1, 5);
     assertEquals(5, b.size());
     assertEquals(2, b.get(0));
@@ -500,8 +501,8 @@ public class ArrayListOfShortsTest {
 
   @Test
   public void testAddUnique() {
-    ArrayListOfShorts a = new ArrayListOfShorts(new short[] {1, 2, 3, 4, 5, 6, 7});
-    a.addUnique(new short[] {8, 0, 2, 5, -1, 11, 9});
+    ArrayListOfShorts a = new ArrayListOfShorts(new short[] { 1, 2, 3, 4, 5, 6, 7 });
+    a.addUnique(new short[] { 8, 0, 2, 5, -1, 11, 9 });
     assertEquals(12, a.size());
     assertEquals(0, a.get(8));
     assertEquals(-1, a.get(9));
@@ -509,7 +510,7 @@ public class ArrayListOfShortsTest {
     assertEquals(9, a.get(11));
   }
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(ArrayListOfShortsTest.class);
-	}
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(ArrayListOfShortsTest.class);
+  }
 }
