@@ -239,8 +239,11 @@ public class ArrayListOfShortsTest {
 		Random r = new Random();
 
 		ArrayListOfShorts list = new ArrayListOfShorts();
-		for (int i = 0; i < size; i++) {
-			list.add((short) r.nextInt(30000));
+		while (list.size < size) {
+		  short next = (short) r.nextInt(30000);
+		  if (!list.contains(next)) {
+		    list.add(next);
+		  }
 		}
 
 		String out = list.toString();
@@ -251,9 +254,12 @@ public class ArrayListOfShortsTest {
 			assertTrue(out.indexOf(new Short(v).toString()) != -1);
 		}
 
-		for (int i = 0; i < size; i++) {
-			list.add((short) r.nextInt(30000));
-		}
+    while (list.size < size * 2) {
+      short next = (short) r.nextInt(30000);
+      if (!list.contains(next)) {
+        list.add(next);
+      }
+    }
 
 		out = list.toString();
 		for (int i = size; i < size+size; i++) {

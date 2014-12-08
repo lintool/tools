@@ -237,8 +237,11 @@ public class ArrayListOfLongsTest {
     Random r = new Random();
 
     ArrayListOfLongs list = new ArrayListOfLongs();
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextLong());
+    while (list.size < size) {
+      long next = r.nextLong();
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     String out = list.toString();
@@ -249,8 +252,11 @@ public class ArrayListOfLongsTest {
       assertTrue(out.indexOf(new Long(v).toString()) != -1);
     }
 
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextInt(1000000));
+    while (list.size < size * 2) {
+      long next = r.nextLong();
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     out = list.toString();

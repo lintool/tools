@@ -235,8 +235,11 @@ public class ArrayListOfIntsTest {
     Random r = new Random();
 
     ArrayListOfInts list = new ArrayListOfInts();
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextInt(100000));
+    while (list.size < size) {
+      int next = r.nextInt(1000000);
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     String out = list.toString();
@@ -247,8 +250,11 @@ public class ArrayListOfIntsTest {
       assertTrue(out.indexOf(new Integer(v).toString()) != -1);
     }
 
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextInt(100000));
+    while (list.size < size * 2) {
+      int next = r.nextInt(1000000);
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     out = list.toString();
