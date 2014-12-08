@@ -116,11 +116,8 @@ public class Int2FloatOpenHashMapWritableTest {
     int[] keys = m2.getKeys();
     float[] values = m2.getValues();
 
-    assertEquals(3, keys[0]);
-    assertEquals(4, keys[1]);
-
-    assertEquals(5.0f, values[0], 10e-6);
-    assertEquals(22.0f, values[1], 10e-6);
+    assertTrue((keys[0] == 3 && values[0] == 5.0f && keys[1] == 4 && values[1] == 22.0f) ||
+        (keys[1] == 3 && values[1] == 5.0f && keys[0] == 4 && values[0] == 22.0f));
 
     m2.decode();
     assertTrue(m2.hasBeenDecoded());
@@ -158,11 +155,8 @@ public class Int2FloatOpenHashMapWritableTest {
     int[] keys = m3.getKeys();
     float[] values = m3.getValues();
 
-    assertEquals(3, keys[0]);
-    assertEquals(4, keys[1]);
-
-    assertEquals(5.0f, values[0], 10e-6);
-    assertEquals(22.0f, values[1], 10e-6);
+    assertTrue((keys[0] == 3 && values[0] == 5.0f && keys[1] == 4 && values[1] == 22.0f) ||
+        (keys[1] == 3 && values[1] == 5.0f && keys[0] == 4 && values[0] == 22.0f));
 
     m3.decode();
     assertTrue(m3.hasBeenDecoded());
