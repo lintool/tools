@@ -203,8 +203,7 @@ public class Int2LongFrequencyDistributionTestBase {
     fd.decrement(1, 4);
   }
 
-  protected void testMultiIncrementDecrementCommon(
-      Int2LongFrequencyDistribution fd) {
+  protected void testMultiIncrementDecrementCommon(Int2LongFrequencyDistribution fd) {
     fd.increment(1, 2);
     fd.increment(2, 3);
     fd.increment(3, 4);
@@ -238,7 +237,7 @@ public class Int2LongFrequencyDistributionTestBase {
 
     assertEquals(6, fd.getNumberOfEvents());
     assertEquals(20, fd.getSumOfCounts());
-    
+
     List<PairOfIntLong> list = fd.getEntries(Order.ByRightElementDescending);
 
     assertEquals(6, list.size());

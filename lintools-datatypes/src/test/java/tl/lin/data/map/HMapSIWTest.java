@@ -99,8 +99,8 @@ public class HMapSIWTest {
   @Test
   public void testJp() throws IOException {
     HMapSIW map1 = new HMapSIW();
-    BufferedReader in = new BufferedReader(new InputStreamReader(
-        this.getClass().getClassLoader().getResourceAsStream("jp-sample.txt"), "UTF8"));
+    BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
+        .getResourceAsStream("jp-sample.txt"), "UTF8"));
 
     List<String> list = Lists.newArrayList();
     int cnt = 0;

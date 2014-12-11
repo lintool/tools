@@ -27,7 +27,8 @@ public class DoubleArrayWritable implements Writable {
   private double[] array;
   private int length = 0;
 
-  public DoubleArrayWritable() {}
+  public DoubleArrayWritable() {
+  }
 
   /**
    * Constructor with array as input.
@@ -118,6 +119,7 @@ public class DoubleArrayWritable implements Writable {
 
   /**
    * Returns the value at index <i>i</i>. Note that no bounds checking is performed.
+   *
    * @param i index position
    */
   public double get(int i) {

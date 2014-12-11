@@ -35,7 +35,8 @@ import tl.lin.data.pair.PairOfWritables;
 import tl.lin.data.util.SequenceFileUtils;
 
 public class ArrayListOfDoublesWritableTest {
- double neg_one=-1, zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, nine=9;
+  double neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6,
+      seven = 7, nine = 9;
 
   @Test
   public void testReadWrite() throws IOException {
@@ -48,11 +49,11 @@ public class ArrayListOfDoublesWritableTest {
     FileSystem.get(conf).delete(tmp, true);
 
     try {
-//      w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
-//          SequenceFile.Writer.keyClass(IntWritable.class),
-//          SequenceFile.Writer.valueClass(ArrayListOfDoublesWritable.class));
-      w = SequenceFile.createWriter(FileSystem.get(conf), conf, tmp,
-          IntWritable.class, ArrayListOfDoublesWritable.class);
+      // w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
+      // SequenceFile.Writer.keyClass(IntWritable.class),
+      // SequenceFile.Writer.valueClass(ArrayListOfDoublesWritable.class));
+      w = SequenceFile.createWriter(FileSystem.get(conf), conf, tmp, IntWritable.class,
+          ArrayListOfDoublesWritable.class);
       w.append(new IntWritable(1), arr);
       w.close();
     } catch (IOException e) {
@@ -60,8 +61,8 @@ public class ArrayListOfDoublesWritableTest {
       assertTrue(false);
     }
 
-    List<PairOfWritables<IntWritable, ArrayListOfDoublesWritable>> listOfKeysPairs =
-      SequenceFileUtils.<IntWritable, ArrayListOfDoublesWritable> readFile(tmp);
+    List<PairOfWritables<IntWritable, ArrayListOfDoublesWritable>> listOfKeysPairs = SequenceFileUtils
+        .<IntWritable, ArrayListOfDoublesWritable> readFile(tmp);
     FileSystem.get(conf).delete(tmp, true);
 
     assertTrue(listOfKeysPairs.size() == 1);
@@ -99,26 +100,25 @@ public class ArrayListOfDoublesWritableTest {
 
     ArrayListOfDoublesWritable b = new ArrayListOfDoublesWritable();
 
-    //[1,3,5] < [1,3,5,7]  
+    // [1,3,5] < [1,3,5,7]
     b.add(one).add(three).add(five).add(seven);
-    assertTrue(b.compareTo(a)>0);
+    assertTrue(b.compareTo(a) > 0);
 
-    //[1,3,5] = [1,3,5]
+    // [1,3,5] = [1,3,5]
     b.remove(3);
-    assertTrue(b.compareTo(a)==0);
+    assertTrue(b.compareTo(a) == 0);
 
-    //[1,3] < [1,3,5]
+    // [1,3] < [1,3,5]
     b.remove(2);
-    assertTrue(b.compareTo(a)<0);
+    assertTrue(b.compareTo(a) < 0);
 
-    //[ ] < [1,3] 
-    //[ ] < [1,3,5]
+    // [ ] < [1,3]
+    // [ ] < [1,3,5]
     ArrayListOfDoublesWritable c = new ArrayListOfDoublesWritable();
-    assertTrue(b.compareTo(c)>0);
-    assertTrue(c.compareTo(a)<0);
-    assertTrue(a.compareTo(c)>0);
-    assertTrue(c.compareTo(b)<0);
-
+    assertTrue(b.compareTo(c) > 0);
+    assertTrue(c.compareTo(a) < 0);
+    assertTrue(a.compareTo(c) > 0);
+    assertTrue(c.compareTo(b) < 0);
 
   }
 
@@ -131,14 +131,14 @@ public class ArrayListOfDoublesWritableTest {
     // [1, 3, 4]
     ArrayListOfDoublesWritable b = new ArrayListOfDoublesWritable();
     b.add(one).add(three).add(four);
-    assertTrue(a.compareTo(b)>0);
+    assertTrue(a.compareTo(b) > 0);
 
     // [1, 3, 4, 9]
     ArrayListOfDoublesWritable c = new ArrayListOfDoublesWritable();
     c.add(one).add(three).add(four).add(nine);
 
-    assertTrue(c.compareTo(a)<0);
-    assertTrue(b.compareTo(c)<0);
+    assertTrue(c.compareTo(a) < 0);
+    assertTrue(b.compareTo(c) < 0);
 
     // [2, 4]
     ArrayListOfDoublesWritable d = new ArrayListOfDoublesWritable();
@@ -148,18 +148,18 @@ public class ArrayListOfDoublesWritableTest {
     ArrayListOfDoublesWritable e = new ArrayListOfDoublesWritable();
     e.add(zero).add(two);
 
-    //[2,4] > all others
-    assertTrue(d.compareTo(a)>0);
-    assertTrue(d.compareTo(b)>0);
-    assertTrue(d.compareTo(c)>0);
+    // [2,4] > all others
+    assertTrue(d.compareTo(a) > 0);
+    assertTrue(d.compareTo(b) > 0);
+    assertTrue(d.compareTo(c) > 0);
 
-    //[0,2] < all others
-    assertTrue(e.compareTo(a)<0);
-    assertTrue(e.compareTo(b)<0);
-    assertTrue(e.compareTo(c)<0);
-    assertTrue(e.compareTo(d)<0);
+    // [0,2] < all others
+    assertTrue(e.compareTo(a) < 0);
+    assertTrue(e.compareTo(b) < 0);
+    assertTrue(e.compareTo(c) < 0);
+    assertTrue(e.compareTo(d) < 0);
   }
-  
+
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(ArrayListOfDoublesWritableTest.class);
   }

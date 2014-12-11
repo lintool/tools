@@ -225,8 +225,7 @@ public class Int2IntFrequencyDistributionTestBase {
     assertEquals(4, fd.get(3));
   }
 
-  protected void testGetFrequencySortedEventsCommon(
-      Int2IntFrequencyDistribution fd) {
+  protected void testGetFrequencySortedEventsCommon(Int2IntFrequencyDistribution fd) {
     fd.set(1, 5);
     fd.set(4, 2);
     fd.set(2, 5);

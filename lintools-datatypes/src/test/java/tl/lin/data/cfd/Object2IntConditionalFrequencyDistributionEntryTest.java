@@ -25,29 +25,25 @@ public class Object2IntConditionalFrequencyDistributionEntryTest extends
 
   @Test
   public void test1Entry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd =
-        new Object2IntConditionalFrequencyDistributionEntry<String>();
+    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
     test1Common(cfd);
   }
 
   @Test
   public void test2Entry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd =
-        new Object2IntConditionalFrequencyDistributionEntry<String>();
+    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
     test2Common(cfd);
   }
 
   @Test
   public void test3Entry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd =
-        new Object2IntConditionalFrequencyDistributionEntry<String>();
+    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
     test3Common(cfd);
   }
 
   @Test
   public void testLargeMarginalEntry() {
-    Object2IntConditionalFrequencyDistribution<String> cfd =
-        new Object2IntConditionalFrequencyDistributionEntry<String>();
+    Object2IntConditionalFrequencyDistribution<String> cfd = new Object2IntConditionalFrequencyDistributionEntry<String>();
     testLargeMarginalCommon(cfd);
   }
 

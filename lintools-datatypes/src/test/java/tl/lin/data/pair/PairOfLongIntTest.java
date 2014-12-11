@@ -35,69 +35,69 @@ import tl.lin.data.WritableComparatorTestHarness;
 
 public class PairOfLongIntTest {
 
-	@Test
-	public void testBasic() throws IOException {
-		PairOfLongInt pair = new PairOfLongInt(1L, 2);
+  @Test
+  public void testBasic() throws IOException {
+    PairOfLongInt pair = new PairOfLongInt(1L, 2);
 
-		assertEquals(1L, pair.getLeftElement());
-		assertEquals(2L, pair.getRightElement());
-	}
+    assertEquals(1L, pair.getLeftElement());
+    assertEquals(2L, pair.getRightElement());
+  }
 
-	@Test
-	public void testSerialize() throws IOException {
-		PairOfLongInt origPair = new PairOfLongInt(1L, 2);
+  @Test
+  public void testSerialize() throws IOException {
+    PairOfLongInt origPair = new PairOfLongInt(1L, 2);
 
-		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
 
-		origPair.write(dataOut);
+    origPair.write(dataOut);
 
-		PairOfLongInt pair = new PairOfLongInt();
+    PairOfLongInt pair = new PairOfLongInt();
 
-		pair.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
+    pair.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
-		assertEquals(1L, pair.getLeftElement());
-		assertEquals(2L, pair.getRightElement());
-	}
+    assertEquals(1L, pair.getLeftElement());
+    assertEquals(2L, pair.getRightElement());
+  }
 
-	@Test
-	public void testComparison1() throws IOException {
-		PairOfLongInt pair1 = new PairOfLongInt(1L, 2);
-		PairOfLongInt pair2 = new PairOfLongInt(1L, 2);
-		PairOfLongInt pair3 = new PairOfLongInt(1L, 1);
-		PairOfLongInt pair4 = new PairOfLongInt(0L, 9);
-		PairOfLongInt pair5 = new PairOfLongInt(9L, 0);
+  @Test
+  public void testComparison1() throws IOException {
+    PairOfLongInt pair1 = new PairOfLongInt(1L, 2);
+    PairOfLongInt pair2 = new PairOfLongInt(1L, 2);
+    PairOfLongInt pair3 = new PairOfLongInt(1L, 1);
+    PairOfLongInt pair4 = new PairOfLongInt(0L, 9);
+    PairOfLongInt pair5 = new PairOfLongInt(9L, 0);
 
-		assertTrue(pair1.equals(pair2));
-		assertFalse(pair1.equals(pair3));
+    assertTrue(pair1.equals(pair2));
+    assertFalse(pair1.equals(pair3));
 
-		assertTrue(pair1.compareTo(pair2) == 0);
-		assertTrue(pair1.compareTo(pair3) > 0);
-		assertTrue(pair1.compareTo(pair4) > 0);
-		assertTrue(pair1.compareTo(pair5) < 0);
-		assertTrue(pair3.compareTo(pair4) > 0);
-		assertTrue(pair4.compareTo(pair5) < 0);
-	}
+    assertTrue(pair1.compareTo(pair2) == 0);
+    assertTrue(pair1.compareTo(pair3) > 0);
+    assertTrue(pair1.compareTo(pair4) > 0);
+    assertTrue(pair1.compareTo(pair5) < 0);
+    assertTrue(pair3.compareTo(pair4) > 0);
+    assertTrue(pair4.compareTo(pair5) < 0);
+  }
 
-	@Test
-	public void testComparison2() throws IOException {
-		WritableComparator comparator = new PairOfLongInt.Comparator();
+  @Test
+  public void testComparison2() throws IOException {
+    WritableComparator comparator = new PairOfLongInt.Comparator();
 
-		PairOfLongInt pair1 = new PairOfLongInt(1L, 2);
-		PairOfLongInt pair2 = new PairOfLongInt(1L, 2);
-		PairOfLongInt pair3 = new PairOfLongInt(1L, 1);
-		PairOfLongInt pair4 = new PairOfLongInt(0L, 9);
-		PairOfLongInt pair5 = new PairOfLongInt(9L, 0);
+    PairOfLongInt pair1 = new PairOfLongInt(1L, 2);
+    PairOfLongInt pair2 = new PairOfLongInt(1L, 2);
+    PairOfLongInt pair3 = new PairOfLongInt(1L, 1);
+    PairOfLongInt pair4 = new PairOfLongInt(0L, 9);
+    PairOfLongInt pair5 = new PairOfLongInt(9L, 0);
 
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair2) == 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair3) > 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair4) > 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair5) < 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair3, pair4) > 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair4, pair5) < 0);
-	}
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair2) == 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair3) > 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair4) > 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair5) < 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair3, pair4) > 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair4, pair5) < 0);
+  }
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(PairOfLongIntTest.class);
-	}
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(PairOfLongIntTest.class);
+  }
 }

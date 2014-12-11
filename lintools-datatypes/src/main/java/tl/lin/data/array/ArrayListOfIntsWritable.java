@@ -27,8 +27,8 @@ import org.apache.hadoop.io.WritableComparable;
  * Writable extension of the {@code ArrayListOfInts} class. This class provides an efficient data
  * structure to store a list of ints for MapReduce jobs.
  */
-public class ArrayListOfIntsWritable extends ArrayListOfInts
-    implements WritableComparable<ArrayListOfIntsWritable> {
+public class ArrayListOfIntsWritable extends ArrayListOfInts implements
+    WritableComparable<ArrayListOfIntsWritable> {
 
   /**
    * Constructs an ArrayListOfIntsWritable object.
@@ -40,7 +40,7 @@ public class ArrayListOfIntsWritable extends ArrayListOfInts
   /**
    * Constructs an empty list with the specified initial capacity.
    *
-   * @param initialCapacity	the initial capacity of the list
+   * @param initialCapacity the initial capacity of the list
    */
   public ArrayListOfIntsWritable(int initialCapacity) {
     super(initialCapacity);
@@ -50,15 +50,14 @@ public class ArrayListOfIntsWritable extends ArrayListOfInts
    * Constructs a list populated with shorts in range [first, last).
    *
    * @param first the smallest short in the range (inclusive)
-   * @param last  the largest short in the range (exclusive)
+   * @param last the largest short in the range (exclusive)
    */
   public ArrayListOfIntsWritable(int first, int last) {
     super(first, last);
   }
 
   /**
-   * Constructs a deep copy of the ArrayListOfIntsWritable object 
-   * given as parameter.
+   * Constructs a deep copy of the ArrayListOfIntsWritable object given as parameter.
    *
    * @param other object to be copied
    */
@@ -93,7 +92,7 @@ public class ArrayListOfIntsWritable extends ArrayListOfInts
   /**
    * Serializes this object.
    *
-   * @param out	where to write the raw byte representation
+   * @param out where to write the raw byte representation
    */
   public void write(DataOutput out) throws IOException {
     int size = size();
@@ -104,7 +103,7 @@ public class ArrayListOfIntsWritable extends ArrayListOfInts
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return toString(size());
   }
 

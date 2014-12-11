@@ -76,8 +76,7 @@ public class HashMapWritableTest {
 
     HashMapWritable<Text, IntWritable> map = new HashMapWritable<Text, IntWritable>();
 
-    map.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut
-        .toByteArray())));
+    map.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
     Text key;
     IntWritable value;
@@ -112,8 +111,7 @@ public class HashMapWritableTest {
 
     HashMapWritable<Text, LongWritable> map = new HashMapWritable<Text, LongWritable>();
 
-    map.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut
-        .toByteArray())));
+    map.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
     Text key;
     LongWritable value;
@@ -148,8 +146,7 @@ public class HashMapWritableTest {
 
     HashMapWritable<Writable, Writable> map = new HashMapWritable<Writable, Writable>();
 
-    map.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut
-        .toByteArray())));
+    map.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
   }
 
   @Test
@@ -164,8 +161,7 @@ public class HashMapWritableTest {
     map.write(dataOut);
 
     HashMapWritable<IntWritable, Text> newList = new HashMapWritable<IntWritable, Text>();
-    newList.readFields(new DataInputStream(new ByteArrayInputStream(
-        bytesOut.toByteArray())));
+    newList.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
     assertTrue(newList.size() == 0);
   }
 

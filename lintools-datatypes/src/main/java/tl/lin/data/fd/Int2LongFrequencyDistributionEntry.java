@@ -143,8 +143,8 @@ public class Int2LongFrequencyDistributionEntry implements Int2LongFrequencyDist
    */
   public Iterator<PairOfIntLong> iterator() {
     return new Iterator<PairOfIntLong>() {
-      private Iterator<MapIL.Entry> iter =
-        Int2LongFrequencyDistributionEntry.this.counts.entrySet().iterator();
+      private Iterator<MapIL.Entry> iter = Int2LongFrequencyDistributionEntry.this.counts
+          .entrySet().iterator();
       private final PairOfIntLong pair = new PairOfIntLong();
 
       @Override
@@ -200,73 +200,69 @@ public class Int2LongFrequencyDistributionEntry implements Int2LongFrequencyDist
     return null;
   }
 
-  private final Comparator<PairOfIntLong> comparatorRightDescending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return -1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return 1;
-        }
-
-        if (e1.getLeftElement() == e2.getLeftElement()) {
-          throw new RuntimeException("Event observed twice!");
-        }
-
-       return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+  private final Comparator<PairOfIntLong> comparatorRightDescending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return -1;
       }
-    };
 
-  private final Comparator<PairOfIntLong> comparatorRightAscending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return 1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return -1;
-        }
-
-        if (e1.getLeftElement() == e2.getLeftElement()) {
-          throw new RuntimeException("Event observed twice!");
-        }
-
-        return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return 1;
       }
-    };
 
-  private final Comparator<PairOfIntLong> comparatorLeftAscending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getLeftElement() > e2.getLeftElement()) {
-          return 1;
-        }
-
-        if (e1.getLeftElement() < e2.getLeftElement()) {
-          return -1;
-        }
-
+      if (e1.getLeftElement() == e2.getLeftElement()) {
         throw new RuntimeException("Event observed twice!");
       }
-    };
 
-  private final Comparator<PairOfIntLong> comparatorLeftDescending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getLeftElement() > e2.getLeftElement()) {
-          return -1;
-        }
+      return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+    }
+  };
 
-        if (e1.getLeftElement() < e2.getLeftElement()) {
-          return 1;
-        }
+  private final Comparator<PairOfIntLong> comparatorRightAscending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return 1;
+      }
 
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return -1;
+      }
+
+      if (e1.getLeftElement() == e2.getLeftElement()) {
         throw new RuntimeException("Event observed twice!");
       }
-    };
+
+      return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+    }
+  };
+
+  private final Comparator<PairOfIntLong> comparatorLeftAscending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getLeftElement() > e2.getLeftElement()) {
+        return 1;
+      }
+
+      if (e1.getLeftElement() < e2.getLeftElement()) {
+        return -1;
+      }
+
+      throw new RuntimeException("Event observed twice!");
+    }
+  };
+
+  private final Comparator<PairOfIntLong> comparatorLeftDescending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getLeftElement() > e2.getLeftElement()) {
+        return -1;
+      }
+
+      if (e1.getLeftElement() < e2.getLeftElement()) {
+        return 1;
+      }
+
+      throw new RuntimeException("Event observed twice!");
+    }
+  };
 
   private List<PairOfIntLong> getEntriesSorted(Comparator<PairOfIntLong> comparator) {
     List<PairOfIntLong> list = Lists.newArrayList();

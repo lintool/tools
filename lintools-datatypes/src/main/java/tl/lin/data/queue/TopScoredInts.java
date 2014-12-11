@@ -38,8 +38,8 @@ public class TopScoredInts implements Writable {
         return ((PairOfIntFloat) obj0).getKey() < ((PairOfIntFloat) obj1).getKey() ? true : false;
       }
 
-      return (((PairOfIntFloat) obj0).getValue() < ((PairOfIntFloat) obj1).getValue()) ?
-          true : false;
+      return (((PairOfIntFloat) obj0).getValue() < ((PairOfIntFloat) obj1).getValue()) ? true
+          : false;
     }
   }
 

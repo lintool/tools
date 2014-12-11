@@ -27,7 +27,8 @@ public class FloatArrayWritable implements Writable {
   private float[] array;
   private int length = 0;
 
-  public FloatArrayWritable() {}
+  public FloatArrayWritable() {
+  }
 
   /**
    * Constructor with array as input.
@@ -118,6 +119,7 @@ public class FloatArrayWritable implements Writable {
 
   /**
    * Returns the value at index <i>i</i>. Note that no bounds checking is performed.
+   *
    * @param i index position
    */
   public float get(int i) {

@@ -27,16 +27,15 @@ import tl.lin.data.pair.PairOfObjectInt;
 import com.google.common.collect.Maps;
 
 /**
- * An implementation of a conditional frequency distribution for arbitrary
- * events, backed by {@link HMapKI}. This class keeps track of
- * frequencies using ints, so beware when dealing with a large number of
- * observations.
+ * An implementation of a conditional frequency distribution for arbitrary events, backed by
+ * {@link HMapKI}. This class keeps track of frequencies using ints, so beware when dealing with a
+ * large number of observations.
  *
  * @author Jimmy Lin
  *
  */
-public class Object2IntConditionalFrequencyDistributionEntry<K extends Comparable<K>>
-    implements Object2IntConditionalFrequencyDistribution<K> {
+public class Object2IntConditionalFrequencyDistributionEntry<K extends Comparable<K>> implements
+    Object2IntConditionalFrequencyDistribution<K> {
 
   private final Map<K, Object2IntFrequencyDistribution<K>> distributions = Maps.newHashMap();
   private final HMapKL<K> marginals = new HMapKL<K>();
@@ -127,8 +126,8 @@ public class Object2IntConditionalFrequencyDistributionEntry<K extends Comparabl
     }
 
     if (totalSum != getSumOfAllCounts()) {
-      throw new RuntimeException("Internal Error! Got " + totalSum
-          + ", Expected " + getSumOfAllCounts());
+      throw new RuntimeException("Internal Error! Got " + totalSum + ", Expected "
+          + getSumOfAllCounts());
     }
 
     for (PairOfObjectInt<K> e : m) {

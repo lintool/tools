@@ -32,14 +32,12 @@ import org.apache.hadoop.io.Writable;
  * </p>
  *
  * <p>
- * One notable feature of this class is the ability to support <i>lazy decoding</i>,
- * controlled by the {@link #setLazyDecodeFlag(boolean)} method. In lazy
- * decoding mode, when an object of this type is deserialized, key-value pairs
- * are not inserted into the map, but rather held in arrays. The reduces memory
- * used in cases where random access to values is not required. In lazy decoding
- * mode, the raw keys and values may be fetched by the {@link #getKeys()} and
- * {@link #getValues()} methods, respectively. The map can be subsequently
- * populated with the {@link #decode()} method.
+ * One notable feature of this class is the ability to support <i>lazy decoding</i>, controlled by
+ * the {@link #setLazyDecodeFlag(boolean)} method. In lazy decoding mode, when an object of this
+ * type is deserialized, key-value pairs are not inserted into the map, but rather held in arrays.
+ * The reduces memory used in cases where random access to values is not required. In lazy decoding
+ * mode, the raw keys and values may be fetched by the {@link #getKeys()} and {@link #getValues()}
+ * methods, respectively. The map can be subsequently populated with the {@link #decode()} method.
  * </p>
  */
 public class HMapILW extends HMapIL implements Writable {
@@ -87,8 +85,7 @@ public class HMapILW extends HMapIL implements Writable {
   }
 
   /**
-   * In lazy decoding mode, populates the map with deserialized data.
-   * Otherwise, does nothing.
+   * In lazy decoding mode, populates the map with deserialized data. Otherwise, does nothing.
    *
    * @throws IOException
    */
@@ -105,8 +102,8 @@ public class HMapILW extends HMapIL implements Writable {
   }
 
   /**
-   * Returns whether or not this map has been decoded. If not in lazy decoding
-   * mode, this method always return <i>true</i>.
+   * Returns whether or not this map has been decoded. If not in lazy decoding mode, this method
+   * always return <i>true</i>.
    */
   public boolean isDecoded() {
     if (getLazyDecodeFlag() == false)
@@ -186,8 +183,8 @@ public class HMapILW extends HMapIL implements Writable {
   }
 
   /**
-   * In lazy decoding mode, returns an array of all the keys if the map hasn't
-   * been decoded yet. Otherwise, returns null.
+   * In lazy decoding mode, returns an array of all the keys if the map hasn't been decoded yet.
+   * Otherwise, returns null.
    *
    * @return an array of all the keys
    */
@@ -196,8 +193,8 @@ public class HMapILW extends HMapIL implements Writable {
   }
 
   /**
-   * In lazy decoding mode, returns an array of all the values if the map
-   * hasn't been decoded yet. Otherwise, returns null.
+   * In lazy decoding mode, returns an array of all the values if the map hasn't been decoded yet.
+   * Otherwise, returns null.
    *
    * @return an array of all the values
    */
@@ -206,9 +203,8 @@ public class HMapILW extends HMapIL implements Writable {
   }
 
   /**
-   * In lazy decoding mode, adds values from keys of another map to this map.
-   * This map must have already been decoded, but the other map must not have
-   * been already decoded.
+   * In lazy decoding mode, adds values from keys of another map to this map. This map must have
+   * already been decoded, but the other map must not have been already decoded.
    *
    * @param m the other map
    */
@@ -224,7 +220,6 @@ public class HMapILW extends HMapIL implements Writable {
       }
     }
   }
-
 
   @Override
   public int size() {

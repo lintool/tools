@@ -20,69 +20,60 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Test;
 
-public class Object2LongFrequencyDistributionEntryTest
-    extends Object2LongFrequencyDistributionTestBase {
+public class Object2LongFrequencyDistributionEntryTest extends
+    Object2LongFrequencyDistributionTestBase {
 
   @Test
   public void test1Entry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     test1Common(fd);
   }
 
   @Test
   public void test2Entry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     test2Common(fd);
   }
 
   @Test
   public void test3Entry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     test3Common(fd);
   }
 
   @Test(expected = RuntimeException.class)
   public void testFailedDecrement1Entry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     testFailedDecrement1Common(fd);
   }
 
   @Test(expected = RuntimeException.class)
   public void testFailedDecrement2Entry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     testFailedDecrement2Common(fd);
   }
 
   @Test
   public void testMultiIncrementDecrementEntry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     testMultiIncrementDecrementCommon(fd);
   }
 
   @Test
   public void testGetFrequencySortedEntry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     testGetFrequencySortedCommon(fd);
   }
 
   @Test
   public void testGetSortedEventsEntry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     testGetSortedEventsCommon(fd);
   }
 
   @Test
   public void testIterableEntry() {
-    Object2LongFrequencyDistribution<String> fd =
-      new Object2LongFrequencyDistributionEntry<String>();
+    Object2LongFrequencyDistribution<String> fd = new Object2LongFrequencyDistributionEntry<String>();
     testIterableCommon(fd);
   }
 

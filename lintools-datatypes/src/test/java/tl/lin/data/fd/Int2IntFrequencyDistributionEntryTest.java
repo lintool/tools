@@ -20,8 +20,7 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Test;
 
-public class Int2IntFrequencyDistributionEntryTest
-    extends Int2IntFrequencyDistributionTestBase {
+public class Int2IntFrequencyDistributionEntryTest extends Int2IntFrequencyDistributionTestBase {
 
   @Test
   public void test1Entry() {

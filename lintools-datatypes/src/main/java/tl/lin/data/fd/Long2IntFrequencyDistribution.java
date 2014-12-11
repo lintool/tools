@@ -56,8 +56,8 @@ public interface Long2IntFrequencyDistribution extends SortableEntries<PairOfLon
   public int get(long key);
 
   /**
-   * Computes the relative frequency of a particular event {@code key}.
-   * That is, {@code f(key) / SUM_i f(key_i)}.
+   * Computes the relative frequency of a particular event {@code key}. That is,
+   * {@code f(key) / SUM_i f(key_i)}.
    */
   public double computeRelativeFrequency(long key);
 

@@ -89,8 +89,8 @@ public class HMapSFWTest {
   @Test
   public void testJp() throws IOException {
     HMapSFW map1 = new HMapSFW();
-    BufferedReader in = new BufferedReader(new InputStreamReader(
-        this.getClass().getClassLoader().getResourceAsStream("jp-sample.txt"), "UTF8"));
+    BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
+        .getResourceAsStream("jp-sample.txt"), "UTF8"));
 
     List<String> list = Lists.newArrayList();
     int cnt = 0;

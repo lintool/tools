@@ -21,8 +21,7 @@ import org.apache.hadoop.util.PriorityQueue;
 import tl.lin.data.pair.PairOfObjectFloat;
 
 public class TopScoredObjects<K extends Comparable<K>> {
-  private class ScoredObjectPriorityQueue extends
-      PriorityQueue<PairOfObjectFloat<K>> {
+  private class ScoredObjectPriorityQueue extends PriorityQueue<PairOfObjectFloat<K>> {
 
     private ScoredObjectPriorityQueue(int maxSize) {
       super.initialize(maxSize);
@@ -32,14 +31,14 @@ public class TopScoredObjects<K extends Comparable<K>> {
     @SuppressWarnings("unchecked")
     protected boolean lessThan(Object obj0, Object obj1) {
       // If equal scores, break tie by object descending.
-      if (((PairOfObjectFloat<K>) obj0).getRightElement() == 
-          ((PairOfObjectFloat<K>) obj1).getRightElement()) {
+      if (((PairOfObjectFloat<K>) obj0).getRightElement() == ((PairOfObjectFloat<K>) obj1)
+          .getRightElement()) {
         return ((PairOfObjectFloat<K>) obj0).getLeftElement().compareTo(
             ((PairOfObjectFloat<K>) obj1).getLeftElement()) < 0 ? true : false;
       }
 
-      return ((PairOfObjectFloat<K>) obj0).getRightElement() < 
-          ((PairOfObjectFloat<K>) obj1).getRightElement() ? true : false;
+      return ((PairOfObjectFloat<K>) obj0).getRightElement() < ((PairOfObjectFloat<K>) obj1)
+          .getRightElement() ? true : false;
     }
   }
 

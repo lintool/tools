@@ -31,8 +31,8 @@ import com.google.common.collect.Lists;
 /**
  * Implementation of {@link Object2LongFrequencyDistribution} based on {@link HMapKL}.
  */
-public class Object2LongFrequencyDistributionEntry<K extends Comparable<K>>
-    implements Object2LongFrequencyDistribution<K> {
+public class Object2LongFrequencyDistributionEntry<K extends Comparable<K>> implements
+    Object2LongFrequencyDistribution<K> {
 
   private MapKL<K> counts = new HMapKL<K>();
   private long sumOfCounts = 0;
@@ -147,8 +147,8 @@ public class Object2LongFrequencyDistributionEntry<K extends Comparable<K>>
    */
   public Iterator<PairOfObjectLong<K>> iterator() {
     return new Iterator<PairOfObjectLong<K>>() {
-      private Iterator<MapKL.Entry<K>> iter
-          = Object2LongFrequencyDistributionEntry.this.counts.entrySet().iterator();
+      private Iterator<MapKL.Entry<K>> iter = Object2LongFrequencyDistributionEntry.this.counts
+          .entrySet().iterator();
       private final PairOfObjectLong<K> pair = new PairOfObjectLong<K>();
 
       @Override
@@ -204,57 +204,53 @@ public class Object2LongFrequencyDistributionEntry<K extends Comparable<K>>
     return null;
   }
 
-  private final Comparator<PairOfObjectLong<K>> comparatorRightDescending =
-    new Comparator<PairOfObjectLong<K>>() {
-      public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return -1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return 1;
-        }
-
-        return e1.getLeftElement().compareTo(e2.getLeftElement());
+  private final Comparator<PairOfObjectLong<K>> comparatorRightDescending = new Comparator<PairOfObjectLong<K>>() {
+    public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return -1;
       }
-    };
 
-  private final Comparator<PairOfObjectLong<K>> comparatorRightAscending =
-    new Comparator<PairOfObjectLong<K>>() {
-      public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return 1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return -1;
-        }
-
-        return e1.getLeftElement().compareTo(e2.getLeftElement());
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return 1;
       }
-    };
 
-  private final Comparator<PairOfObjectLong<K>> comparatorLeftAscending =
-    new Comparator<PairOfObjectLong<K>>() {
-      public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
-        if (e1.getLeftElement().equals(e2.getLeftElement())) {
-          throw new RuntimeException("Event observed twice!");
-        }
+      return e1.getLeftElement().compareTo(e2.getLeftElement());
+    }
+  };
 
-        return e1.getLeftElement().compareTo(e2.getLeftElement());
+  private final Comparator<PairOfObjectLong<K>> comparatorRightAscending = new Comparator<PairOfObjectLong<K>>() {
+    public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return 1;
       }
-    };
 
-  private final Comparator<PairOfObjectLong<K>> comparatorLeftDescending =
-    new Comparator<PairOfObjectLong<K>>() {
-      public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
-        if (e1.getLeftElement().equals(e2.getLeftElement())) {
-          throw new RuntimeException("Event observed twice!");
-        }
-
-        return e2.getLeftElement().compareTo(e1.getLeftElement());
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return -1;
       }
-    };
+
+      return e1.getLeftElement().compareTo(e2.getLeftElement());
+    }
+  };
+
+  private final Comparator<PairOfObjectLong<K>> comparatorLeftAscending = new Comparator<PairOfObjectLong<K>>() {
+    public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
+      if (e1.getLeftElement().equals(e2.getLeftElement())) {
+        throw new RuntimeException("Event observed twice!");
+      }
+
+      return e1.getLeftElement().compareTo(e2.getLeftElement());
+    }
+  };
+
+  private final Comparator<PairOfObjectLong<K>> comparatorLeftDescending = new Comparator<PairOfObjectLong<K>>() {
+    public int compare(PairOfObjectLong<K> e1, PairOfObjectLong<K> e2) {
+      if (e1.getLeftElement().equals(e2.getLeftElement())) {
+        throw new RuntimeException("Event observed twice!");
+      }
+
+      return e2.getLeftElement().compareTo(e1.getLeftElement());
+    }
+  };
 
   private List<PairOfObjectLong<K>> getEntriesSorted(Comparator<PairOfObjectLong<K>> comparator) {
     List<PairOfObjectLong<K>> list = Lists.newArrayList();
@@ -267,8 +263,8 @@ public class Object2LongFrequencyDistributionEntry<K extends Comparable<K>>
     return list;
   }
 
-  private List<PairOfObjectLong<K>>
-      getEntriesSorted(Comparator<PairOfObjectLong<K>> comparator, int n) {
+  private List<PairOfObjectLong<K>> getEntriesSorted(Comparator<PairOfObjectLong<K>> comparator,
+      int n) {
     List<PairOfObjectLong<K>> list = getEntriesSorted(comparator);
     return list.subList(0, n);
   }
