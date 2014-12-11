@@ -38,66 +38,66 @@ import com.google.common.collect.Lists;
  * Implementation of {@link Int2LongFrequencyDistribution} based on {@link Int2LongOpenHashMap}.
  */
 public class Int2LongFrequencyDistributionFastutil implements Int2LongFrequencyDistribution {
-	private Int2LongOpenHashMapWritable counts = new Int2LongOpenHashMapWritable();
-	private long sumOfCounts = 0;
+  private Int2LongOpenHashMapWritable counts = new Int2LongOpenHashMapWritable();
+  private long sumOfCounts = 0;
 
-	@Override
-	public void increment(int key) {
-		if (contains(key)) {
-			set(key, get(key) + 1L);
-		} else {
-			set(key, 1L);
-		}
-	}
+  @Override
+  public void increment(int key) {
+    if (contains(key)) {
+      set(key, get(key) + 1L);
+    } else {
+      set(key, 1L);
+    }
+  }
 
-	@Override
-	public void increment(int key, long cnt) {
-		if (contains(key)) {
-			set(key, get(key) + cnt);
-		} else {
-			set(key, cnt);
-		}
-	}
+  @Override
+  public void increment(int key, long cnt) {
+    if (contains(key)) {
+      set(key, get(key) + cnt);
+    } else {
+      set(key, cnt);
+    }
+  }
 
-	@Override
-	public void decrement(int key) {
-		if (contains(key)) {
-			long v = get(key);
-			if (v == 1L) {
-				remove(key);
-			} else {
-				set(key, v - 1L);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(int key) {
+    if (contains(key)) {
+      long v = get(key);
+      if (v == 1L) {
+        remove(key);
+      } else {
+        set(key, v - 1L);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public void decrement(int key, long cnt) {
-		if (contains(key)) {
-			long v = get(key);
-			if (v < cnt) {
-				throw new RuntimeException("Can't decrement past zero!");
-			} else if (v == cnt) {
-				remove(key);
-			} else {
-				set(key, v - cnt);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(int key, long cnt) {
+    if (contains(key)) {
+      long v = get(key);
+      if (v < cnt) {
+        throw new RuntimeException("Can't decrement past zero!");
+      } else if (v == cnt) {
+        remove(key);
+      } else {
+        set(key, v - cnt);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public boolean contains(int key) {
-		return counts.containsKey(key);
-	}
+  @Override
+  public boolean contains(int key) {
+    return counts.containsKey(key);
+  }
 
-	@Override
-	public long get(int key) {
-		return counts.get(key);
-	}
+  @Override
+  public long get(int key) {
+    return counts.get(key);
+  }
 
   @Override
   public double computeRelativeFrequency(int k) {
@@ -109,90 +109,90 @@ public class Int2LongFrequencyDistributionFastutil implements Int2LongFrequencyD
     return Math.log(counts.get(k)) - Math.log(getSumOfCounts());
   }
 
-	@Override
-	public long set(int k, long v) {
-		long rv = counts.put(k, v);
-		sumOfCounts = sumOfCounts - rv + v;
+  @Override
+  public long set(int k, long v) {
+    long rv = counts.put(k, v);
+    sumOfCounts = sumOfCounts - rv + v;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public long remove(int k) {
-		long rv = counts.remove(k);
-		sumOfCounts -= rv;
+  @Override
+  public long remove(int k) {
+    long rv = counts.remove(k);
+    sumOfCounts -= rv;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public void clear() {
-		counts.clear();
-		sumOfCounts = 0;
-	}
+  @Override
+  public void clear() {
+    counts.clear();
+    sumOfCounts = 0;
+  }
 
-	/**
-	 * Exposes efficient method for accessing keys in this map.
-	 */
-	public IntSet keySet() {
-		return counts.keySet();
-	}
+  /**
+   * Exposes efficient method for accessing keys in this map.
+   */
+  public IntSet keySet() {
+    return counts.keySet();
+  }
 
-	/**
-	 * Exposes efficient method for accessing values in this map.
-	 */
-	public LongCollection values() {
-		return counts.values();
-	}
+  /**
+   * Exposes efficient method for accessing values in this map.
+   */
+  public LongCollection values() {
+    return counts.values();
+  }
 
-	/**
-	 * Exposes efficient method for accessing mappings in this map.
-	 */
-	public Int2LongMap.FastEntrySet entrySet() {
-		return counts.int2LongEntrySet();
-	}
+  /**
+   * Exposes efficient method for accessing mappings in this map.
+   */
+  public Int2LongMap.FastEntrySet entrySet() {
+    return counts.int2LongEntrySet();
+  }
 
-	@Override
-	public int getNumberOfEvents() {
-		return counts.size();
-	}
+  @Override
+  public int getNumberOfEvents() {
+    return counts.size();
+  }
 
-	@Override
-	public long getSumOfCounts() {
-		return sumOfCounts;
-	}
+  @Override
+  public long getSumOfCounts() {
+    return sumOfCounts;
+  }
 
-	/**
-	 * Iterator returns the same object every time, just with a different payload.
-	 */
-	public Iterator<PairOfIntLong> iterator() {
-		return new Iterator<PairOfIntLong>() {
-			private Iterator<Int2LongMap.Entry> iter =
-			  Int2LongFrequencyDistributionFastutil.this.counts.int2LongEntrySet().iterator();
-			private final PairOfIntLong pair = new PairOfIntLong();
+  /**
+   * Iterator returns the same object every time, just with a different payload.
+   */
+  public Iterator<PairOfIntLong> iterator() {
+    return new Iterator<PairOfIntLong>() {
+      private Iterator<Int2LongMap.Entry> iter = Int2LongFrequencyDistributionFastutil.this.counts
+          .int2LongEntrySet().iterator();
+      private final PairOfIntLong pair = new PairOfIntLong();
 
-			@Override
-			public boolean hasNext() {
-				return iter.hasNext();
-			}
+      @Override
+      public boolean hasNext() {
+        return iter.hasNext();
+      }
 
-			@Override
-			public PairOfIntLong next() {
-				if (!hasNext()) {
-					return null;
-				}
+      @Override
+      public PairOfIntLong next() {
+        if (!hasNext()) {
+          return null;
+        }
 
-				Int2LongMap.Entry entry = iter.next();
-				pair.set(entry.getIntKey(), entry.getLongValue());
-				return pair;
-			}
+        Int2LongMap.Entry entry = iter.next();
+        pair.set(entry.getIntKey(), entry.getLongValue());
+        return pair;
+      }
 
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
+  }
 
   @Override
   public List<PairOfIntLong> getEntries(Order ordering) {
@@ -224,73 +224,69 @@ public class Int2LongFrequencyDistributionFastutil implements Int2LongFrequencyD
     return null;
   }
 
-  private final Comparator<PairOfIntLong> comparatorRightDescending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return -1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return 1;
-        }
-
-        if (e1.getLeftElement() == e2.getLeftElement()) {
-          throw new RuntimeException("Event observed twice!");
-        }
-
-       return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+  private final Comparator<PairOfIntLong> comparatorRightDescending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return -1;
       }
-    };
 
-  private final Comparator<PairOfIntLong> comparatorRightAscending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return 1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return -1;
-        }
-
-        if (e1.getLeftElement() == e2.getLeftElement()) {
-          throw new RuntimeException("Event observed twice!");
-        }
-
-        return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return 1;
       }
-    };
 
-  private final Comparator<PairOfIntLong> comparatorLeftAscending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getLeftElement() > e2.getLeftElement()) {
-          return 1;
-        }
-
-        if (e1.getLeftElement() < e2.getLeftElement()) {
-          return -1;
-        }
-
+      if (e1.getLeftElement() == e2.getLeftElement()) {
         throw new RuntimeException("Event observed twice!");
       }
-    };
 
-  private final Comparator<PairOfIntLong> comparatorLeftDescending =
-    new Comparator<PairOfIntLong>() {
-      public int compare(PairOfIntLong e1, PairOfIntLong e2) {
-        if (e1.getLeftElement() > e2.getLeftElement()) {
-          return -1;
-        }
+      return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+    }
+  };
 
-        if (e1.getLeftElement() < e2.getLeftElement()) {
-          return 1;
-        }
+  private final Comparator<PairOfIntLong> comparatorRightAscending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return 1;
+      }
 
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return -1;
+      }
+
+      if (e1.getLeftElement() == e2.getLeftElement()) {
         throw new RuntimeException("Event observed twice!");
       }
-    };
+
+      return e1.getLeftElement() < e2.getLeftElement() ? -1 : 1;
+    }
+  };
+
+  private final Comparator<PairOfIntLong> comparatorLeftAscending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getLeftElement() > e2.getLeftElement()) {
+        return 1;
+      }
+
+      if (e1.getLeftElement() < e2.getLeftElement()) {
+        return -1;
+      }
+
+      throw new RuntimeException("Event observed twice!");
+    }
+  };
+
+  private final Comparator<PairOfIntLong> comparatorLeftDescending = new Comparator<PairOfIntLong>() {
+    public int compare(PairOfIntLong e1, PairOfIntLong e2) {
+      if (e1.getLeftElement() > e2.getLeftElement()) {
+        return -1;
+      }
+
+      if (e1.getLeftElement() < e2.getLeftElement()) {
+        return 1;
+      }
+
+      throw new RuntimeException("Event observed twice!");
+    }
+  };
 
   private List<PairOfIntLong> getEntriesSorted(Comparator<PairOfIntLong> comparator) {
     List<PairOfIntLong> list = Lists.newArrayList();
