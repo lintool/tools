@@ -30,75 +30,65 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 
-public class HMapSIWTest {
+public class HMapStFWTest {
 
   @Test
   public void testBasic() throws IOException {
-    HMapSIW m = new HMapSIW();
+    HMapStFW m = new HMapStFW();
 
-    m.put("hi", 5);
-    m.put("there", 22);
+    m.put("hi", 5.0f);
+    m.put("there", 22.0f);
 
     assertEquals(2, m.size());
-    assertEquals(5, m.get("hi"));
+    assertEquals(5.0f, m.get("hi"), 10e-6);
 
     m.remove("hi");
     assertEquals(1, m.size());
 
-    assertEquals(22, m.get("there"));
+    assertEquals(22.0f, m.get("there"), 10e-6);
   }
 
   @Test
   public void testAccent() throws IOException {
-    HMapSIW map1 = new HMapSIW();
+    HMapStFW map1 = new HMapStFW();
 
     // '\u00E0': [LATIN SMALL LETTER A WITH GRAVE]
     // '\u00E6': [LATIN SMALL LETTER AE]
     // '\u00E7': [LATIN SMALL LETTER C WITH CEDILLA]
     // '\u00FC': [LATIN SMALL LETTER U WITH DIAERESIS]
 
-    map1.put("\u00E0", 1);
-    map1.put("\u00E6", 2);
-    map1.put("\u00E7", 3);
-    map1.put("\u00FC", 4);
+    map1.put("\u00E0", 1.0f);
+    map1.put("\u00E6", 2.0f);
+    map1.put("\u00E7", 3.0f);
+    map1.put("\u00FC", 4.0f);
 
-    assertEquals(1, map1.get("\u00E0"));
-    assertEquals(2, map1.get("\u00E6"));
-    assertEquals(3, map1.get("\u00E7"));
-    assertEquals(4, map1.get("\u00FC"));
+    assertEquals(1.0f, map1.get("\u00E0"), 10e-6);
+    assertEquals(2.0f, map1.get("\u00E6"), 10e-6);
+    assertEquals(3.0f, map1.get("\u00E7"), 10e-6);
+    assertEquals(4.0f, map1.get("\u00FC"), 10e-6);
 
-    map1.increment("\u00E0");
-    map1.increment("\u00E6");
-    map1.increment("\u00E7");
-    map1.increment("\u00FC");
-
-    assertEquals(2, map1.get("\u00E0"));
-    assertEquals(3, map1.get("\u00E6"));
-    assertEquals(4, map1.get("\u00E7"));
-    assertEquals(5, map1.get("\u00FC"));
-
-    map1.put("\u00E0", 10);
+    map1.put("\u00E0", 10.0f);
     map1.remove("\u00E6");
     map1.remove("\u00E7");
-    map1.put("\u00E7", 2);
-    map1.increment("\u00FC");
+    map1.put("\u00E7", 2.0f);
 
-    assertEquals(10, map1.get("\u00E0"));
-    assertEquals(2, map1.get("\u00E7"));
-    assertEquals(6, map1.get("\u00FC"));
+    assertEquals(10.0f, map1.get("\u00E0"), 10e-6);
+    assertEquals(2.0f, map1.get("\u00E7"), 10e-6);
+    assertEquals(4.0f, map1.get("\u00FC"), 10e-6);
 
     assertEquals(3, map1.size());
 
     // Test serialization
-    HMapSIW map2 = HMapSIW.create(map1.serialize());
-    assertEquals(10, map2.get("\u00E0"));
-    assertEquals(2, map2.get("\u00E7"));
-    assertEquals(6, map2.get("\u00FC"));
+    HMapStFW map2 = HMapStFW.create(map1.serialize());
+
+    assertEquals(10.0f, map2.get("\u00E0"), 10e-6);
+    assertEquals(2.0f, map2.get("\u00E7"), 10e-6);
+    assertEquals(4.0f, map2.get("\u00FC"), 10e-6);
   }
 
   @Test
   public void testJp() throws IOException {
-    HMapSIW map1 = new HMapSIW();
+    HMapStFW map1 = new HMapStFW();
     BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
         .getResourceAsStream("jp-sample.txt"), "UTF8"));
 
@@ -111,24 +101,14 @@ public class HMapSIWTest {
     }
 
     for (int i = 0; i < list.size(); i++) {
-      assertEquals(i, map1.get(list.get(i)));
-    }
-    assertEquals(5, map1.size());
-
-    for (int i = 0; i < list.size(); i++) {
-      map1.increment(list.get(i));
-    }
-    assertEquals(5, map1.size());
-
-    for (int i = 0; i < list.size(); i++) {
-      assertEquals(i + 1, map1.get(list.get(i)));
+      assertEquals((float) i, map1.get(list.get(i)), 10e-6);
     }
     assertEquals(5, map1.size());
 
     // Test serialization
-    HMapSIW map2 = HMapSIW.create(map1.serialize());
+    HMapStFW map2 = HMapStFW.create(map1.serialize());
     for (int i = 0; i < list.size(); i++) {
-      assertEquals(i + 1, map2.get(list.get(i)));
+      assertEquals((float) i, map2.get(list.get(i)), 10e-6);
     }
     assertEquals(5, map2.size());
 
@@ -142,12 +122,12 @@ public class HMapSIWTest {
 
   @Test
   public void testSerialize1() throws IOException {
-    HMapSIW m1 = new HMapSIW();
+    HMapStFW m1 = new HMapStFW();
 
-    m1.put("hi", 5);
-    m1.put("there", 22);
+    m1.put("hi", 5.0f);
+    m1.put("there", 22.0f);
 
-    HMapSIW n2 = HMapSIW.create(m1.serialize());
+    HMapStFW n2 = HMapStFW.create(m1.serialize());
 
     String key;
     float value;
@@ -156,28 +136,28 @@ public class HMapSIWTest {
 
     key = "hi";
     value = n2.get(key);
-    assertTrue(value == 5);
+    assertTrue(value == 5.0f);
 
     value = n2.remove(key);
     assertEquals(n2.size(), 1);
 
     key = "there";
     value = n2.get(key);
-    assertTrue(value == 22);
+    assertTrue(value == 22.0f);
   }
 
   @Test
   public void testSerializeEmpty() throws IOException {
-    HMapSIW m1 = new HMapSIW();
+    HMapStFW m1 = new HMapStFW();
 
     assertTrue(m1.size() == 0);
 
-    HMapSIW m2 = HMapSIW.create(m1.serialize());
+    HMapStFW m2 = HMapStFW.create(m1.serialize());
 
     assertTrue(m2.size() == 0);
   }
 
   public static junit.framework.Test suite() {
-    return new JUnit4TestAdapter(HMapSIWTest.class);
+    return new JUnit4TestAdapter(HMapStFWTest.class);
   }
 }

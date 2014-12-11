@@ -31,13 +31,13 @@ import org.apache.hadoop.io.Writable;
  * for String objects to avoid the overhead that comes with wrapping Strings inside
  * <code>Text</code> objects.
  */
-public class HMapSIW extends HMapKI<String> implements Writable {
+public class HMapStIW extends HMapKI<String> implements Writable {
   private static final long serialVersionUID = -9179978557431493856L;
 
   /**
-   * Creates a <code>HMapSIW</code> object.
+   * Creates a <code>HMapStIW</code> object.
    */
-  public HMapSIW() {
+  public HMapStIW() {
     super();
   }
 
@@ -93,27 +93,27 @@ public class HMapSIW extends HMapKI<String> implements Writable {
   }
 
   /**
-   * Creates a <code>HMapSIW</code> object from a <code>DataInput</code>.
+   * Creates a <code>HMapStIW</code> object from a <code>DataInput</code>.
    *
    * @param in source for reading the serialized representation
-   * @return a newly-created <code>OHMapSIW</code> object
+   * @return a newly-created <code>HMapStIW</code> object
    * @throws IOException
    */
-  public static HMapSIW create(DataInput in) throws IOException {
-    HMapSIW m = new HMapSIW();
+  public static HMapStIW create(DataInput in) throws IOException {
+    HMapStIW m = new HMapStIW();
     m.readFields(in);
 
     return m;
   }
 
   /**
-   * Creates a <code>HMapSIW</code> object from a byte array.
+   * Creates a <code>HMapStIW</code> object from a byte array.
    *
    * @param bytes source for reading the serialized representation
-   * @return a newly-created <code>OHMapSIW</code> object
+   * @return a newly-created <code>HMapStIW</code> object
    * @throws IOException
    */
-  public static HMapSIW create(byte[] bytes) throws IOException {
+  public static HMapStIW create(byte[] bytes) throws IOException {
     return create(new DataInputStream(new ByteArrayInputStream(bytes)));
   }
 }

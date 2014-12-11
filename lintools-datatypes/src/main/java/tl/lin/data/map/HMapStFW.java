@@ -31,13 +31,13 @@ import org.apache.hadoop.io.Writable;
  * specialized for String objects to avoid the overhead that comes with wrapping Strings inside
  * <code>Text</code> objects.
  */
-public class HMapSFW extends HMapKF<String> implements Writable {
+public class HMapStFW extends HMapKF<String> implements Writable {
   private static final long serialVersionUID = 3804087604196020037L;
 
   /**
-   * Creates a <code>HMapSFW</code> object.
+   * Creates a <code>HMapStFW</code> object.
    */
-  public HMapSFW() {
+  public HMapStFW() {
     super();
   }
 
@@ -93,27 +93,27 @@ public class HMapSFW extends HMapKF<String> implements Writable {
   }
 
   /**
-   * Creates a <code>HMapSFW</code> object from a <code>DataInput</code>.
+   * Creates a <code>HMapStFW</code> object from a <code>DataInput</code>.
    * 
    * @param in source for reading the serialized representation
-   * @return a newly-created <code>HMapSFW</code> object
+   * @return a newly-created <code>HMapStFW</code> object
    * @throws IOException
    */
-  public static HMapSFW create(DataInput in) throws IOException {
-    HMapSFW m = new HMapSFW();
+  public static HMapStFW create(DataInput in) throws IOException {
+    HMapStFW m = new HMapStFW();
     m.readFields(in);
 
     return m;
   }
 
   /**
-   * Creates a <code>HMapSFW</code> object from a byte array.
+   * Creates a <code>HMapStFW</code> object from a byte array.
    * 
    * @param bytes source for reading the serialized representation
-   * @return a newly-created <code>HMapSFW</code> object
+   * @return a newly-created <code>HMapStFW</code> object
    * @throws IOException
    */
-  public static HMapSFW create(byte[] bytes) throws IOException {
+  public static HMapStFW create(byte[] bytes) throws IOException {
     return create(new DataInputStream(new ByteArrayInputStream(bytes)));
   }
 }
