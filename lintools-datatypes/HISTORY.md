@@ -1,3 +1,9 @@
+Version 1.0.0
+=============
+December 10, 2014
+
++ Minor cleanup, upgraded dependencies
+
 Version 0.9.2
 =============
 July 14, 2013
