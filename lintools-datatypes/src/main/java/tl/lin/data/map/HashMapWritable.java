@@ -28,31 +28,29 @@ import org.apache.hadoop.io.Writable;
 
 /**
  * <p>
- * Writable extension of a Java HashMap. This generic class supports the use of
- * any type as either key or value. For a feature vector, {@link HMapKIW},
- * {@link HMapKFW}, and a family of related classes provides a more efficient
- * implementation.
+ * Writable extension of a Java HashMap. This generic class supports the use of any type as either
+ * key or value. For a feature vector, {@link HMapKIW}, {@link HMapKFW}, and a family of related
+ * classes provides a more efficient implementation.
  * </p>
  *
  * <p>
- * There are a number of key differences between this class and Hadoop's
- * {@link MapWritable}:
+ * There are a number of key differences between this class and Hadoop's {@link MapWritable}:
  * </p>
  *
  * <ul>
  *
- * <li><code>MapWritable</code> is more flexible in that it supports
- * heterogeneous elements. In this class, all keys must be of the same type and
- * all values must be of the same type. This assumption allows a simpler
- * serialization protocol and thus is more efficient. Run <code>main</code> in
- * this class for a simple efficiency test.</li>
+ * <li><code>MapWritable</code> is more flexible in that it supports heterogeneous elements. In this
+ * class, all keys must be of the same type and all values must be of the same type. This assumption
+ * allows a simpler serialization protocol and thus is more efficient. Run <code>main</code> in this
+ * class for a simple efficiency test.</li>
  *
  * </ul>
  *
  * @param <K> type of the key
  * @param <V> type of the value
  */
-public class HashMapWritable<K extends Writable, V extends Writable> extends HashMap<K, V> implements Writable {
+public class HashMapWritable<K extends Writable, V extends Writable> extends HashMap<K, V>
+    implements Writable {
   private static final long serialVersionUID = -7549423384046548469L;
 
   /**

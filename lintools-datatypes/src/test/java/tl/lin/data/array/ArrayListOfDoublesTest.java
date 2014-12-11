@@ -26,10 +26,11 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class ArrayListOfDoublesTest {
-  double neg_one=-1, zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, nine=9;
+  double neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6,
+      seven = 7, nine = 9;
 
   @Test
-  public void testRemoveWithinBounds(){
+  public void testRemoveWithinBounds() {
     ArrayListOfDoubles a = new ArrayListOfDoubles();
     a.add(one).add(three).add(five).add(seven);
 
@@ -39,19 +40,19 @@ public class ArrayListOfDoublesTest {
     assertTrue(five == a.get(1));
 
     assertTrue(five == a.remove(1));
-    assertTrue(seven == a.get(2));  
+    assertTrue(seven == a.get(2));
   }
 
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds(){
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds() {
     ArrayListOfDoubles a = new ArrayListOfDoubles();
     a.add(one).add(three).add(five).add(seven);
 
     a.remove(4);
   }
 
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds2(){
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds2() {
     ArrayListOfDoubles a = new ArrayListOfDoubles();
     a.add(neg_one);
     a.remove(-1);
@@ -94,7 +95,7 @@ public class ArrayListOfDoublesTest {
   @Test
   public void testRemove() {
     ArrayListOfDoubles list = new ArrayListOfDoubles();
-    for ( int i=0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
       list.add((double) i);
     }
 
@@ -234,7 +235,7 @@ public class ArrayListOfDoublesTest {
     }
 
     out = list.toString();
-    for (int i = size; i < size+size; i++) {
+    for (int i = size; i < size + size; i++) {
       double v = list.get(i);
 
       // Make sure these elements are not printed out.
@@ -257,8 +258,8 @@ public class ArrayListOfDoublesTest {
       doubles[i] = k;
     }
 
-    int i=0;
-    for ( Double v : list) {
+    int i = 0;
+    for (Double v : list) {
       assertEquals(doubles[i++], v, 10e-5);
     }
   }
@@ -294,10 +295,10 @@ public class ArrayListOfDoublesTest {
     a.sort();
     assertEquals(4, a.size());
 
-    assertTrue(Math.abs(a.get(0)-4.1) < 0.0001);
-    assertTrue(Math.abs(a.get(1)-5.2) < 0.0001);
-    assertTrue(Math.abs(a.get(2)-5.9) < 0.0001);
-    assertTrue(Math.abs(a.get(3)-6) < 0.0001);
+    assertTrue(Math.abs(a.get(0) - 4.1) < 0.0001);
+    assertTrue(Math.abs(a.get(1) - 5.2) < 0.0001);
+    assertTrue(Math.abs(a.get(2) - 5.9) < 0.0001);
+    assertTrue(Math.abs(a.get(3) - 6) < 0.0001);
   }
 
   @Test
@@ -345,7 +346,7 @@ public class ArrayListOfDoublesTest {
 
   @Test
   public void testMerge1() {
-    //CASE: interleaved
+    // CASE: interleaved
 
     ArrayListOfDoubles a = new ArrayListOfDoubles();
     a.add(3);
@@ -368,13 +369,13 @@ public class ArrayListOfDoublesTest {
     assertTrue(Math.abs(10 - c.get(5)) < 0.0001);
 
     // c should be same as c2
-    ArrayListOfDoubles c2 = b.merge(a); 
+    ArrayListOfDoubles c2 = b.merge(a);
     assertEquals(c, c2);
   }
 
   @Test
   public void testMerge2() {
-    //CASE: append
+    // CASE: append
 
     ArrayListOfDoubles a = new ArrayListOfDoubles();
     a.add(3);
@@ -402,7 +403,7 @@ public class ArrayListOfDoublesTest {
 
   @Test
   public void testMerge3() {
-    //CASE: one of the lists are empty
+    // CASE: one of the lists are empty
 
     ArrayListOfDoubles a = new ArrayListOfDoubles();
     a.add(3);
@@ -415,12 +416,12 @@ public class ArrayListOfDoublesTest {
     assertEquals(c, a);
 
     ArrayListOfDoubles c2 = b.merge(a);
-    assertEquals(c, c2);   
+    assertEquals(c, c2);
   }
 
   @Test
   public void testSubList() {
-    ArrayListOfDoubles a = new ArrayListOfDoubles(new double[] {1, 2, 3, 4, 5, 6, 7});
+    ArrayListOfDoubles a = new ArrayListOfDoubles(new double[] { 1, 2, 3, 4, 5, 6, 7 });
     ArrayListOfDoubles c = a.subList(1, 5);
     assertEquals(5, c.size());
     assertTrue(Math.abs(2 - c.get(0)) < 0.0001);
@@ -436,13 +437,13 @@ public class ArrayListOfDoublesTest {
     assertTrue(Math.abs(3 - c.get(1)) < 0.0001);
     assertTrue(Math.abs(4 - c.get(2)) < 0.0001);
     assertTrue(Math.abs(5 - c.get(3)) < 0.0001);
-    assertTrue(Math.abs(6 - c.get(4)) < 0.0001);   
+    assertTrue(Math.abs(6 - c.get(4)) < 0.0001);
   }
 
   @Test
   public void testAddUnique() {
-    ArrayListOfDoubles a = new ArrayListOfDoubles(new double[] {1, 2, 3, 4, 5, 6, 7});
-    a.addUnique(new int[] {8, 0, 2, 5, -1, 11, 9});
+    ArrayListOfDoubles a = new ArrayListOfDoubles(new double[] { 1, 2, 3, 4, 5, 6, 7 });
+    a.addUnique(new int[] { 8, 0, 2, 5, -1, 11, 9 });
 
     assertEquals(12, a.size());
     assertTrue(Math.abs(0 - a.get(8)) < 0.0001);

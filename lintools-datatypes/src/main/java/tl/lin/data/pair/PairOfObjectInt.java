@@ -18,56 +18,57 @@ package tl.lin.data.pair;
 
 public class PairOfObjectInt<L extends Comparable<L>> implements Comparable<PairOfObjectInt<L>> {
 
-	private L left;
-	private int right;
+  private L left;
+  private int right;
 
-	public PairOfObjectInt(L left, int right) {
-		this.left = left;
-		this.right = right;
-	}
+  public PairOfObjectInt(L left, int right) {
+    this.left = left;
+    this.right = right;
+  }
 
-	public PairOfObjectInt() {}
+  public PairOfObjectInt() {
+  }
 
-	public L getLeftElement() {
-		return left;
-	}
+  public L getLeftElement() {
+    return left;
+  }
 
-	public int getRightElement() {
-		return right;
-	}
+  public int getRightElement() {
+    return right;
+  }
 
-	public void set(L left, int right) {
-		this.left = left;
-		this.right = right;
-	}
+  public void set(L left, int right) {
+    this.left = left;
+    this.right = right;
+  }
 
-	public void setLeftElement(L left) {
-		this.left = left;
-	}
+  public void setLeftElement(L left) {
+    this.left = left;
+  }
 
-	public void setRightElement(int right) {
-		this.right = right;
-	}
+  public void setRightElement(int right) {
+    this.right = right;
+  }
 
-	/**
-	 * Generates human-readable String representation of this pair.
-	 */
-	public String toString() {
-		return "(" + left + ", " + right + ")";
-	}
+  /**
+   * Generates human-readable String representation of this pair.
+   */
+  public String toString() {
+    return "(" + left + ", " + right + ")";
+  }
 
-	/**
-	 * Creates a shallow clone of this object; the left element itself is not cloned.
-	 */
-	public PairOfObjectInt<L> clone() {
-		return new PairOfObjectInt<L>(left, right);
-	}
+  /**
+   * Creates a shallow clone of this object; the left element itself is not cloned.
+   */
+  public PairOfObjectInt<L> clone() {
+    return new PairOfObjectInt<L>(left, right);
+  }
 
-	@Override
-	public int compareTo(PairOfObjectInt<L> that) {
-		if ( this.left.equals(that.left)) {
-			return that.right > this.right ? -1 : 1;
-		}
-		return this.left.compareTo(that.left);
-	}
+  @Override
+  public int compareTo(PairOfObjectInt<L> that) {
+    if (this.left.equals(that.left)) {
+      return that.right > this.right ? -1 : 1;
+    }
+    return this.left.compareTo(that.left);
+  }
 }

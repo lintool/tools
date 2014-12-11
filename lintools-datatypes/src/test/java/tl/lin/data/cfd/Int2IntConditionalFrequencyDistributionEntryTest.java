@@ -25,29 +25,25 @@ public class Int2IntConditionalFrequencyDistributionEntryTest extends
 
   @Test
   public void test1Entry() {
-    Int2IntConditionalFrequencyDistribution cfd =
-        new Int2IntConditionalFrequencyDistributionEntry();
+    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
     test1Common(cfd);
   }
 
   @Test
   public void test2Entry() {
-    Int2IntConditionalFrequencyDistribution cfd =
-        new Int2IntConditionalFrequencyDistributionEntry();
+    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
     test2Common(cfd);
   }
 
   @Test
   public void test3Entry() {
-    Int2IntConditionalFrequencyDistribution cfd =
-        new Int2IntConditionalFrequencyDistributionEntry();
+    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
     test3Common(cfd);
   }
 
   @Test
   public void testLargeMarginalEntry() {
-    Int2IntConditionalFrequencyDistribution cfd =
-        new Int2IntConditionalFrequencyDistributionEntry();
+    Int2IntConditionalFrequencyDistribution cfd = new Int2IntConditionalFrequencyDistributionEntry();
     testLargeMarginalCommon(cfd);
   }
 

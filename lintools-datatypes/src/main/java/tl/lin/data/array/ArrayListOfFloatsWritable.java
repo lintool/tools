@@ -27,8 +27,8 @@ import org.apache.hadoop.io.WritableComparable;
  * Writable extension of the {@code ArrayListOfFloats} class. This class provides an efficient data
  * structure to store a list of floats for MapReduce jobs.
  */
-public class ArrayListOfFloatsWritable extends ArrayListOfFloats
-    implements WritableComparable<ArrayListOfFloatsWritable> {
+public class ArrayListOfFloatsWritable extends ArrayListOfFloats implements
+    WritableComparable<ArrayListOfFloatsWritable> {
 
   /**
    * Constructs an ArrayListOfFloatsWritable object.
@@ -47,8 +47,7 @@ public class ArrayListOfFloatsWritable extends ArrayListOfFloats
   }
 
   /**
-   * Constructs a deep copy of the ArrayListOfFloatsWritable object 
-   * given as parameter.
+   * Constructs a deep copy of the ArrayListOfFloatsWritable object given as parameter.
    *
    * @param other object to be copied
    */
@@ -94,7 +93,7 @@ public class ArrayListOfFloatsWritable extends ArrayListOfFloats
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return toString(size());
   }
 
@@ -108,7 +107,7 @@ public class ArrayListOfFloatsWritable extends ArrayListOfFloats
 
     return list;
   }
-  
+
   /**
    * Elementwise comparison. Shorter always comes before if it is a sublist of longer. No preference
    * if both are empty.

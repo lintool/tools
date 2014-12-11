@@ -44,7 +44,7 @@ public class JsonWritableTest {
 
     assertEquals("{\"JSON\":\"Hello, World!\"}", obj2.getJsonObject().toString());
   }
-  
+
   @Test
   public void testSerialize2() throws Exception {
     JsonWritable obj1 = new JsonWritable();
@@ -80,9 +80,9 @@ public class JsonWritableTest {
     byte[] bytes = w.serialize();
     JsonWritable w2 = JsonWritable.create(bytes);
 
-    String s = "{\"firstName\":\"John\",\"lastName\":\"Smith\"," +
-        "\"address\":{\"streetAddress\":\"21 2nd Street\",\"city\":\"New York\",\"state\":\"NY\",\"postalCode\":10021}," +
-        "\"phoneNumbers\":[\"212 555-1234\",\"646 555-4567\"]}";
+    String s = "{\"firstName\":\"John\",\"lastName\":\"Smith\","
+        + "\"address\":{\"streetAddress\":\"21 2nd Street\",\"city\":\"New York\",\"state\":\"NY\",\"postalCode\":10021},"
+        + "\"phoneNumbers\":[\"212 555-1234\",\"646 555-4567\"]}";
 
     assertEquals(s, w2.getJsonObject().toString());
 
@@ -114,17 +114,17 @@ public class JsonWritableTest {
 
     assertEquals(obj.getJsonObject().toString(), s2);
   }
-  
+
   @Test
   public void testOverwrite() throws Exception {
     JsonWritable obj = new JsonWritable();
     obj.getJsonObject().addProperty("field", "longer string");
     assertEquals("{\"field\":\"longer string\"}", obj.getJsonObject().toString());
-    
+
     obj.getJsonObject().addProperty("field", "a");
     assertEquals("{\"field\":\"a\"}", obj.getJsonObject().toString());
   }
-  
+
   public static junit.framework.Test suite() {
     return new JUnit4TestAdapter(JsonWritableTest.class);
   }

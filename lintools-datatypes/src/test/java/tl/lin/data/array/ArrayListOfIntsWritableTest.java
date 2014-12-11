@@ -35,15 +35,17 @@ import tl.lin.data.pair.PairOfWritables;
 import tl.lin.data.util.SequenceFileUtils;
 
 public class ArrayListOfIntsWritableTest {
-  int neg_one=-1, zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, nine=9;
-  
+  int neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7,
+      nine = 9;
+
   @Test
   public void testToString() {
     assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", new ArrayListOfIntsWritable(1, 11).toString());
     assertEquals("[1, 2, 3, 4, 5 ... (5 more) ]", new ArrayListOfIntsWritable(1, 11).toString(5));
 
     assertEquals("[1, 2, 3, 4, 5]", new ArrayListOfIntsWritable(1, 6).toString());
-    assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]", new ArrayListOfIntsWritable(1, 12).toString());
+    assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
+        new ArrayListOfIntsWritable(1, 12).toString());
 
     assertEquals("[]", new ArrayListOfIntsWritable().toString());
   }
@@ -59,11 +61,11 @@ public class ArrayListOfIntsWritableTest {
     FileSystem.get(conf).delete(tmp, true);
 
     try {
-//      w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
-//          SequenceFile.Writer.keyClass(IntWritable.class),
-//          SequenceFile.Writer.valueClass(ArrayListOfIntsWritable.class));
-      w = SequenceFile.createWriter(FileSystem.get(conf), conf, tmp,
-          IntWritable.class, ArrayListOfIntsWritable.class);
+      // w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
+      // SequenceFile.Writer.keyClass(IntWritable.class),
+      // SequenceFile.Writer.valueClass(ArrayListOfIntsWritable.class));
+      w = SequenceFile.createWriter(FileSystem.get(conf), conf, tmp, IntWritable.class,
+          ArrayListOfIntsWritable.class);
       w.append(new IntWritable(1), arr);
       w.close();
     } catch (IOException e) {
@@ -71,8 +73,8 @@ public class ArrayListOfIntsWritableTest {
       assertTrue(false);
     }
 
-    List<PairOfWritables<IntWritable, ArrayListOfIntsWritable>> listOfKeysPairs =
-      SequenceFileUtils.<IntWritable, ArrayListOfIntsWritable> readFile(tmp);
+    List<PairOfWritables<IntWritable, ArrayListOfIntsWritable>> listOfKeysPairs = SequenceFileUtils
+        .<IntWritable, ArrayListOfIntsWritable> readFile(tmp);
     FileSystem.get(conf).delete(tmp, true);
 
     assertTrue(listOfKeysPairs.size() == 1);
@@ -110,26 +112,25 @@ public class ArrayListOfIntsWritableTest {
 
     ArrayListOfIntsWritable b = new ArrayListOfIntsWritable();
 
-    //[1,3,5] < [1,3,5,7]  
+    // [1,3,5] < [1,3,5,7]
     b.add(one).add(three).add(five).add(seven);
-    assertTrue(b.compareTo(a)>0);
+    assertTrue(b.compareTo(a) > 0);
 
-    //[1,3,5] = [1,3,5]
+    // [1,3,5] = [1,3,5]
     b.remove(3);
-    assertTrue(b.compareTo(a)==0);
+    assertTrue(b.compareTo(a) == 0);
 
-    //[1,3] < [1,3,5]
+    // [1,3] < [1,3,5]
     b.remove(2);
-    assertTrue(b.compareTo(a)<0);
+    assertTrue(b.compareTo(a) < 0);
 
-    //[ ] < [1,3] 
-    //[ ] < [1,3,5]
+    // [ ] < [1,3]
+    // [ ] < [1,3,5]
     ArrayListOfIntsWritable c = new ArrayListOfIntsWritable();
-    assertTrue(b.compareTo(c)>0);
-    assertTrue(c.compareTo(a)<0);
-    assertTrue(a.compareTo(c)>0);
-    assertTrue(c.compareTo(b)<0);
-
+    assertTrue(b.compareTo(c) > 0);
+    assertTrue(c.compareTo(a) < 0);
+    assertTrue(a.compareTo(c) > 0);
+    assertTrue(c.compareTo(b) < 0);
 
   }
 
@@ -142,14 +143,14 @@ public class ArrayListOfIntsWritableTest {
     // [1, 3, 4]
     ArrayListOfIntsWritable b = new ArrayListOfIntsWritable();
     b.add(one).add(three).add(four);
-    assertTrue(a.compareTo(b)>0);
+    assertTrue(a.compareTo(b) > 0);
 
     // [1, 3, 4, 9]
     ArrayListOfIntsWritable c = new ArrayListOfIntsWritable();
     c.add(one).add(three).add(four).add(nine);
 
-    assertTrue(c.compareTo(a)<0);
-    assertTrue(b.compareTo(c)<0);
+    assertTrue(c.compareTo(a) < 0);
+    assertTrue(b.compareTo(c) < 0);
 
     // [2, 4]
     ArrayListOfIntsWritable d = new ArrayListOfIntsWritable();
@@ -159,20 +160,20 @@ public class ArrayListOfIntsWritableTest {
     ArrayListOfIntsWritable e = new ArrayListOfIntsWritable();
     e.add(zero).add(two);
 
-    //[2,4] > all others
-    assertTrue(d.compareTo(a)>0);
-    assertTrue(d.compareTo(b)>0);
-    assertTrue(d.compareTo(c)>0);
+    // [2,4] > all others
+    assertTrue(d.compareTo(a) > 0);
+    assertTrue(d.compareTo(b) > 0);
+    assertTrue(d.compareTo(c) > 0);
 
-    //[0,2] < all others
-    assertTrue(e.compareTo(a)<0);
-    assertTrue(e.compareTo(b)<0);
-    assertTrue(e.compareTo(c)<0);
-    assertTrue(e.compareTo(d)<0);
+    // [0,2] < all others
+    assertTrue(e.compareTo(a) < 0);
+    assertTrue(e.compareTo(b) < 0);
+    assertTrue(e.compareTo(c) < 0);
+    assertTrue(e.compareTo(d) < 0);
   }
 
   @Test
-  public void testIO(){
+  public void testIO() {
     ArrayListOfIntsWritable a1 = new ArrayListOfIntsWritable();
     ArrayListOfIntsWritable a2 = new ArrayListOfIntsWritable();
     ArrayListOfIntsWritable a3 = new ArrayListOfIntsWritable();
@@ -186,9 +187,9 @@ public class ArrayListOfIntsWritableTest {
     Configuration conf = new Configuration();
 
     try {
-//      w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(new Path("tmp")),
-//          SequenceFile.Writer.keyClass(ArrayListOfIntsWritable.class),
-//          SequenceFile.Writer.valueClass(IntWritable.class));
+      // w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(new Path("tmp")),
+      // SequenceFile.Writer.keyClass(ArrayListOfIntsWritable.class),
+      // SequenceFile.Writer.valueClass(IntWritable.class));
       w = SequenceFile.createWriter(FileSystem.get(conf), conf, new Path("tmp"),
           ArrayListOfIntsWritable.class, IntWritable.class);
 
@@ -202,8 +203,10 @@ public class ArrayListOfIntsWritableTest {
     }
 
     try {
-//      SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.file(new Path("tmp")));
-      SequenceFile.Reader reader = new SequenceFile.Reader(FileSystem.get(conf), new Path("tmp"), conf);
+      // SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.file(new
+      // Path("tmp")));
+      SequenceFile.Reader reader = new SequenceFile.Reader(FileSystem.get(conf), new Path("tmp"),
+          conf);
 
       ArrayListOfIntsWritable key = (ArrayListOfIntsWritable) reader.getKeyClass().newInstance();
       IntWritable value = (IntWritable) reader.getValueClass().newInstance();

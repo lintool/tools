@@ -168,8 +168,7 @@ public class Object2IntFrequencyDistributionTestBase {
     assertEquals(0, fd.getSumOfCounts());
   }
 
-  protected void testFailedDecrement1Common(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testFailedDecrement1Common(Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a");
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -185,8 +184,7 @@ public class Object2IntFrequencyDistributionTestBase {
     fd.decrement("a");
   }
 
-  protected void testFailedDecrement2Common(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testFailedDecrement2Common(Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a", 1000);
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -209,8 +207,7 @@ public class Object2IntFrequencyDistributionTestBase {
     fd.decrement("a", 4);
   }
 
-  protected void testMultiIncrementDecrementCommon(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testMultiIncrementDecrementCommon(Object2IntFrequencyDistribution<String> fd) {
     fd.increment("a", 2);
     fd.increment("b", 3);
     fd.increment("c", 4);
@@ -232,8 +229,7 @@ public class Object2IntFrequencyDistributionTestBase {
     assertEquals(4, fd.get("c"));
   }
 
-  protected void testGetFrequencySortedCommon(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testGetFrequencySortedCommon(Object2IntFrequencyDistribution<String> fd) {
     fd.set("a", 5);
     fd.set("d", 2);
     fd.set("b", 5);
@@ -305,8 +301,7 @@ public class Object2IntFrequencyDistributionTestBase {
     assertEquals(5, list.get(3).getRightElement());
   }
 
-  protected void testGetSortedEventsCommon(
-      Object2IntFrequencyDistribution<String> fd) {
+  protected void testGetSortedEventsCommon(Object2IntFrequencyDistribution<String> fd) {
     fd.set("a", 1);
     fd.set("d", 3);
     fd.set("b", 4);

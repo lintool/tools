@@ -23,23 +23,21 @@ import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Set;
 
 import org.apache.hadoop.io.Writable;
-import org.apache.hadoop.io.WritableComparable;
 
 /**
- * Writable representing a map from ints to values of arbitrary Writables.
- *
- * @param <V> type of value
+ * Writable representing a map where keys are Strings and values are ints. This class is specialized
+ * for String objects to avoid the overhead that comes with wrapping Strings inside
+ * <code>Text</code> objects.
  */
-public class HMapIVW<V extends Writable> extends HMapIV<V> implements Writable {
-  private static final long serialVersionUID = 2532109344100674110L;
+public class HMapStIW extends HMapKI<String> implements Writable {
+  private static final long serialVersionUID = -9179978557431493856L;
 
   /**
-   * Creates a <code>HMapIVW</code> object.
+   * Creates a <code>HMapStIW</code> object.
    */
-  public HMapIVW() {
+  public HMapStIW() {
     super();
   }
 
@@ -48,7 +46,6 @@ public class HMapIVW<V extends Writable> extends HMapIV<V> implements Writable {
    *
    * @param in source for raw byte representation
    */
-  @SuppressWarnings("unchecked")
   public void readFields(DataInput in) throws IOException {
     this.clear();
 
@@ -56,27 +53,10 @@ public class HMapIVW<V extends Writable> extends HMapIV<V> implements Writable {
     if (numEntries == 0)
       return;
 
-    String valueClassName = in.readUTF();
-
-    V objV;
-
-    try {
-      Class<V> valueClass = (Class<V>) Class.forName(valueClassName);
-      for (int i = 0; i < numEntries; i++) {
-        int k = in.readInt();
-
-        objV = (V) valueClass.newInstance();
-        objV.readFields(in);
-
-        put(k, objV);
-      }
-
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    } catch (InstantiationException e) {
-      e.printStackTrace();
+    for (int i = 0; i < numEntries; i++) {
+      String k = in.readUTF();
+      int v = in.readInt();
+      put(k, v);
     }
   }
 
@@ -91,16 +71,10 @@ public class HMapIVW<V extends Writable> extends HMapIV<V> implements Writable {
     if (size() == 0)
       return;
 
-    // Write out the class names for keys and values, assuming that all entries have same types.
-    Set<MapIV.Entry<V>> entries = entrySet();
-    MapIV.Entry<V> first = entries.iterator().next();
-    V objV = first.getValue();
-    out.writeUTF(objV.getClass().getCanonicalName());
-
     // Then write out each key/value pair.
-    for (MapIV.Entry<V> e : entrySet()) {
-      out.writeInt(e.getKey());
-      e.getValue().write(out);
+    for (MapKI.Entry<String> e : entrySet()) {
+      out.writeUTF(e.getKey());
+      out.writeInt(e.getValue());
     }
   }
 
@@ -119,29 +93,27 @@ public class HMapIVW<V extends Writable> extends HMapIV<V> implements Writable {
   }
 
   /**
-   * Creates a <code>HMapIVW</code> object from a <code>DataInput</code>.
+   * Creates a <code>HMapStIW</code> object from a <code>DataInput</code>.
    *
    * @param in source for reading the serialized representation
-   * @return a newly-created <code>HMapIVW</code> object
+   * @return a newly-created <code>HMapStIW</code> object
    * @throws IOException
    */
-  public static <T extends WritableComparable<?>> HMapIVW<T> create(DataInput in)
-      throws IOException {
-    HMapIVW<T> m = new HMapIVW<T>();
+  public static HMapStIW create(DataInput in) throws IOException {
+    HMapStIW m = new HMapStIW();
     m.readFields(in);
 
     return m;
   }
 
   /**
-   * Creates a <code>HMapIVW</code> object from a byte array.
+   * Creates a <code>HMapStIW</code> object from a byte array.
    *
    * @param bytes source for reading the serialized representation
-   * @return a newly-created <code>HMapIVW</code> object
+   * @return a newly-created <code>HMapStIW</code> object
    * @throws IOException
    */
-  public static <T extends WritableComparable<?>> HMapIVW<T> create(byte[] bytes)
-      throws IOException {
+  public static HMapStIW create(byte[] bytes) throws IOException {
     return create(new DataInputStream(new ByteArrayInputStream(bytes)));
   }
 }

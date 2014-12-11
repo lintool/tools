@@ -27,7 +27,8 @@ public class LongArrayWritable implements Writable {
   private long[] array;
   private int length = 0;
 
-  public LongArrayWritable() {}
+  public LongArrayWritable() {
+  }
 
   /**
    * Constructor with array as input.
@@ -118,6 +119,7 @@ public class LongArrayWritable implements Writable {
 
   /**
    * Returns the value at index <i>i</i>. Note that no bounds checking is performed.
+   *
    * @param i index position
    */
   public long get(int i) {

@@ -27,8 +27,8 @@ import org.apache.hadoop.io.WritableComparable;
  * Writable extension of the {@code ArrayListOfDoubles} class. This class provides an efficient data
  * structure to store a list of doubles for MapReduce jobs.
  */
-public class ArrayListOfDoublesWritable extends ArrayListOfDoubles
-    implements WritableComparable<ArrayListOfDoublesWritable> {
+public class ArrayListOfDoublesWritable extends ArrayListOfDoubles implements
+    WritableComparable<ArrayListOfDoublesWritable> {
 
   /**
    * Constructs an {@code ArrayListOfDoublesWritable} object.
@@ -93,7 +93,7 @@ public class ArrayListOfDoublesWritable extends ArrayListOfDoubles
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return toString(size());
   }
 
@@ -110,7 +110,7 @@ public class ArrayListOfDoublesWritable extends ArrayListOfDoubles
 
     return list;
   }
-  
+
   /**
    * Elementwise comparison. Shorter always comes before if it is a sublist of longer. No preference
    * if both are empty.

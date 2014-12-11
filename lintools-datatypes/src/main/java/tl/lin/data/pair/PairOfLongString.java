@@ -26,10 +26,9 @@ import org.apache.hadoop.io.WritableComparator;
 import org.apache.hadoop.io.WritableUtils;
 
 /**
- * WritableComparable representing a pair consisting of a long and a String.
- * The elements in the pair are referred to as the left and right elements. The
- * natural sort order is: first by the left element, and then by
- * the right element.
+ * WritableComparable representing a pair consisting of a long and a String. The elements in the
+ * pair are referred to as the left and right elements. The natural sort order is: first by the left
+ * element, and then by the right element.
  */
 public class PairOfLongString implements WritableComparable<PairOfLongString> {
   private long leftElement;
@@ -38,7 +37,8 @@ public class PairOfLongString implements WritableComparable<PairOfLongString> {
   /**
    * Creates a pair.
    */
-  public PairOfLongString() {}
+  public PairOfLongString() {
+  }
 
   /**
    * Creates a pair.
@@ -87,7 +87,7 @@ public class PairOfLongString implements WritableComparable<PairOfLongString> {
   public String getRightElement() {
     return rightElement;
   }
-  
+
   /**
    * Returns the value (right element).
    *
@@ -121,7 +121,8 @@ public class PairOfLongString implements WritableComparable<PairOfLongString> {
    * Checks two pairs for equality.
    *
    * @param obj object for comparison
-   * @return <code>true</code> if <code>obj</code> is equal to this object, <code>false</code> otherwise
+   * @return <code>true</code> if <code>obj</code> is equal to this object, <code>false</code>
+   *         otherwise
    */
   @Override
   public boolean equals(Object obj) {
@@ -130,12 +131,11 @@ public class PairOfLongString implements WritableComparable<PairOfLongString> {
   }
 
   /**
-   * Defines a natural sort order for pairs. Pairs are sorted first by the
-   * left element, and then by the right element.
+   * Defines a natural sort order for pairs. Pairs are sorted first by the left element, and then by
+   * the right element.
    *
-   * @return a value less than zero, a value greater than zero, or zero if
-   *         this pair should be sorted before, sorted after, or is equal to
-   *         <code>obj</code>.
+   * @return a value less than zero, a value greater than zero, or zero if this pair should be
+   *         sorted before, sorted after, or is equal to <code>obj</code>.
    */
   public int compareTo(PairOfLongString pair) {
     long pl = pair.getLeftElement();
@@ -199,9 +199,9 @@ public class PairOfLongString implements WritableComparable<PairOfLongString> {
       long thatLeftValue = readLong(b2, s2);
 
       if (thisLeftValue == thatLeftValue) {
-        int n1 = WritableUtils.decodeVIntSize(b1[s1+8]);
-        int n2 = WritableUtils.decodeVIntSize(b2[s2+8]);
-        return compareBytes(b1, s1+8+n1, l1-n1-8, b2, s2+n2+8, l2-n2-8);
+        int n1 = WritableUtils.decodeVIntSize(b1[s1 + 8]);
+        int n2 = WritableUtils.decodeVIntSize(b2[s2 + 8]);
+        return compareBytes(b1, s1 + 8 + n1, l1 - n1 - 8, b2, s2 + n2 + 8, l2 - n2 - 8);
       }
 
       return thisLeftValue < thatLeftValue ? -1 : 1;

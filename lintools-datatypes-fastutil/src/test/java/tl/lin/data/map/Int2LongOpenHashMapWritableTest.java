@@ -120,11 +120,8 @@ public class Int2LongOpenHashMapWritableTest {
     int[] keys = m2.getKeys();
     long[] values = m2.getValues();
 
-    assertEquals(3, keys[0]);
-    assertEquals(4, keys[1]);
-
-    assertEquals(5L, values[0]);
-    assertEquals(22L, values[1]);
+    assertTrue((keys[0] == 3 && values[0] == 5L && keys[1] == 4 && values[1] == 22L) ||
+        (keys[1] == 3 && values[1] == 5L && keys[0] == 4 && values[0] == 22L));
 
     m2.decode();
     assertTrue(m2.hasBeenDecoded());
@@ -162,11 +159,8 @@ public class Int2LongOpenHashMapWritableTest {
     int[] keys = m3.getKeys();
     long[] values = m3.getValues();
 
-    assertEquals(3, keys[0]);
-    assertEquals(4, keys[1]);
-
-    assertEquals(5L, values[0]);
-    assertEquals(22L, values[1]);
+    assertTrue((keys[0] == 3 && values[0] == 5L && keys[1] == 4 && values[1] == 22L) ||
+        (keys[1] == 3 && values[1] == 5L && keys[0] == 4 && values[0] == 22L));
 
     m3.decode();
     assertTrue(m3.hasBeenDecoded());

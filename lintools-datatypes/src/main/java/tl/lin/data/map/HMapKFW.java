@@ -34,104 +34,107 @@ import org.apache.hadoop.io.WritableComparable;
  * @param <K> type of key
  */
 public class HMapKFW<K extends WritableComparable<?>> extends HMapKF<K> implements Writable {
-	private static final long serialVersionUID = 1343885977770942281L;
+  private static final long serialVersionUID = 1343885977770942281L;
 
-	/**
-	 * Creates a <code>HMapKFW</code> object.
-	 */
-	public HMapKFW() {
-		super();
-	}
+  /**
+   * Creates a <code>HMapKFW</code> object.
+   */
+  public HMapKFW() {
+    super();
+  }
 
-	/**
-	 * Deserializes the map.
-	 *
-	 * @param in source for raw byte representation
-	 */
-	@Override @SuppressWarnings("unchecked")
-	public void readFields(DataInput in) throws IOException {
-		this.clear();
+  /**
+   * Deserializes the map.
+   *
+   * @param in source for raw byte representation
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public void readFields(DataInput in) throws IOException {
+    this.clear();
 
-		int numEntries = in.readInt();
-		if (numEntries == 0)
-			return;
+    int numEntries = in.readInt();
+    if (numEntries == 0)
+      return;
 
-		String keyClassName = in.readUTF();
+    String keyClassName = in.readUTF();
 
-		K objK;
-		try {
-			Class<K> keyClass = (Class<K>) Class.forName(keyClassName);
-			for (int i = 0; i < numEntries; i++) {
-				objK = (K) keyClass.newInstance();
-				objK.readFields(in);
-				float s = in.readFloat();
-				put(objK, s);
-			}
-		} catch (Exception e) {
-			throw new IOException("Unable to create HMapKFW!");
-		}
-	}
+    K objK;
+    try {
+      Class<K> keyClass = (Class<K>) Class.forName(keyClassName);
+      for (int i = 0; i < numEntries; i++) {
+        objK = (K) keyClass.newInstance();
+        objK.readFields(in);
+        float s = in.readFloat();
+        put(objK, s);
+      }
+    } catch (Exception e) {
+      throw new IOException("Unable to create HMapKFW!");
+    }
+  }
 
-	/**
-	 * Serializes the map.
-	 *
-	 * @param out where to write the raw byte representation
-	 */
-	public void write(DataOutput out) throws IOException {
-		// Write out the number of entries in the map.
-		out.writeInt(size());
-		if (size() == 0)
-			return;
+  /**
+   * Serializes the map.
+   *
+   * @param out where to write the raw byte representation
+   */
+  public void write(DataOutput out) throws IOException {
+    // Write out the number of entries in the map.
+    out.writeInt(size());
+    if (size() == 0)
+      return;
 
-		// Write out the class names for keys and values assuming that all keys have the same type.
-		Set<MapKF.Entry<K>> entries = entrySet();
-		MapKF.Entry<K> first = entries.iterator().next();
-		K objK = first.getKey();
-		out.writeUTF(objK.getClass().getCanonicalName());
+    // Write out the class names for keys and values assuming that all keys have the same type.
+    Set<MapKF.Entry<K>> entries = entrySet();
+    MapKF.Entry<K> first = entries.iterator().next();
+    K objK = first.getKey();
+    out.writeUTF(objK.getClass().getCanonicalName());
 
-		// Then write out each key/value pair.
-		for (MapKF.Entry<K> e : entrySet()) {
-			e.getKey().write(out);
-			out.writeFloat(e.getValue());
-		}
-	}
+    // Then write out each key/value pair.
+    for (MapKF.Entry<K> e : entrySet()) {
+      e.getKey().write(out);
+      out.writeFloat(e.getValue());
+    }
+  }
 
-	/**
-	 * Returns the serialized representation of this object as a byte array.
-	 *
-	 * @return byte array representing the serialized representation of this object
-	 * @throws IOException
-	 */
-	public byte[] serialize() throws IOException {
-		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		DataOutputStream dataOut = new DataOutputStream(bytesOut);
-		write(dataOut);
+  /**
+   * Returns the serialized representation of this object as a byte array.
+   *
+   * @return byte array representing the serialized representation of this object
+   * @throws IOException
+   */
+  public byte[] serialize() throws IOException {
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    write(dataOut);
 
-		return bytesOut.toByteArray();
-	}
+    return bytesOut.toByteArray();
+  }
 
-	/**
-	 * Creates a <code>HMapKFW</code> object from a <code>DataInput</code>.
-	 *
-	 * @param in source for reading the serialized representation
-	 * @return a newly-created <code>HMapKFW</code> object
-	 * @throws IOException
-	 */
-	public static <T extends WritableComparable<?>> HMapKFW<T> create(DataInput in) throws IOException {
-		HMapKFW<T> m = new HMapKFW<T>();
-		m.readFields(in);
+  /**
+   * Creates a <code>HMapKFW</code> object from a <code>DataInput</code>.
+   *
+   * @param in source for reading the serialized representation
+   * @return a newly-created <code>HMapKFW</code> object
+   * @throws IOException
+   */
+  public static <T extends WritableComparable<?>> HMapKFW<T> create(DataInput in)
+      throws IOException {
+    HMapKFW<T> m = new HMapKFW<T>();
+    m.readFields(in);
 
-		return m;
-	}
+    return m;
+  }
 
-	/**
-	 * Creates a <code>HMapKFW</code> object from a byte array.
-	 *
-	 * @param bytes source for reading the serialized representation
-	 * @return a newly-created <code>HMapKFW</code> object
-	 * @throws IOException
-	 */
-	public static <T extends WritableComparable<?>> HMapKFW<T> create(byte[] bytes) throws IOException {
-		return create(new DataInputStream(new ByteArrayInputStream(bytes)));
-	}
+  /**
+   * Creates a <code>HMapKFW</code> object from a byte array.
+   *
+   * @param bytes source for reading the serialized representation
+   * @return a newly-created <code>HMapKFW</code> object
+   * @throws IOException
+   */
+  public static <T extends WritableComparable<?>> HMapKFW<T> create(byte[] bytes)
+      throws IOException {
+    return create(new DataInputStream(new ByteArrayInputStream(bytes)));
+  }
 }

@@ -16,7 +16,8 @@
 
 package tl.lin.data.pair;
 
-public class PairOfObjectDouble<L extends Comparable<L>> implements Comparable<PairOfObjectDouble<L>> {
+public class PairOfObjectDouble<L extends Comparable<L>> implements
+    Comparable<PairOfObjectDouble<L>> {
 
   private L left;
   private double right;
@@ -26,7 +27,8 @@ public class PairOfObjectDouble<L extends Comparable<L>> implements Comparable<P
     this.right = right;
   }
 
-  public PairOfObjectDouble() {}
+  public PairOfObjectDouble() {
+  }
 
   public L getLeftElement() {
     return left;
@@ -65,7 +67,7 @@ public class PairOfObjectDouble<L extends Comparable<L>> implements Comparable<P
 
   @Override
   public int compareTo(PairOfObjectDouble<L> that) {
-    if ( this.left.equals(that.left)) {
+    if (this.left.equals(that.left)) {
       return that.right > this.right ? -1 : 1;
     }
     return this.left.compareTo(that.left);

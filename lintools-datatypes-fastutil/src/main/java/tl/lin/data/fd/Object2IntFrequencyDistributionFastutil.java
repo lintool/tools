@@ -31,64 +31,63 @@ import tl.lin.data.pair.PairOfObjectInt;
 import com.google.common.collect.Lists;
 
 /**
- * Implementation of {@link Object2IntFrequencyDistribution} based on
- * {@link Object2IntOpenHashMap}.
+ * Implementation of {@link Object2IntFrequencyDistribution} based on {@link Object2IntOpenHashMap}.
  */
 public class Object2IntFrequencyDistributionFastutil<K extends Comparable<K>>
     implements Object2IntFrequencyDistribution<K> {
 
-	private Object2IntOpenHashMap<K> counts = new Object2IntOpenHashMap<K>();
-	private long sumOfCounts = 0;
+  private Object2IntOpenHashMap<K> counts = new Object2IntOpenHashMap<K>();
+  private long sumOfCounts = 0;
 
-	@Override
-	public void increment(K key) {
-		set(key, get(key) + 1);
-	}
+  @Override
+  public void increment(K key) {
+    set(key, get(key) + 1);
+  }
 
-	@Override
-	public void increment(K key, int cnt) {
-		set(key, get(key) + cnt);
-	}
+  @Override
+  public void increment(K key, int cnt) {
+    set(key, get(key) + cnt);
+  }
 
-	@Override
-	public void decrement(K key) {
-		if (contains(key)) {
-			int v = get(key);
-			if (v == 1) {
-				remove(key);
-			} else {
-				set(key, v - 1);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(K key) {
+    if (contains(key)) {
+      int v = get(key);
+      if (v == 1) {
+        remove(key);
+      } else {
+        set(key, v - 1);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public void decrement(K key, int cnt) {
-		if (contains(key)) {
-			int v = get(key);
-			if (v < cnt) {
-				throw new RuntimeException("Can't decrement past zero!");
-			} else if (v == cnt) {
-				remove(key);
-			} else {
-				set(key, v - cnt);
-			}
-		} else {
-			throw new RuntimeException("Can't decrement non-existent event!");
-		}
-	}
+  @Override
+  public void decrement(K key, int cnt) {
+    if (contains(key)) {
+      int v = get(key);
+      if (v < cnt) {
+        throw new RuntimeException("Can't decrement past zero!");
+      } else if (v == cnt) {
+        remove(key);
+      } else {
+        set(key, v - cnt);
+      }
+    } else {
+      throw new RuntimeException("Can't decrement non-existent event!");
+    }
+  }
 
-	@Override
-	public boolean contains(K k) {
-		return counts.containsKey(k);
-	}
+  @Override
+  public boolean contains(K k) {
+    return counts.containsKey(k);
+  }
 
-	@Override
-	public int get(K k) {
-		return counts.getInt(k);
-	}
+  @Override
+  public int get(K k) {
+    return counts.getInt(k);
+  }
 
   @Override
   public double computeRelativeFrequency(K k) {
@@ -100,96 +99,96 @@ public class Object2IntFrequencyDistributionFastutil<K extends Comparable<K>>
     return Math.log(counts.getInt(k)) - Math.log(getSumOfCounts());
   }
 
-	@Override
-	public int set(K k, int v) {
-		int rv = counts.put(k, v);
-		sumOfCounts = sumOfCounts - rv + v;
+  @Override
+  public int set(K k, int v) {
+    int rv = counts.put(k, v);
+    sumOfCounts = sumOfCounts - rv + v;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public int remove(K k) {
-		int rv = counts.remove(k);
-		sumOfCounts -= rv;
+  @Override
+  public int remove(K k) {
+    int rv = counts.remove(k);
+    sumOfCounts -= rv;
 
-		return rv;
-	}
+    return rv;
+  }
 
-	@Override
-	public void clear() {
-		counts.clear();
-		sumOfCounts = 0;
-	}
-
-	/**
-	 * Exposes efficient method for accessing values in this map.
-	 */
-	public IntCollection values() {
-		return counts.values();
-	}
-
-	/**
-	 * Exposes efficient method for accessing mappings in this map.
-	 */
-	public Object2IntMap.FastEntrySet<K> entrySet() {
-		return counts.object2IntEntrySet();
-	}
+  @Override
+  public void clear() {
+    counts.clear();
+    sumOfCounts = 0;
+  }
 
   /**
-   * Returns the underlying map backing this frequency distribution. Manipulate
-   * this map at your own risk; may render this frequency distribution unusable.
+   * Exposes efficient method for accessing values in this map.
    */
-	public Object2IntOpenHashMap<K> getObject2IntOpenHashMap() {
-	  return counts;
-	}
+  public IntCollection values() {
+    return counts.values();
+  }
 
-	@Override
-	public int getNumberOfEvents() {
-		return counts.size();
-	}
+  /**
+   * Exposes efficient method for accessing mappings in this map.
+   */
+  public Object2IntMap.FastEntrySet<K> entrySet() {
+    return counts.object2IntEntrySet();
+  }
 
-	@Override
-	public long getSumOfCounts() {
-		return sumOfCounts;
-	}
+  /**
+   * Returns the underlying map backing this frequency distribution. Manipulate this map at your own
+   * risk; may render this frequency distribution unusable.
+   */
+  public Object2IntOpenHashMap<K> getObject2IntOpenHashMap() {
+    return counts;
+  }
+
+  @Override
+  public int getNumberOfEvents() {
+    return counts.size();
+  }
+
+  @Override
+  public long getSumOfCounts() {
+    return sumOfCounts;
+  }
 
   @Override
   public Set<K> keySet() {
     return counts.keySet();
   }
 
-	/**
-	 * Iterator returns the same object every time, just with a different payload.
-	 */
-	public Iterator<PairOfObjectInt<K>> iterator() {
-		return new Iterator<PairOfObjectInt<K>>() {
-			private Iterator<Object2IntMap.Entry<K>> iter =
-			  Object2IntFrequencyDistributionFastutil.this.counts.object2IntEntrySet().iterator();
-			private final PairOfObjectInt<K> pair = new PairOfObjectInt<K>();
+  /**
+   * Iterator returns the same object every time, just with a different payload.
+   */
+  public Iterator<PairOfObjectInt<K>> iterator() {
+    return new Iterator<PairOfObjectInt<K>>() {
+      private Iterator<Object2IntMap.Entry<K>> iter = Object2IntFrequencyDistributionFastutil.this.counts
+          .object2IntEntrySet().iterator();
+      private final PairOfObjectInt<K> pair = new PairOfObjectInt<K>();
 
-			@Override
-			public boolean hasNext() {
-				return iter.hasNext();
-			}
+      @Override
+      public boolean hasNext() {
+        return iter.hasNext();
+      }
 
-			@Override
-			public PairOfObjectInt<K> next() {
-				if (!hasNext()) {
-					return null;
-				}
+      @Override
+      public PairOfObjectInt<K> next() {
+        if (!hasNext()) {
+          return null;
+        }
 
-				Object2IntMap.Entry<K> entry = iter.next();
-				pair.set(entry.getKey(), entry.getIntValue());
-				return pair;
-			}
+        Object2IntMap.Entry<K> entry = iter.next();
+        pair.set(entry.getKey(), entry.getIntValue());
+        return pair;
+      }
 
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
+  }
 
   @Override
   public List<PairOfObjectInt<K>> getEntries(Order ordering) {
@@ -221,57 +220,53 @@ public class Object2IntFrequencyDistributionFastutil<K extends Comparable<K>>
     return null;
   }
 
-  private final Comparator<PairOfObjectInt<K>> comparatorRightDescending =
-    new Comparator<PairOfObjectInt<K>>() {
-      public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return -1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return 1;
-        }
-
-        return e1.getLeftElement().compareTo(e2.getLeftElement());
+  private final Comparator<PairOfObjectInt<K>> comparatorRightDescending = new Comparator<PairOfObjectInt<K>>() {
+    public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return -1;
       }
-    };
 
-  private final Comparator<PairOfObjectInt<K>> comparatorRightAscending =
-    new Comparator<PairOfObjectInt<K>>() {
-      public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
-        if (e1.getRightElement() > e2.getRightElement()) {
-          return 1;
-        }
-
-        if (e1.getRightElement() < e2.getRightElement()) {
-          return -1;
-        }
-
-        return e1.getLeftElement().compareTo(e2.getLeftElement());
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return 1;
       }
-    };
 
-  private final Comparator<PairOfObjectInt<K>> comparatorLeftAscending =
-    new Comparator<PairOfObjectInt<K>>() {
-      public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
-        if (e1.getLeftElement().equals(e2.getLeftElement())) {
-          throw new RuntimeException("Event observed twice!");
-        }
+      return e1.getLeftElement().compareTo(e2.getLeftElement());
+    }
+  };
 
-        return e1.getLeftElement().compareTo(e2.getLeftElement());
+  private final Comparator<PairOfObjectInt<K>> comparatorRightAscending = new Comparator<PairOfObjectInt<K>>() {
+    public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
+      if (e1.getRightElement() > e2.getRightElement()) {
+        return 1;
       }
-    };
 
-  private final Comparator<PairOfObjectInt<K>> comparatorLeftDescending =
-    new Comparator<PairOfObjectInt<K>>() {
-      public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
-        if (e1.getLeftElement().equals(e2.getLeftElement())) {
-          throw new RuntimeException("Event observed twice!");
-        }
-
-        return e2.getLeftElement().compareTo(e1.getLeftElement());
+      if (e1.getRightElement() < e2.getRightElement()) {
+        return -1;
       }
-    };
+
+      return e1.getLeftElement().compareTo(e2.getLeftElement());
+    }
+  };
+
+  private final Comparator<PairOfObjectInt<K>> comparatorLeftAscending = new Comparator<PairOfObjectInt<K>>() {
+    public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
+      if (e1.getLeftElement().equals(e2.getLeftElement())) {
+        throw new RuntimeException("Event observed twice!");
+      }
+
+      return e1.getLeftElement().compareTo(e2.getLeftElement());
+    }
+  };
+
+  private final Comparator<PairOfObjectInt<K>> comparatorLeftDescending = new Comparator<PairOfObjectInt<K>>() {
+    public int compare(PairOfObjectInt<K> e1, PairOfObjectInt<K> e2) {
+      if (e1.getLeftElement().equals(e2.getLeftElement())) {
+        throw new RuntimeException("Event observed twice!");
+      }
+
+      return e2.getLeftElement().compareTo(e1.getLeftElement());
+    }
+  };
 
   private List<PairOfObjectInt<K>> getEntriesSorted(Comparator<PairOfObjectInt<K>> comparator) {
     List<PairOfObjectInt<K>> list = Lists.newArrayList();
@@ -284,20 +279,18 @@ public class Object2IntFrequencyDistributionFastutil<K extends Comparable<K>>
     return list;
   }
 
-  private List<PairOfObjectInt<K>>
-      getEntriesSorted(Comparator<PairOfObjectInt<K>> comparator, int n) {
+  private List<PairOfObjectInt<K>> getEntriesSorted(Comparator<PairOfObjectInt<K>> comparator, int n) {
     List<PairOfObjectInt<K>> list = getEntriesSorted(comparator);
     return list.subList(0, n);
   }
 
-  public static <T extends Comparable<T>> Object2IntFrequencyDistributionFastutil<T>
-      fromObject2IntOpenHashMap(Object2IntOpenHashMap<T> map) {
-    Object2IntFrequencyDistributionFastutil<T> fd =
-      new Object2IntFrequencyDistributionFastutil<T>();
+  public static <T extends Comparable<T>> Object2IntFrequencyDistributionFastutil<T> fromObject2IntOpenHashMap(
+      Object2IntOpenHashMap<T> map) {
+    Object2IntFrequencyDistributionFastutil<T> fd = new Object2IntFrequencyDistributionFastutil<T>();
 
     fd.counts = map;
     long cnt = 0;
-    for ( Object2IntMap.Entry<T> entry : map.object2IntEntrySet() ) {
+    for (Object2IntMap.Entry<T> entry : map.object2IntEntrySet()) {
       cnt += entry.getIntValue();
     }
     fd.sumOfCounts = cnt;

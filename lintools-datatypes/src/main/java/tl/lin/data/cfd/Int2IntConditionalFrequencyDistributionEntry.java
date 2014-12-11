@@ -30,13 +30,11 @@ import tl.lin.data.pair.PairOfInts;
 /**
  * Implementation of {@link Int2IntConditionalFrequencyDistribution} based on {@link HMapII}.
  */
-public class Int2IntConditionalFrequencyDistributionEntry
-    implements Int2IntConditionalFrequencyDistribution {
+public class Int2IntConditionalFrequencyDistributionEntry implements
+    Int2IntConditionalFrequencyDistribution {
 
-  private final HMapIVW<Int2IntFrequencyDistribution> distributions =
-      new HMapIVW<Int2IntFrequencyDistribution>();
-  private final Int2LongFrequencyDistributionEntry marginals = 
-      new Int2LongFrequencyDistributionEntry();
+  private final HMapIVW<Int2IntFrequencyDistribution> distributions = new HMapIVW<Int2IntFrequencyDistribution>();
+  private final Int2LongFrequencyDistributionEntry marginals = new Int2LongFrequencyDistributionEntry();
 
   private long sumOfAllCounts = 0;
 
@@ -78,7 +76,7 @@ public class Int2IntConditionalFrequencyDistributionEntry
 
   @Override
   public int get(int k, int cond) {
-    if ( !distributions.containsKey(cond)) {
+    if (!distributions.containsKey(cond)) {
       return 0;
     }
 
@@ -92,7 +90,7 @@ public class Int2IntConditionalFrequencyDistributionEntry
 
   @Override
   public Int2IntFrequencyDistribution getConditionalDistribution(int cond) {
-    if ( distributions.containsKey(cond) ) {
+    if (distributions.containsKey(cond)) {
       return distributions.get(cond);
     }
 
@@ -124,17 +122,18 @@ public class Int2IntConditionalFrequencyDistributionEntry
     }
 
     if (totalSum != getSumOfAllCounts()) {
-      throw new RuntimeException("Internal Error! Got " + totalSum + ", Expected "  + getSumOfAllCounts());
+      throw new RuntimeException("Internal Error! Got " + totalSum + ", Expected "
+          + getSumOfAllCounts());
     }
 
     for (PairOfInts e : m) {
-      if ( e.getRightElement() != marginals.get(e.getLeftElement()) ) {
+      if (e.getRightElement() != marginals.get(e.getLeftElement())) {
         throw new RuntimeException("Internal Error!");
       }
     }
 
     for (PairOfInts e : m) {
-      if ( e.getRightElement() != m.get(e.getLeftElement()) ) {
+      if (e.getRightElement() != m.get(e.getLeftElement())) {
         throw new RuntimeException("Internal Error!");
       }
     }

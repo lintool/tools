@@ -29,8 +29,7 @@ import tl.lin.data.map.HashMapWritable;
 
 /**
  * <p>
- * Benchmark comparing HashMapWritable to Hadoop's native MapWritable. Sample
- * output:
+ * Benchmark comparing HashMapWritable to Hadoop's native MapWritable. Sample output:
  * </p>
  * 
  * <pre>
@@ -45,93 +44,93 @@ import tl.lin.data.map.HashMapWritable;
  */
 public class BenchmarkHashMapWritable {
 
-	private BenchmarkHashMapWritable() {
-	}
+  private BenchmarkHashMapWritable() {
+  }
 
-	/**
-	 * Runs this benchmark.
-	 */
-	public static void main(String[] args) throws Exception {
-		long startTime = System.currentTimeMillis();
-		int numTrials = 100000;
+  /**
+   * Runs this benchmark.
+   */
+  public static void main(String[] args) throws Exception {
+    long startTime = System.currentTimeMillis();
+    int numTrials = 100000;
 
-		Random rand = new Random();
+    Random rand = new Random();
 
-		ByteArrayOutputStream[] storageHashMapWritable = new ByteArrayOutputStream[numTrials];
-		for (int i = 0; i < numTrials; i++) {
-			HashMapWritable<IntWritable, IntWritable> map = new HashMapWritable<IntWritable, IntWritable>();
+    ByteArrayOutputStream[] storageHashMapWritable = new ByteArrayOutputStream[numTrials];
+    for (int i = 0; i < numTrials; i++) {
+      HashMapWritable<IntWritable, IntWritable> map = new HashMapWritable<IntWritable, IntWritable>();
 
-			int size = rand.nextInt(50) + 50;
+      int size = rand.nextInt(50) + 50;
 
-			for (int j = 0; j < size; j++) {
-				map.put(new IntWritable(rand.nextInt(10000)), new IntWritable(rand.nextInt(10)));
-			}
+      for (int j = 0; j < size; j++) {
+        map.put(new IntWritable(rand.nextInt(10000)), new IntWritable(rand.nextInt(10)));
+      }
 
-			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-			DataOutputStream dataOut = new DataOutputStream(bytesOut);
+      ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+      DataOutputStream dataOut = new DataOutputStream(bytesOut);
 
-			map.write(dataOut);
-			storageHashMapWritable[i] = bytesOut;
-		}
+      map.write(dataOut);
+      storageHashMapWritable[i] = bytesOut;
+    }
 
-		System.out.println("Generating and serializing " + numTrials + " random HashMapWritables: "
-				+ (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
+    System.out.println("Generating and serializing " + numTrials + " random HashMapWritables: "
+        + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
 
-		startTime = System.currentTimeMillis();
+    startTime = System.currentTimeMillis();
 
-		ByteArrayOutputStream[] storageMapWritable = new ByteArrayOutputStream[numTrials];
-		for (int i = 0; i < numTrials; i++) {
-			MapWritable map = new MapWritable();
+    ByteArrayOutputStream[] storageMapWritable = new ByteArrayOutputStream[numTrials];
+    for (int i = 0; i < numTrials; i++) {
+      MapWritable map = new MapWritable();
 
-			int size = rand.nextInt(50) + 50;
+      int size = rand.nextInt(50) + 50;
 
-			for (int j = 0; j < size; j++) {
-				map.put(new IntWritable(rand.nextInt(10000)), new IntWritable(rand.nextInt(10)));
-			}
+      for (int j = 0; j < size; j++) {
+        map.put(new IntWritable(rand.nextInt(10000)), new IntWritable(rand.nextInt(10)));
+      }
 
-			ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-			DataOutputStream dataOut = new DataOutputStream(bytesOut);
+      ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+      DataOutputStream dataOut = new DataOutputStream(bytesOut);
 
-			map.write(dataOut);
-			storageMapWritable[i] = bytesOut;
-		}
+      map.write(dataOut);
+      storageMapWritable[i] = bytesOut;
+    }
 
-		System.out.println("Generating and serializing " + numTrials + " random MapWritables: "
-				+ (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
+    System.out.println("Generating and serializing " + numTrials + " random MapWritables: "
+        + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
 
-		float cntA = 0.0f;
-		float cntB = 0.0f;
-		for (int i = 0; i < numTrials; i++) {
-			cntA += storageHashMapWritable[i].size();
-			cntB += storageMapWritable[i].size();
-		}
+    float cntA = 0.0f;
+    float cntB = 0.0f;
+    for (int i = 0; i < numTrials; i++) {
+      cntA += storageHashMapWritable[i].size();
+      cntB += storageMapWritable[i].size();
+    }
 
-		System.out.println("Average size of each HashMapWritable: " + cntA / numTrials);
-		System.out.println("Average size of each MapWritable: " + cntB / numTrials);
+    System.out.println("Average size of each HashMapWritable: " + cntA / numTrials);
+    System.out.println("Average size of each MapWritable: " + cntB / numTrials);
 
-		startTime = System.currentTimeMillis();
+    startTime = System.currentTimeMillis();
 
-		for (int i = 0; i < numTrials; i++) {
-			HashMapWritable<IntWritable, IntWritable> map = new HashMapWritable<IntWritable, IntWritable>();
+    for (int i = 0; i < numTrials; i++) {
+      HashMapWritable<IntWritable, IntWritable> map = new HashMapWritable<IntWritable, IntWritable>();
 
-			map.readFields(new DataInputStream(new ByteArrayInputStream(storageHashMapWritable[i]
-					.toByteArray())));
-		}
+      map.readFields(new DataInputStream(new ByteArrayInputStream(storageHashMapWritable[i]
+          .toByteArray())));
+    }
 
-		System.out.println("Deserializing " + numTrials + " random MapWritables: "
-				+ (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
+    System.out.println("Deserializing " + numTrials + " random MapWritables: "
+        + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
 
-		startTime = System.currentTimeMillis();
+    startTime = System.currentTimeMillis();
 
-		for (int i = 0; i < numTrials; i++) {
-			MapWritable map = new MapWritable();
+    for (int i = 0; i < numTrials; i++) {
+      MapWritable map = new MapWritable();
 
-			map.readFields(new DataInputStream(new ByteArrayInputStream(storageMapWritable[i]
-					.toByteArray())));
-		}
+      map.readFields(new DataInputStream(new ByteArrayInputStream(storageMapWritable[i]
+          .toByteArray())));
+    }
 
-		System.out.println("Deserializing " + numTrials + " random MapWritables: "
-				+ (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
+    System.out.println("Deserializing " + numTrials + " random MapWritables: "
+        + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
 
-	}
+  }
 }

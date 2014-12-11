@@ -42,22 +42,20 @@ public class IntegratedExampleTest {
 
   @Test
   public void testBasic() throws IOException {
-    PairOfWritables<PairOfStringInt, IntArrayWritable> data =
-        new PairOfWritables<PairOfStringInt, IntArrayWritable>(
-            new PairOfStringInt("foo", 42),
-            new IntArrayWritable(new int[] {1, 2, 3, 4, 5}));
+    PairOfWritables<PairOfStringInt, IntArrayWritable> data = new PairOfWritables<PairOfStringInt, IntArrayWritable>(
+        new PairOfStringInt("foo", 42), new IntArrayWritable(new int[] { 1, 2, 3, 4, 5 }));
 
-    //System.out.println(data);
+    // System.out.println(data);
     ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
     DataOutputStream dataOut = new DataOutputStream(bytesOut);
     data.write(dataOut);
 
-    PairOfWritables<PairOfStringInt, IntArrayWritable> reconstructed =
-        new PairOfWritables<PairOfStringInt, IntArrayWritable>();
+    PairOfWritables<PairOfStringInt, IntArrayWritable> reconstructed = new PairOfWritables<PairOfStringInt, IntArrayWritable>();
     reconstructed.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
     assertEquals(data.getLeftElement(), reconstructed.getLeftElement());
-    assertTrue(Arrays.equals(data.getRightElement().getArray(), reconstructed.getRightElement().getArray()));
+    assertTrue(Arrays.equals(data.getRightElement().getArray(), reconstructed.getRightElement()
+        .getArray()));
   }
 
   @Test
@@ -68,7 +66,7 @@ public class IntegratedExampleTest {
     data.add(new PairOfInts(5, 6));
     data.add(new PairOfInts(7, 8));
 
-    //System.out.println(data);
+    // System.out.println(data);
     ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
     DataOutputStream dataOut = new DataOutputStream(bytesOut);
     data.write(dataOut);
@@ -89,7 +87,7 @@ public class IntegratedExampleTest {
     data.put(4, new PairOfStrings("alpha", "beta"));
     data.put(42, new PairOfStrings("four", "two"));
 
-    //System.out.println(data);
+    // System.out.println(data);
     ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
     DataOutputStream dataOut = new DataOutputStream(bytesOut);
     data.write(dataOut);

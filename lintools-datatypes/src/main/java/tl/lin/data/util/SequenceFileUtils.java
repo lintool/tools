@@ -35,26 +35,27 @@ import tl.lin.data.pair.PairOfWritables;
  * Class containing a number of utility methods for manipulating {@code SequenceFile}s.
  */
 public class SequenceFileUtils {
-  private SequenceFileUtils() {}
+  private SequenceFileUtils() {
+  }
 
-  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>>
-      readFile(Path path) throws IOException {
+  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>> readFile(
+      Path path) throws IOException {
     FileSystem fs;
     fs = FileSystem.get(new Configuration());
 
     return readFile(path, fs, Integer.MAX_VALUE);
   }
 
-  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>>
-      readFile(Path path, int max) throws IOException {
+  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>> readFile(
+      Path path, int max) throws IOException {
     FileSystem fs;
     fs = FileSystem.get(new Configuration());
 
     return readFile(path, fs, max);
   }
 
-  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>>
-      readFile(Path path, FileSystem fs) throws IOException {
+  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>> readFile(
+      Path path, FileSystem fs) throws IOException {
     return readFile(path, fs, Integer.MAX_VALUE);
   }
 
@@ -66,8 +67,8 @@ public class SequenceFileUtils {
    * @return list of key-value pairs
    */
   @SuppressWarnings("unchecked")
-  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>>
-      readFile(Path path, FileSystem fs, int max) throws IOException {
+  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>> readFile(
+      Path path, FileSystem fs, int max) throws IOException {
     List<PairOfWritables<K, V>> list = new ArrayList<PairOfWritables<K, V>>();
 
     try {
@@ -132,8 +133,8 @@ public class SequenceFileUtils {
     return map;
   }
 
-  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>>
-      readDirectory(Path path) {
+  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>> readDirectory(
+      Path path) {
     FileSystem fs;
     try {
       fs = FileSystem.get(new Configuration());
@@ -152,8 +153,8 @@ public class SequenceFileUtils {
    * @param max maximum of key-value pairs to read per file
    * @return list of key-value pairs
    */
-  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>>
-      readDirectory(Path path, FileSystem fs, int max) {
+  public static <K extends Writable, V extends Writable> List<PairOfWritables<K, V>> readDirectory(
+      Path path, FileSystem fs, int max) {
     List<PairOfWritables<K, V>> list = new ArrayList<PairOfWritables<K, V>>();
 
     try {

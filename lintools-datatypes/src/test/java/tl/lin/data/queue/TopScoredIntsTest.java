@@ -47,8 +47,8 @@ public class TopScoredIntsTest {
 
     PairOfIntFloat[] arr = set.extractAll();
     assertEquals(10, arr.length);
-    for ( int i = 0; i<arr.length-1; i++) {
-      assertTrue(arr[i].getValue() > arr[i+1].getValue());
+    for (int i = 0; i < arr.length - 1; i++) {
+      assertTrue(arr[i].getValue() > arr[i + 1].getValue());
     }
   }
 

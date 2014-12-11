@@ -168,8 +168,7 @@ public class Object2LongFrequencyDistributionTestBase {
     assertEquals(0, fd.getSumOfCounts());
   }
 
-  protected void testFailedDecrement1Common(
-      Object2LongFrequencyDistribution<String> fd) {
+  protected void testFailedDecrement1Common(Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a");
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -185,8 +184,7 @@ public class Object2LongFrequencyDistributionTestBase {
     fd.decrement("a");
   }
 
-  protected void testFailedDecrement2Common(
-      Object2LongFrequencyDistribution<String> fd) {
+  protected void testFailedDecrement2Common(Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a", 1000);
 
     assertEquals(1, fd.getNumberOfEvents());
@@ -209,8 +207,7 @@ public class Object2LongFrequencyDistributionTestBase {
     fd.decrement("a", 4);
   }
 
-  protected void testMultiIncrementDecrementCommon(
-      Object2LongFrequencyDistribution<String> fd) {
+  protected void testMultiIncrementDecrementCommon(Object2LongFrequencyDistribution<String> fd) {
     fd.increment("a", 2);
     fd.increment("b", 3);
     fd.increment("c", 4);
@@ -232,8 +229,7 @@ public class Object2LongFrequencyDistributionTestBase {
     assertEquals(4, fd.get("c"));
   }
 
-  protected void testGetFrequencySortedCommon(
-      Object2LongFrequencyDistribution<String> fd) {
+  protected void testGetFrequencySortedCommon(Object2LongFrequencyDistribution<String> fd) {
     fd.set("a", 5L);
     fd.set("d", 2L);
     fd.set("b", 5L);
@@ -244,8 +240,7 @@ public class Object2LongFrequencyDistributionTestBase {
     assertEquals(6, fd.getNumberOfEvents());
     assertEquals(20, fd.getSumOfCounts());
 
-    List<PairOfObjectLong<String>> list = fd
-        .getEntries(Order.ByRightElementDescending);
+    List<PairOfObjectLong<String>> list = fd.getEntries(Order.ByRightElementDescending);
 
     assertEquals(6, list.size());
 

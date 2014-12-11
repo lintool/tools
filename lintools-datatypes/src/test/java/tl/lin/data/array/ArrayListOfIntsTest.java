@@ -26,10 +26,11 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class ArrayListOfIntsTest {
-  int neg_one=-1, zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, nine=9;
+  int neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7,
+      nine = 9;
 
   @Test
-  public void testRemoveWithinBounds(){
+  public void testRemoveWithinBounds() {
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(one).add(three).add(five).add(seven);
 
@@ -39,19 +40,19 @@ public class ArrayListOfIntsTest {
     assertTrue(five == a.get(1));
 
     assertTrue(five == a.remove(1));
-    assertTrue(seven == a.get(2)); 
+    assertTrue(seven == a.get(2));
   }
 
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds(){
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds() {
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(one).add(three).add(five).add(seven);
 
     a.remove(4);
   }
 
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds2(){
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds2() {
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(neg_one);
     a.remove(-1);
@@ -96,7 +97,7 @@ public class ArrayListOfIntsTest {
   @Test
   public void testRemove() {
     ArrayListOfInts list = new ArrayListOfInts();
-    for ( int i=0; i<10; i++) {
+    for (int i = 0; i < 10; i++) {
       list.add(i);
     }
 
@@ -235,8 +236,11 @@ public class ArrayListOfIntsTest {
     Random r = new Random();
 
     ArrayListOfInts list = new ArrayListOfInts();
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextInt(100000));
+    while (list.size < size) {
+      int next = r.nextInt(1000000);
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     String out = list.toString();
@@ -247,12 +251,15 @@ public class ArrayListOfIntsTest {
       assertTrue(out.indexOf(new Integer(v).toString()) != -1);
     }
 
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextInt(100000));
+    while (list.size < size * 2) {
+      int next = r.nextInt(1000000);
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     out = list.toString();
-    for (int i = size; i < size+size; i++) {
+    for (int i = size; i < size + size; i++) {
       int v = list.get(i);
 
       // Make sure these elements are not printed out.
@@ -275,8 +282,8 @@ public class ArrayListOfIntsTest {
       ints[i] = k;
     }
 
-    int i=0;
-    for ( Integer v : list) {
+    int i = 0;
+    for (Integer v : list) {
       assertEquals(ints[i++], (int) v);
     }
 
@@ -364,7 +371,7 @@ public class ArrayListOfIntsTest {
 
   @Test
   public void testMerge1() {
-    //CASE: interleaved
+    // CASE: interleaved
 
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(3);
@@ -387,13 +394,13 @@ public class ArrayListOfIntsTest {
     assertEquals(10, c.get(5));
 
     // c should be same as c2
-    ArrayListOfInts c2 = b.merge(a); 
+    ArrayListOfInts c2 = b.merge(a);
     assertEquals(c, c2);
   }
 
   @Test
   public void testMerge2() {
-    //CASE: append
+    // CASE: append
 
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(3);
@@ -417,12 +424,12 @@ public class ArrayListOfIntsTest {
 
     ArrayListOfInts c2 = b.merge(a);
     assertEquals(c, c2);
- }
+  }
 
   @Test
   public void testMerge3() {
-    //CASE: one of the lists are empty
-    
+    // CASE: one of the lists are empty
+
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(3);
     a.add(7);
@@ -432,14 +439,14 @@ public class ArrayListOfIntsTest {
 
     ArrayListOfInts c = a.merge(b);
     assertEquals(c, a);
-    
+
     ArrayListOfInts c2 = b.merge(a);
-    assertEquals(c, c2);   
+    assertEquals(c, c2);
   }
 
   @Test
   public void testMerge4() {
-    //CASE: both lists have the same object
+    // CASE: both lists have the same object
 
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(3);
@@ -468,7 +475,7 @@ public class ArrayListOfIntsTest {
 
   @Test
   public void testMerge5() {
-    //CASE: both lists have the same object
+    // CASE: both lists have the same object
 
     ArrayListOfInts a = new ArrayListOfInts();
     a.add(3);
@@ -491,10 +498,10 @@ public class ArrayListOfIntsTest {
     assertEquals(cNoDups.get(1), 7);
     assertEquals(cNoDups.get(2), 10);
   }
-  
+
   @Test
   public void testSubList() {
-    ArrayListOfInts a = new ArrayListOfInts(new int[] {1, 2, 3, 4, 5, 6, 7});
+    ArrayListOfInts a = new ArrayListOfInts(new int[] { 1, 2, 3, 4, 5, 6, 7 });
     ArrayListOfInts b = a.subList(1, 5);
     assertEquals(5, b.size());
     assertEquals(2, b.get(0));
@@ -515,8 +522,8 @@ public class ArrayListOfIntsTest {
 
   @Test
   public void testAddUnique() {
-    ArrayListOfInts a = new ArrayListOfInts(new int[] {1, 2, 3, 4, 5, 6, 7});
-    a.addUnique(new int[] {8, 0, 2, 5, -1, 11, 9});
+    ArrayListOfInts a = new ArrayListOfInts(new int[] { 1, 2, 3, 4, 5, 6, 7 });
+    a.addUnique(new int[] { 8, 0, 2, 5, -1, 11, 9 });
     assertEquals(12, a.size());
     assertEquals(0, a.get(8));
     assertEquals(-1, a.get(9));

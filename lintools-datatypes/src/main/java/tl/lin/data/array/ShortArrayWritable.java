@@ -27,7 +27,8 @@ public class ShortArrayWritable implements Writable {
   private short[] array;
   private int length = 0;
 
-  public ShortArrayWritable() {}
+  public ShortArrayWritable() {
+  }
 
   /**
    * Constructor with array as input.
@@ -118,6 +119,7 @@ public class ShortArrayWritable implements Writable {
 
   /**
    * Returns the value at index <i>i</i>. Note that no bounds checking is performed.
+   *
    * @param i index position
    */
   public short get(int i) {

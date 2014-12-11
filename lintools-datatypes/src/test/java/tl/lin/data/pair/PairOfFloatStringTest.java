@@ -35,72 +35,72 @@ import tl.lin.data.WritableComparatorTestHarness;
 
 public class PairOfFloatStringTest {
 
-	@Test
-	public void testBasic() throws IOException {
-		PairOfFloatString pair = new PairOfFloatString(1.0f, "hi");
+  @Test
+  public void testBasic() throws IOException {
+    PairOfFloatString pair = new PairOfFloatString(1.0f, "hi");
 
-		assertEquals("hi", pair.getRightElement());
-		assertTrue(pair.getLeftElement() == 1.0f);
-	}
+    assertEquals("hi", pair.getRightElement());
+    assertTrue(pair.getLeftElement() == 1.0f);
+  }
 
-	@Test
-	public void testSerialize() throws IOException {
-		PairOfFloatString origPair = new PairOfFloatString(2.0f, "hi");
+  @Test
+  public void testSerialize() throws IOException {
+    PairOfFloatString origPair = new PairOfFloatString(2.0f, "hi");
 
-		ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-		DataOutputStream dataOut = new DataOutputStream(bytesOut);
+    ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+    DataOutputStream dataOut = new DataOutputStream(bytesOut);
 
-		origPair.write(dataOut);
+    origPair.write(dataOut);
 
-		PairOfFloatString pair = new PairOfFloatString();
+    PairOfFloatString pair = new PairOfFloatString();
 
-		pair.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
+    pair.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
-		assertEquals("hi", pair.getRightElement());
-		assertTrue(pair.getLeftElement() == 2.0f);
-	}
+    assertEquals("hi", pair.getRightElement());
+    assertTrue(pair.getLeftElement() == 2.0f);
+  }
 
-	@Test
-	public void testComparison1() throws IOException {
-		PairOfFloatString pair1 = new PairOfFloatString(1.0f, "hi");
-		PairOfFloatString pair2 = new PairOfFloatString(1.0f, "hi");
-		PairOfFloatString pair3 = new PairOfFloatString(0.0f, "hi");
-		PairOfFloatString pair4 = new PairOfFloatString(0.0f, "a");
-		PairOfFloatString pair5 = new PairOfFloatString(2.0f, "hi");
-		
-		assertTrue(pair1.equals(pair2));
-		assertFalse(pair1.equals(pair3));
+  @Test
+  public void testComparison1() throws IOException {
+    PairOfFloatString pair1 = new PairOfFloatString(1.0f, "hi");
+    PairOfFloatString pair2 = new PairOfFloatString(1.0f, "hi");
+    PairOfFloatString pair3 = new PairOfFloatString(0.0f, "hi");
+    PairOfFloatString pair4 = new PairOfFloatString(0.0f, "a");
+    PairOfFloatString pair5 = new PairOfFloatString(2.0f, "hi");
 
-		assertTrue(pair1.compareTo(pair2) == 0);
-		assertTrue(pair1.compareTo(pair3) > 0);
-		assertTrue(pair1.compareTo(pair4) > 0);
-		assertTrue(pair1.compareTo(pair5) < 0);
-		assertTrue(pair3.compareTo(pair4) > 0);
-		assertTrue(pair4.compareTo(pair5) < 0);		
-	}
+    assertTrue(pair1.equals(pair2));
+    assertFalse(pair1.equals(pair3));
 
-	@Test
-	public void testComparison2() throws IOException {
-		WritableComparator comparator = new PairOfFloatString.Comparator();
+    assertTrue(pair1.compareTo(pair2) == 0);
+    assertTrue(pair1.compareTo(pair3) > 0);
+    assertTrue(pair1.compareTo(pair4) > 0);
+    assertTrue(pair1.compareTo(pair5) < 0);
+    assertTrue(pair3.compareTo(pair4) > 0);
+    assertTrue(pair4.compareTo(pair5) < 0);
+  }
 
-		PairOfFloatString pair1 = new PairOfFloatString(1.0f, "hi");
-		PairOfFloatString pair2 = new PairOfFloatString(1.0f, "hi");
-		PairOfFloatString pair3 = new PairOfFloatString(0.0f, "hi");
-		PairOfFloatString pair4 = new PairOfFloatString(0.0f, "a");
-		PairOfFloatString pair5 = new PairOfFloatString(2.0f, "hi");
-		
-		assertTrue(pair1.equals(pair2));
-		assertFalse(pair1.equals(pair3));
+  @Test
+  public void testComparison2() throws IOException {
+    WritableComparator comparator = new PairOfFloatString.Comparator();
 
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair2) == 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair3) > 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair4) > 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair5) < 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair3, pair4) > 0);
-		assertTrue(WritableComparatorTestHarness.compare(comparator, pair4, pair5) < 0);		
-	}
+    PairOfFloatString pair1 = new PairOfFloatString(1.0f, "hi");
+    PairOfFloatString pair2 = new PairOfFloatString(1.0f, "hi");
+    PairOfFloatString pair3 = new PairOfFloatString(0.0f, "hi");
+    PairOfFloatString pair4 = new PairOfFloatString(0.0f, "a");
+    PairOfFloatString pair5 = new PairOfFloatString(2.0f, "hi");
 
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(PairOfFloatStringTest.class);
-	}
+    assertTrue(pair1.equals(pair2));
+    assertFalse(pair1.equals(pair3));
+
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair2) == 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair3) > 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair4) > 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair5) < 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair3, pair4) > 0);
+    assertTrue(WritableComparatorTestHarness.compare(comparator, pair4, pair5) < 0);
+  }
+
+  public static junit.framework.Test suite() {
+    return new JUnit4TestAdapter(PairOfFloatStringTest.class);
+  }
 }

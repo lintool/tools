@@ -27,8 +27,8 @@ import org.apache.hadoop.io.WritableComparable;
  * Writable extension of the {@code ArrayListOfShorts} class. This class provides an efficient data
  * structure to store a list of shorts for MapReduce jobs.
  */
-public class ArrayListOfShortsWritable extends ArrayListOfShorts
-    implements WritableComparable<ArrayListOfShortsWritable> {
+public class ArrayListOfShortsWritable extends ArrayListOfShorts implements
+    WritableComparable<ArrayListOfShortsWritable> {
 
   /**
    * Constructs an ArrayListOfIntsWritable object.
@@ -50,15 +50,14 @@ public class ArrayListOfShortsWritable extends ArrayListOfShorts
    * Constructs a list populated with shorts in range [first, last).
    *
    * @param first the smallest short in the range (inclusive)
-   * @param last  the largest short in the range (exclusive)
+   * @param last the largest short in the range (exclusive)
    */
   public ArrayListOfShortsWritable(short first, short last) {
     super(first, last);
   }
 
   /**
-   * Constructs a deep copy of the ArrayListOfShortsWritable object given as
-   * parameter.
+   * Constructs a deep copy of the ArrayListOfShortsWritable object given as parameter.
    *
    * @param other object to be copied
    */
@@ -104,7 +103,7 @@ public class ArrayListOfShortsWritable extends ArrayListOfShorts
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return toString(size());
   }
 
@@ -118,7 +117,7 @@ public class ArrayListOfShortsWritable extends ArrayListOfShorts
 
     return list;
   }
-  
+
   /**
    * Elementwise comparison. Shorter always comes before if it is a sublist of longer. No preference
    * if both are empty.

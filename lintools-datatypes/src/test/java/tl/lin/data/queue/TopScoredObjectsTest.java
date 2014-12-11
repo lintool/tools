@@ -35,7 +35,7 @@ public class TopScoredObjectsTest {
 
     TopScoredObjects<String> set = new TopScoredObjects<String>(10);
     for (int i = 0; i < 10000; i++) {
-      set.add(""+random.nextInt(Integer.MAX_VALUE), random.nextFloat());
+      set.add("" + random.nextInt(Integer.MAX_VALUE), random.nextFloat());
     }
 
     assertEquals(10, set.getMaxElements());
@@ -43,8 +43,8 @@ public class TopScoredObjectsTest {
 
     PairOfObjectFloat<String>[] arr = set.extractAll();
     assertEquals(10, arr.length);
-    for ( int i = 0; i<arr.length-1; i++) {
-      assertTrue(arr[i].getRightElement() > arr[i+1].getRightElement());
+    for (int i = 0; i < arr.length - 1; i++) {
+      assertTrue(arr[i].getRightElement() > arr[i + 1].getRightElement());
     }
   }
 

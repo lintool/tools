@@ -219,10 +219,10 @@ public interface MapIS {
    * @param key key to increment
    */
   void increment(int key);
-  
+
   /**
-   * Increments the key by some value. If the key does not exist in the map, its value is
-   * set to the parameter value.
+   * Increments the key by some value. If the key does not exist in the map, its value is set to the
+   * parameter value.
    *
    * @param key key to increment
    * @param value increment value

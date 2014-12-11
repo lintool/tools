@@ -19,69 +19,60 @@ import junit.framework.JUnit4TestAdapter;
 
 import org.junit.Test;
 
-public class Object2IntFrequencyDistributionEntryTest
-    extends Object2IntFrequencyDistributionTestBase {
+public class Object2IntFrequencyDistributionEntryTest extends
+    Object2IntFrequencyDistributionTestBase {
 
   @Test
   public void test1Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     test1Common(fd);
   }
 
   @Test
   public void test2Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     test2Common(fd);
   }
 
   @Test
   public void test3Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     test3Common(fd);
   }
 
   @Test(expected = RuntimeException.class)
   public void testFailedDecrement1Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     testFailedDecrement1Common(fd);
   }
 
   @Test(expected = RuntimeException.class)
   public void testFailedDecrement2Entry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     testFailedDecrement2Common(fd);
   }
 
   @Test
   public void testMultiIncrementDecrementEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     testMultiIncrementDecrementCommon(fd);
   }
 
   @Test
   public void testGetFrequencySortedEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     testGetFrequencySortedCommon(fd);
   }
 
   @Test
   public void testGetSortedEventsEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     testGetSortedEventsCommon(fd);
   }
 
   @Test
   public void testIterableEntry() {
-    Object2IntFrequencyDistribution<String> fd =
-      new Object2IntFrequencyDistributionEntry<String>();
+    Object2IntFrequencyDistribution<String> fd = new Object2IntFrequencyDistributionEntry<String>();
     testIterableCommon(fd);
   }
 

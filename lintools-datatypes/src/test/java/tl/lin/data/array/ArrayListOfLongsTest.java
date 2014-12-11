@@ -26,37 +26,38 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class ArrayListOfLongsTest {
-  long neg_one=-1, zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, nine=9;
+  long neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7,
+      nine = 9;
 
   @Test
-  public void testRemoveWithinBounds(){
+  public void testRemoveWithinBounds() {
     ArrayListOfLongs a = new ArrayListOfLongs();
     a.add(one).add(three).add(five).add(seven);
-    
+
     assertTrue(one == a.remove(0));
 
     assertTrue(three == a.get(0));
     assertTrue(five == a.get(1));
-    
+
     assertTrue(five == a.remove(1));
-    assertTrue(seven == a.get(2)); 
+    assertTrue(seven == a.get(2));
   }
-  
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds(){
+
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds() {
     ArrayListOfLongs a = new ArrayListOfLongs();
     a.add(one).add(three).add(five).add(seven);
 
     a.remove(4);
   }
 
-  @Test (expected=ArrayIndexOutOfBoundsException.class)
-  public void testRemoveOutOfBounds2(){
+  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  public void testRemoveOutOfBounds2() {
     ArrayListOfLongs a = new ArrayListOfLongs();
     a.add(neg_one);
     a.remove(-1);
   }
-  
+
   @Test
   public void testBasic1() {
     int size = 100000;
@@ -219,14 +220,11 @@ public class ArrayListOfLongsTest {
 
   @Test
   public void testToString1() {
-    assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", new ArrayListOfLongs(1, 11)
-        .toString());
-    assertEquals("[1, 2, 3, 4, 5 ... (5 more) ]", new ArrayListOfLongs(1, 11)
-        .toString(5));
+    assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]", new ArrayListOfLongs(1, 11).toString());
+    assertEquals("[1, 2, 3, 4, 5 ... (5 more) ]", new ArrayListOfLongs(1, 11).toString(5));
 
     assertEquals("[1, 2, 3, 4, 5]", new ArrayListOfLongs(1, 6).toString());
-    assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]", new ArrayListOfLongs(1,
-        12).toString(11));
+    assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]", new ArrayListOfLongs(1, 12).toString(11));
 
     assertEquals("[]", new ArrayListOfLongs().toString());
   }
@@ -237,8 +235,11 @@ public class ArrayListOfLongsTest {
     Random r = new Random();
 
     ArrayListOfLongs list = new ArrayListOfLongs();
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextLong());
+    while (list.size < size) {
+      long next = r.nextLong();
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     String out = list.toString();
@@ -249,8 +250,11 @@ public class ArrayListOfLongsTest {
       assertTrue(out.indexOf(new Long(v).toString()) != -1);
     }
 
-    for (int i = 0; i < size; i++) {
-      list.add(r.nextInt(1000000));
+    while (list.size < size * 2) {
+      long next = r.nextLong();
+      if (!list.contains(next)) {
+        list.add(next);
+      }
     }
 
     out = list.toString();
@@ -379,7 +383,7 @@ public class ArrayListOfLongsTest {
 
   @Test
   public void testMerge1() {
-    //CASE: interleaved
+    // CASE: interleaved
 
     ArrayListOfLongs a = new ArrayListOfLongs();
     a.add(3);
@@ -402,13 +406,13 @@ public class ArrayListOfLongsTest {
     assertEquals(10, c.get(5));
 
     // c should be same as c2
-    ArrayListOfLongs c2 = b.merge(a); 
+    ArrayListOfLongs c2 = b.merge(a);
     assertEquals(c, c2);
   }
 
   @Test
   public void testMerge2() {
-    //CASE: append
+    // CASE: append
 
     ArrayListOfLongs a = new ArrayListOfLongs();
     a.add(3);
@@ -432,12 +436,12 @@ public class ArrayListOfLongsTest {
 
     ArrayListOfLongs c2 = b.merge(a);
     assertEquals(c, c2);
- }
+  }
 
   @Test
   public void testMerge3() {
-    //CASE: one of the lists are empty
-    
+    // CASE: one of the lists are empty
+
     ArrayListOfLongs a = new ArrayListOfLongs();
     a.add(3);
     a.add(7);
@@ -447,11 +451,11 @@ public class ArrayListOfLongsTest {
 
     ArrayListOfLongs c = a.merge(b);
     assertEquals(c, a);
-    
+
     ArrayListOfLongs c2 = b.merge(a);
-    assertEquals(c, c2);   
+    assertEquals(c, c2);
   }
-  
+
   @Test
   public void testSubList() {
     ArrayListOfLongs a = new ArrayListOfLongs(new long[] { 1, 2, 3, 4, 5, 6, 7 });

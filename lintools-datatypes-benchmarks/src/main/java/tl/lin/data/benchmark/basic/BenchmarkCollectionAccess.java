@@ -23,8 +23,8 @@ import java.util.Map;
 
 /**
  * <p>
- * Benchmark comparing HashMaps, ArrayLists, and raw arrays. Tests one trillion
- * accesses to a simple three element collection. Sample output:
+ * Benchmark comparing HashMaps, ArrayLists, and raw arrays. Tests one trillion accesses to a simple
+ * three element collection. Sample output:
  * </p>
  * 
  * <pre>
@@ -36,51 +36,51 @@ import java.util.Map;
  */
 public class BenchmarkCollectionAccess {
 
-	private BenchmarkCollectionAccess() {
-	}
+  private BenchmarkCollectionAccess() {
+  }
 
-	/**
-	 * Runs this benchmark.
-	 */
-	@SuppressWarnings("unused")
-	public static void main(String[] args) {
-		long startTime;
-		double duration;
+  /**
+   * Runs this benchmark.
+   */
+  @SuppressWarnings("unused")
+  public static void main(String[] args) {
+    long startTime;
+    double duration;
 
-		int trials = 1000000000;
+    int trials = 1000000000;
 
-		System.out.println(trials + " accesses to a 3-element collection:");
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("field1", 1);
-		map.put("field2", 2);
-		map.put("field3", 2);
+    System.out.println(trials + " accesses to a 3-element collection:");
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    map.put("field1", 1);
+    map.put("field2", 2);
+    map.put("field3", 2);
 
-		startTime = System.currentTimeMillis();
-		for (int i = 0; i < trials; i++) {
-			int tmp = map.get("field1");
-		}
-		duration = (System.currentTimeMillis() - startTime) / 1000.0;
-		System.out.println(" for HashMap: " + duration + " seconds");
+    startTime = System.currentTimeMillis();
+    for (int i = 0; i < trials; i++) {
+      int tmp = map.get("field1");
+    }
+    duration = (System.currentTimeMillis() - startTime) / 1000.0;
+    System.out.println(" for HashMap: " + duration + " seconds");
 
-		List<Integer> arrayList = new ArrayList<Integer>();
-		arrayList.add(1);
-		arrayList.add(2);
-		arrayList.add(2);
+    List<Integer> arrayList = new ArrayList<Integer>();
+    arrayList.add(1);
+    arrayList.add(2);
+    arrayList.add(2);
 
-		startTime = System.currentTimeMillis();
-		for (int i = 0; i < trials; i++) {
-			int tmp = arrayList.get(1);
-		}
-		duration = (System.currentTimeMillis() - startTime) / 1000.0;
-		System.out.println(" for ArrayList: " + duration + " seconds");
+    startTime = System.currentTimeMillis();
+    for (int i = 0; i < trials; i++) {
+      int tmp = arrayList.get(1);
+    }
+    duration = (System.currentTimeMillis() - startTime) / 1000.0;
+    System.out.println(" for ArrayList: " + duration + " seconds");
 
-		int[] array = { 1, 2, 3 };
+    int[] array = { 1, 2, 3 };
 
-		startTime = System.currentTimeMillis();
-		for (int i = 0; i < trials; i++) {
-			int tmp = array[1];
-		}
-		duration = (System.currentTimeMillis() - startTime) / 1000.0;
-		System.out.println(" for array: " + duration + " seconds");
-	}
+    startTime = System.currentTimeMillis();
+    for (int i = 0; i < trials; i++) {
+      int tmp = array[1];
+    }
+    duration = (System.currentTimeMillis() - startTime) / 1000.0;
+    System.out.println(" for array: " + duration + " seconds");
+  }
 }

@@ -33,7 +33,7 @@ public class IntArrayWritableTest {
 
   @Test
   public void testBasic1() throws IOException {
-    IntArrayWritable array1 = new IntArrayWritable(new int[] {1, 3, 53, 97, 286});
+    IntArrayWritable array1 = new IntArrayWritable(new int[] { 1, 3, 53, 97, 286 });
     assertEquals(1, array1.get(0));
     assertEquals(3, array1.get(1));
     assertEquals(53, array1.get(2));
@@ -41,7 +41,7 @@ public class IntArrayWritableTest {
     assertEquals(286, array1.get(4));
     assertEquals(5, array1.size());
 
-    IntArrayWritable array2 = new IntArrayWritable(new int[] {1, 3, 53, 97, 286}, 3);
+    IntArrayWritable array2 = new IntArrayWritable(new int[] { 1, 3, 53, 97, 286 }, 3);
     assertEquals(1, array2.get(0));
     assertEquals(3, array2.get(1));
     assertEquals(53, array2.get(2));
@@ -57,7 +57,7 @@ public class IntArrayWritableTest {
 
     assertEquals(0, array.size());
 
-    int[] list1 = new int[] {1, 3, 53, 97, 286};
+    int[] list1 = new int[] { 1, 3, 53, 97, 286 };
     array.setArray(list1);
 
     assertEquals(1, array.get(0));
@@ -73,7 +73,7 @@ public class IntArrayWritableTest {
     assertEquals(2, array.get(0));
     assertEquals(-5, array.get(3));
 
-    int[] list2 = new int[] {9, -1, 6, 22, 76};
+    int[] list2 = new int[] { 9, -1, 6, 22, 76 };
     array.setArray(list2, 3);
 
     assertEquals(9, array.get(0));
@@ -88,7 +88,7 @@ public class IntArrayWritableTest {
 
   @Test
   public void testSerialize1() throws IOException {
-    IntArrayWritable array = new IntArrayWritable(new int[] {1, 3, 53, 97, 286});
+    IntArrayWritable array = new IntArrayWritable(new int[] { 1, 3, 53, 97, 286 });
 
     ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
     DataOutputStream dataOut = new DataOutputStream(bytesOut);
@@ -96,8 +96,7 @@ public class IntArrayWritableTest {
     array.write(dataOut);
 
     IntArrayWritable array2 = new IntArrayWritable();
-    array2.readFields(new DataInputStream(new ByteArrayInputStream(
-        bytesOut.toByteArray())));
+    array2.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
     assertEquals(5, array2.size());
     assertEquals(1, array2.get(0));
@@ -109,7 +108,7 @@ public class IntArrayWritableTest {
 
   @Test
   public void testSerialize2() throws IOException {
-    IntArrayWritable array = new IntArrayWritable(new int[] {1, 3, 53, 97, 286}, 4);
+    IntArrayWritable array = new IntArrayWritable(new int[] { 1, 3, 53, 97, 286 }, 4);
 
     ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
     DataOutputStream dataOut = new DataOutputStream(bytesOut);
@@ -117,8 +116,7 @@ public class IntArrayWritableTest {
     array.write(dataOut);
 
     IntArrayWritable array2 = new IntArrayWritable();
-    array2.readFields(new DataInputStream(new ByteArrayInputStream(
-        bytesOut.toByteArray())));
+    array2.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
     assertEquals(4, array2.size());
     assertEquals(1, array2.get(0));
@@ -129,7 +127,7 @@ public class IntArrayWritableTest {
 
   @Test
   public void testSerialize3() throws IOException {
-    IntArrayWritable array = new IntArrayWritable(new int[] {1, 2, 3, 4, 5});
+    IntArrayWritable array = new IntArrayWritable(new int[] { 1, 2, 3, 4, 5 });
 
     ByteArrayOutputStream bytesOut1 = new ByteArrayOutputStream();
     DataOutputStream dataOut1 = new DataOutputStream(bytesOut1);
@@ -137,8 +135,7 @@ public class IntArrayWritableTest {
     array.write(dataOut1);
 
     IntArrayWritable array2 = new IntArrayWritable();
-    array2.readFields(new DataInputStream(new ByteArrayInputStream(
-        bytesOut1.toByteArray())));
+    array2.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut1.toByteArray())));
 
     assertEquals(5, array2.size());
     assertEquals(1, array2.get(0));
@@ -147,7 +144,7 @@ public class IntArrayWritableTest {
     assertEquals(4, array2.get(3));
     assertEquals(5, array2.get(4));
 
-    array.setArray(new int[] {6, 7});
+    array.setArray(new int[] { 6, 7 });
 
     ByteArrayOutputStream bytesOut2 = new ByteArrayOutputStream();
     DataOutputStream dataOut2 = new DataOutputStream(bytesOut2);
@@ -155,8 +152,7 @@ public class IntArrayWritableTest {
     array.write(dataOut2);
 
     IntArrayWritable array3 = new IntArrayWritable();
-    array3.readFields(new DataInputStream(new ByteArrayInputStream(
-        bytesOut2.toByteArray())));
+    array3.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut2.toByteArray())));
 
     assertEquals(2, array3.size());
     assertEquals(6, array3.get(0));
@@ -173,8 +169,7 @@ public class IntArrayWritableTest {
     array.write(dataOut);
 
     IntArrayWritable array2 = new IntArrayWritable();
-    array2.readFields(new DataInputStream(new ByteArrayInputStream(
-        bytesOut.toByteArray())));
+    array2.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
 
     assertEquals(0, array2.size());
     assertTrue(array2.getArray() != null);
@@ -183,7 +178,7 @@ public class IntArrayWritableTest {
 
   @Test
   public void testClone1() throws IOException {
-    IntArrayWritable array = new IntArrayWritable(new int[] {1, 3, 53, 97, 286});
+    IntArrayWritable array = new IntArrayWritable(new int[] { 1, 3, 53, 97, 286 });
     assertEquals(1, array.get(0));
     assertEquals(3, array.get(1));
     assertEquals(53, array.get(2));
@@ -204,7 +199,7 @@ public class IntArrayWritableTest {
 
   @Test
   public void testClone2() throws IOException {
-    IntArrayWritable array = new IntArrayWritable(new int[] {1, 3, 53, 97, 286}, 2);
+    IntArrayWritable array = new IntArrayWritable(new int[] { 1, 3, 53, 97, 286 }, 2);
     assertEquals(1, array.get(0));
     assertEquals(3, array.get(1));
     assertEquals(2, array.size());

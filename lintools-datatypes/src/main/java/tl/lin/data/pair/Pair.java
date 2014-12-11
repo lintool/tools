@@ -17,51 +17,51 @@
 package tl.lin.data.pair;
 
 public class Pair {
-	public static PairOfFloatInt of(float left, int right) {
-		return new PairOfFloatInt(left, right);
-	}
+  public static PairOfFloatInt of(float left, int right) {
+    return new PairOfFloatInt(left, right);
+  }
 
-	public static PairOfFloats of(float left, float right) {
-		return new PairOfFloats(left, right);
-	}
+  public static PairOfFloats of(float left, float right) {
+    return new PairOfFloats(left, right);
+  }
 
-	public static PairOfIntLong of(int left, long right) {
-		return new PairOfIntLong(left, right);
-	}
+  public static PairOfIntLong of(int left, long right) {
+    return new PairOfIntLong(left, right);
+  }
 
-	public static PairOfInts of(int left, int right) {
-		return new PairOfInts(left, right);
-	}
+  public static PairOfInts of(int left, int right) {
+    return new PairOfInts(left, right);
+  }
 
-	public static PairOfIntString of(int left, String right) {
-		return new PairOfIntString(left, right);
-	}
+  public static PairOfIntString of(int left, String right) {
+    return new PairOfIntString(left, right);
+  }
 
-	public static PairOfLongFloat of(long left, float right) {
-		return new PairOfLongFloat(left, right);
-	}
+  public static PairOfLongFloat of(long left, float right) {
+    return new PairOfLongFloat(left, right);
+  }
 
-	public static PairOfLongInt of(long left, int right) {
-		return new PairOfLongInt(left, right);
-	}
+  public static PairOfLongInt of(long left, int right) {
+    return new PairOfLongInt(left, right);
+  }
 
-	public static PairOfLongs of(long left, long right) {
-		return new PairOfLongs(left, right);
-	}
+  public static PairOfLongs of(long left, long right) {
+    return new PairOfLongs(left, right);
+  }
 
-	public static PairOfStringFloat of(String left, float right) {
-		return new PairOfStringFloat(left, right);
-	}
+  public static PairOfStringFloat of(String left, float right) {
+    return new PairOfStringFloat(left, right);
+  }
 
-	public static PairOfStringLong of(String left, long right) {
-		return new PairOfStringLong(left, right);
-	}
+  public static PairOfStringLong of(String left, long right) {
+    return new PairOfStringLong(left, right);
+  }
 
-	public static PairOfStringInt of(String left, int right) {
-		return new PairOfStringInt(left, right);
-	}
+  public static PairOfStringInt of(String left, int right) {
+    return new PairOfStringInt(left, right);
+  }
 
-	public static PairOfStrings of(String left, String right) {
-		return new PairOfStrings(left, right);
-	}
+  public static PairOfStrings of(String left, String right) {
+    return new PairOfStrings(left, right);
+  }
 }

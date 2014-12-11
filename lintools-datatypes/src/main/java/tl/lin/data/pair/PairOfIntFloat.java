@@ -24,9 +24,9 @@ import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 
 /**
- * WritableComparable representing a pair of an int and long. The elements in
- * the pair are referred to as the left and right elements. The natural sort
- * order is: first by the left element, and then by the right element.
+ * WritableComparable representing a pair of an int and long. The elements in the pair are referred
+ * to as the left and right elements. The natural sort order is: first by the left element, and then
+ * by the right element.
  */
 public class PairOfIntFloat implements WritableComparable<PairOfIntFloat> {
   private int leftElement;
@@ -35,7 +35,8 @@ public class PairOfIntFloat implements WritableComparable<PairOfIntFloat> {
   /**
    * Creates a pair.
    */
-  public PairOfIntFloat() {}
+  public PairOfIntFloat() {
+  }
 
   /**
    * Creates a pair.
@@ -118,7 +119,8 @@ public class PairOfIntFloat implements WritableComparable<PairOfIntFloat> {
    * Checks two pairs for equality.
    *
    * @param obj object for comparison
-   * @return <code>true</code> if <code>obj</code> is equal to this object, <code>false</code> otherwise
+   * @return <code>true</code> if <code>obj</code> is equal to this object, <code>false</code>
+   *         otherwise
    */
   public boolean equals(Object obj) {
     PairOfIntFloat pair = (PairOfIntFloat) obj;
@@ -126,12 +128,11 @@ public class PairOfIntFloat implements WritableComparable<PairOfIntFloat> {
   }
 
   /**
-   * Defines a natural sort order for pairs. Pairs are sorted first by the
-   * left element, and then by the right element.
+   * Defines a natural sort order for pairs. Pairs are sorted first by the left element, and then by
+   * the right element.
    *
-   * @return a value less than zero, a value greater than zero, or zero if
-   *         this pair should be sorted before, sorted after, or is equal to
-   *         <code>obj</code>.
+   * @return a value less than zero, a value greater than zero, or zero if this pair should be
+   *         sorted before, sorted after, or is equal to <code>obj</code>.
    */
   public int compareTo(PairOfIntFloat pair) {
     int pl = pair.getLeftElement();
@@ -199,8 +200,7 @@ public class PairOfIntFloat implements WritableComparable<PairOfIntFloat> {
         float thisRightValue = readFloat(b1, s1 + 4);
         float thatRightValue = readFloat(b2, s2 + 4);
 
-        return (thisRightValue < thatRightValue ? -1
-            : (thisRightValue == thatRightValue ? 0 : 1));
+        return (thisRightValue < thatRightValue ? -1 : (thisRightValue == thatRightValue ? 0 : 1));
       }
 
       return (thisLeftValue < thatLeftValue ? -1 : (thisLeftValue == thatLeftValue ? 0 : 1));

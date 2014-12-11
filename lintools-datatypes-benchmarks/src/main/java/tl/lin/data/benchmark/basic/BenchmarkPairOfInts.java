@@ -29,11 +29,10 @@ import tl.lin.data.pair.PairOfInts;
  * </p>
  * 
  * <ul>
- * <li>Creating 2 million new objects. Each is populated with two random
- * numbers between 0 and 1000. All objects are added to an ArrayList.</li>
+ * <li>Creating 2 million new objects. Each is populated with two random numbers between 0 and 1000.
+ * All objects are added to an ArrayList.</li>
  * 
- * <li>Cloning all 2 million objects. All new objects are added to another
- * ArrayList.</li>
+ * <li>Cloning all 2 million objects. All new objects are added to another ArrayList.</li>
  * 
  * <li>Sorting the second ArrayList</li>
  * 
@@ -41,8 +40,7 @@ import tl.lin.data.pair.PairOfInts;
  * 
  * <p>
  * See below for results comparing this benchmark to {@link BenchmarkTuple} and
- * {@link BenchmarkJson} (on the equivalent task). All times measured in
- * seconds.
+ * {@link BenchmarkJson} (on the equivalent task). All times measured in seconds.
  * </p>
  * 
  * <table cellpadding="5" border="1">
@@ -77,50 +75,50 @@ import tl.lin.data.pair.PairOfInts;
  * </table>
  * 
  * <p>
- * Times were arrived at by taking the average of 10 trials. Experiments were
- * conducted on Aug 6, 2008 on a 2.6GHz MacBook Pro running Windows XP and
- * Cygwin.
+ * Times were arrived at by taking the average of 10 trials. Experiments were conducted on Aug 6,
+ * 2008 on a 2.6GHz MacBook Pro running Windows XP and Cygwin.
  * </p>
  * 
  */
 public class BenchmarkPairOfInts {
   private static final int SAMPLES = 1000000;
 
-	private BenchmarkPairOfInts() {}
+  private BenchmarkPairOfInts() {
+  }
 
-	/**
-	 * Runs this benchmark.
-	 */
-	public static void main(String[] args) throws Exception {
+  /**
+   * Runs this benchmark.
+   */
+  public static void main(String[] args) throws Exception {
     System.out.println("Number of samples: " + SAMPLES);
-		Random r = new Random();
+    Random r = new Random();
 
-		long startTime;
-		double duration;
+    long startTime;
+    double duration;
 
-		startTime = System.currentTimeMillis();
+    startTime = System.currentTimeMillis();
 
-		List<PairOfInts> listPairOfInts1 = new ArrayList<PairOfInts>();
-		for (int i = 0; i < SAMPLES; i++) {
-			listPairOfInts1.add(new PairOfInts(r.nextInt(1000), r.nextInt(1000)));
-		}
+    List<PairOfInts> listPairOfInts1 = new ArrayList<PairOfInts>();
+    for (int i = 0; i < SAMPLES; i++) {
+      listPairOfInts1.add(new PairOfInts(r.nextInt(1000), r.nextInt(1000)));
+    }
 
-		duration = (System.currentTimeMillis() - startTime) / 1000.0;
-		System.out.println("Generated PairOfInts in " + duration + " seconds");
+    duration = (System.currentTimeMillis() - startTime) / 1000.0;
+    System.out.println("Generated PairOfInts in " + duration + " seconds");
 
-		startTime = System.currentTimeMillis();
-		List<PairOfInts> listPairOfInts2 = new ArrayList<PairOfInts>();
-		for (PairOfInts p : listPairOfInts1) {
-			listPairOfInts2.add(p.clone());
-		}
+    startTime = System.currentTimeMillis();
+    List<PairOfInts> listPairOfInts2 = new ArrayList<PairOfInts>();
+    for (PairOfInts p : listPairOfInts1) {
+      listPairOfInts2.add(p.clone());
+    }
 
-		duration = (System.currentTimeMillis() - startTime) / 1000.0;
-		System.out.println("Cloned PairOfInts in " + duration + " seconds");
+    duration = (System.currentTimeMillis() - startTime) / 1000.0;
+    System.out.println("Cloned PairOfInts in " + duration + " seconds");
 
-		startTime = System.currentTimeMillis();
-		Collections.sort(listPairOfInts2);
-		duration = (System.currentTimeMillis() - startTime) / 1000.0;
+    startTime = System.currentTimeMillis();
+    Collections.sort(listPairOfInts2);
+    duration = (System.currentTimeMillis() - startTime) / 1000.0;
 
-		System.out.println("Sorted PairOfInts in " + duration + " seconds");
-	}
+    System.out.println("Sorted PairOfInts in " + duration + " seconds");
+  }
 }

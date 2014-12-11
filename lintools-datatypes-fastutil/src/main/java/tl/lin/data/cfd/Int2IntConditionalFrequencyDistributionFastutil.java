@@ -35,10 +35,8 @@ import tl.lin.data.pair.PairOfInts;
 public class Int2IntConditionalFrequencyDistributionFastutil implements
     Int2IntConditionalFrequencyDistribution {
 
-  private final Int2ObjectMap<Int2IntFrequencyDistributionFastutil> distributions =
-      new Int2ObjectOpenHashMap<Int2IntFrequencyDistributionFastutil>();
-  private final Int2LongFrequencyDistributionFastutil marginals =
-      new Int2LongFrequencyDistributionFastutil();
+  private final Int2ObjectMap<Int2IntFrequencyDistributionFastutil> distributions = new Int2ObjectOpenHashMap<Int2IntFrequencyDistributionFastutil>();
+  private final Int2LongFrequencyDistributionFastutil marginals = new Int2LongFrequencyDistributionFastutil();
 
   private long sumOfAllFrequencies = 0;
 
@@ -93,8 +91,7 @@ public class Int2IntConditionalFrequencyDistributionFastutil implements
   }
 
   @Override
-  public Int2IntFrequencyDistributionFastutil getConditionalDistribution(
-      int cond) {
+  public Int2IntFrequencyDistributionFastutil getConditionalDistribution(int cond) {
     if (distributions.containsKey(cond)) {
       return distributions.get(cond);
     }
@@ -127,8 +124,8 @@ public class Int2IntConditionalFrequencyDistributionFastutil implements
     }
 
     if (totalSum != getSumOfAllCounts()) {
-      throw new RuntimeException("Internal Error! Got " + totalSum
-          + ", Expected " + getSumOfAllCounts());
+      throw new RuntimeException("Internal Error! Got " + totalSum + ", Expected "
+          + getSumOfAllCounts());
     }
 
     for (PairOfInts e : m) {
@@ -150,7 +147,7 @@ public class Int2IntConditionalFrequencyDistributionFastutil implements
     marginals.readFields(in);
 
     int sz = in.readInt();
-    for (int i=0; i<sz; i++) {
+    for (int i = 0; i < sz; i++) {
       int key = in.readInt();
       Int2IntFrequencyDistributionFastutil map = new Int2IntFrequencyDistributionFastutil();
       map.readFields(in);
@@ -164,8 +161,8 @@ public class Int2IntConditionalFrequencyDistributionFastutil implements
     marginals.write(out);
 
     out.writeInt(distributions.size());
-    for (Int2ObjectMap.Entry<Int2IntFrequencyDistributionFastutil> e :
-         distributions.int2ObjectEntrySet()) {
+    for (Int2ObjectMap.Entry<Int2IntFrequencyDistributionFastutil> e : distributions
+        .int2ObjectEntrySet()) {
       out.writeInt(e.getIntKey());
       e.getValue().write(out);
     }

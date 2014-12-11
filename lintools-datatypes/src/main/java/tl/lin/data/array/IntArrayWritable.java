@@ -27,7 +27,8 @@ public class IntArrayWritable implements Writable {
   private int[] array;
   private int length = 0;
 
-  public IntArrayWritable() {}
+  public IntArrayWritable() {
+  }
 
   /**
    * Constructor with array as input.
@@ -118,6 +119,7 @@ public class IntArrayWritable implements Writable {
 
   /**
    * Returns the value at index <i>i</i>. Note that no bounds checking is performed.
+   *
    * @param i index position
    */
   public int get(int i) {

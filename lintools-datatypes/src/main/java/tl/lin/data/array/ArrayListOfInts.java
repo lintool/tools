@@ -362,7 +362,8 @@ public class ArrayListOfInts implements RandomAccess, Cloneable, Iterable<Intege
   }
 
   /**
-   * Merges two sorted (ascending order) lists into one sorted union. Duplicate items remain in the merged list.
+   * Merges two sorted (ascending order) lists into one sorted union. Duplicate items remain in the
+   * merged list.
    *
    * @param sortedLst list to be merged into this
    * @return merged sorted (ascending order) union of this and sortedLst
@@ -392,7 +393,8 @@ public class ArrayListOfInts implements RandomAccess, Cloneable, Iterable<Intege
   }
 
   /**
-   * Merges two sorted (ascending order) lists into one sorted union. Duplicate items are discarded in the merged list.
+   * Merges two sorted (ascending order) lists into one sorted union. Duplicate items are discarded
+   * in the merged list.
    *
    * @param sortedLst list to be merged into this
    * @return merged sorted (ascending order) union of this and sortedLst

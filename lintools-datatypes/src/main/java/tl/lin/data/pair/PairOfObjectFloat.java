@@ -26,7 +26,8 @@ public class PairOfObjectFloat<L extends Comparable<L>> implements Comparable<Pa
     this.right = right;
   }
 
-  public PairOfObjectFloat() {}
+  public PairOfObjectFloat() {
+  }
 
   public L getLeftElement() {
     return left;
@@ -65,7 +66,7 @@ public class PairOfObjectFloat<L extends Comparable<L>> implements Comparable<Pa
 
   @Override
   public int compareTo(PairOfObjectFloat<L> that) {
-    if ( this.left.equals(that.left)) {
+    if (this.left.equals(that.left)) {
       return that.right > this.right ? -1 : 1;
     }
     return this.left.compareTo(that.left);
