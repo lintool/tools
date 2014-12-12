@@ -3,7 +3,7 @@
   <groupId>tl.lin</groupId>
   <artifactId>lintools-datatypes-fastutil</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>lintools-datatypes-fastutil</name>
   <description>Lintools (fastutil datatypes)</description>
   <url>http://lin.tl/</url>
