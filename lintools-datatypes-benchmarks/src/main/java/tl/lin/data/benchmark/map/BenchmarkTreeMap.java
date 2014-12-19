@@ -48,6 +48,7 @@ public class BenchmarkTreeMap {
       }
 
       if (SUM) {
+        @SuppressWarnings("unused")
         int sum = 0;
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
           sum += entry.getKey();
@@ -74,6 +75,7 @@ public class BenchmarkTreeMap {
       }
 
       if (SUM) {
+        @SuppressWarnings("unused")
         int sum = 0;
         for (MapIV.Entry<String> entry : map.entrySet()) {
           sum += entry.getKey();
@@ -110,6 +112,7 @@ public class BenchmarkTreeMap {
       });
 
       if (SUM) {
+        @SuppressWarnings("unused")
         int sum = 0;
         for (MapIV.Entry<String> entry : entries) {
           sum += entry.getKey();

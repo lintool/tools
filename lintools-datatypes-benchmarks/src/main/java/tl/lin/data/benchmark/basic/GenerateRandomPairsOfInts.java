@@ -3,7 +3,6 @@ package tl.lin.data.benchmark.basic;
 import java.util.Random;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
@@ -26,9 +25,10 @@ public class GenerateRandomPairsOfInts {
     Random r = new Random();
 
     Configuration conf = new Configuration();
-    FileSystem fs = FileSystem.get(conf);
-    SequenceFile.Writer writer = SequenceFile.createWriter(fs, conf, new Path("random-pairs.seq"),
-        PairOfInts.class, IntWritable.class);
+    SequenceFile.Writer writer = SequenceFile.createWriter(conf,
+        SequenceFile.Writer.file(new Path("random-pairs.seq")),
+        SequenceFile.Writer.keyClass(PairOfInts.class),
+        SequenceFile.Writer.valueClass(IntWritable.class));
 
     IntWritable n = new IntWritable();
     PairOfInts pair = new PairOfInts();

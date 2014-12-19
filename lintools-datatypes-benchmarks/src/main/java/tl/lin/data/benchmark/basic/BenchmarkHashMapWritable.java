@@ -29,18 +29,18 @@ import tl.lin.data.map.HashMapWritable;
 
 /**
  * <p>
- * Benchmark comparing HashMapWritable to Hadoop's native MapWritable. Sample output:
+ * Benchmark comparing HashMapWritable to Hadoop's native MapWritable. Sample output (1.7 GHz Intel
+ * Core i7, Mac OS X):
  * </p>
  * 
  * <pre>
- * Generating and serializing 100000 random HashMapWritables: 4.672 seconds
- * Generating and serializing 100000 random MapWritables: 5.546 seconds
- * Average size of each HashMapWritable: 664.77783
- * Average size of each MapWritable: 747.4403
- * Deserializing 100000 random MapWritables: 3.954 seconds
- * Deserializing 100000 random MapWritables: 4.968 seconds
+ * Generating and serializing 100000 random HashMapWritables: 1.981 seconds
+ * Generating and serializing 100000 random MapWritables: 2.386 seconds
+ * Average size of each HashMapWritable: 665.4588
+ * Average size of each MapWritable: 746.79376
+ * Deserializing 100000 random HashMapWritables: 1.124 seconds
+ * Deserializing 100000 random MapWritables: 1.796 seconds
  * </pre>
- * 
  */
 public class BenchmarkHashMapWritable {
 
@@ -117,7 +117,7 @@ public class BenchmarkHashMapWritable {
           .toByteArray())));
     }
 
-    System.out.println("Deserializing " + numTrials + " random MapWritables: "
+    System.out.println("Deserializing " + numTrials + " random HashMapWritables: "
         + (System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
 
     startTime = System.currentTimeMillis();
