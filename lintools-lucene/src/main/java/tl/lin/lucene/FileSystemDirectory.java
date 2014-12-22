@@ -23,17 +23,16 @@ import java.util.Collection;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.lucene.store.BufferedIndexInput;
-import org.apache.lucene.store.BufferedIndexOutput;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
 import org.apache.lucene.store.Lock;
+import org.apache.lucene.store.LockFactory;
 
 /**
  * This class implements a Lucene Directory on top of a general FileSystem.
@@ -96,16 +95,15 @@ public class FileSystemDirectory extends Directory {
       throw new IOException(directory + " is not a directory");
     }
 
-    fs.delete(directory, true);
-//    // clear old index files
-//    FileStatus[] fileStatus =
-//        fs.listStatus(directory, LuceneIndexFileNameFilter.getFilter());
-//    for (int i = 0; i < fileStatus.length; i++) {
-//      if (!fs.delete(fileStatus[i].getPath())) {
-//        throw new IOException("Cannot delete index file "
-//            + fileStatus[i].getPath());
-//      }
-//    }
+    // clear old index files
+    FileStatus[] fileStatus =
+        fs.listStatus(directory); //, LuceneIndexFileNameFilter.getFilter());
+    for (int i = 0; i < fileStatus.length; i++) {
+      if (!fs.delete(fileStatus[i].getPath())) {
+        throw new IOException("Cannot delete index file "
+            + fileStatus[i].getPath());
+      }
+    }
   }
 
   /* (non-Javadoc)
@@ -169,13 +167,7 @@ public class FileSystemDirectory extends Directory {
    * @see org.apache.lucene.store.Directory#createOutput(java.lang.String)
    */
   public IndexOutput createOutput(String name) throws IOException {
-    Path file = new Path(directory, name);
-    if (fs.exists(file) && !fs.delete(file)) {
-      // delete the existing one if applicable
-      throw new IOException("Cannot overwrite index file " + file);
-    }
-
-    return new FileSystemIndexOutput(file, ioFileBufferSize);
+    throw new UnsupportedOperationException();
   }
 
   /* (non-Javadoc)
@@ -197,19 +189,23 @@ public class FileSystemDirectory extends Directory {
    */
   public Lock makeLock(final String name) {
     return new Lock() {
+      @Override
       public boolean obtain() {
         return true;
       }
 
-      public void release() {
-      }
-
+      @Override
       public boolean isLocked() {
         throw new UnsupportedOperationException();
       }
 
+      @Override
       public String toString() {
         return "Lock@" + new Path(directory, name);
+      }
+
+      @Override
+      public void close() throws IOException {
       }
     };
   }
@@ -248,7 +244,7 @@ public class FileSystemDirectory extends Directory {
 
     public FileSystemIndexInput(Path path, int ioFileBufferSize)
         throws IOException {
-      super(path.toString(), ioFileBufferSize);
+      super(path.toString());
       filePath = path;
       descriptor = new Descriptor(path, ioFileBufferSize);
       length = fs.getFileStatus(path).getLen();
@@ -307,51 +303,19 @@ public class FileSystemDirectory extends Directory {
     }
   }
 
-  private class FileSystemIndexOutput extends BufferedIndexOutput {
-
-    private final Path filePath; // for debugging
-    private final FSDataOutputStream out;
-    private boolean isOpen;
-
-    public FileSystemIndexOutput(Path path, int ioFileBufferSize)
-        throws IOException {
-      filePath = path;
-      // overwrite is true by default
-      out = fs.create(path, true, ioFileBufferSize);
-      isOpen = true;
-    }
-
-    public void flushBuffer(byte[] b, int offset, int size) throws IOException {
-      out.write(b, offset, size);
-    }
-
-    public void close() throws IOException {
-      if (isOpen) {
-        super.close();
-        out.close();
-        isOpen = false;
-      } else {
-        throw new IOException("Index file " + filePath + " already closed");
-      }
-    }
-
-    public void seek(long pos) throws IOException {
-      throw new UnsupportedOperationException();
-    }
-
-    public long length() throws IOException {
-      return out.getPos();
-    }
-
-    protected void finalize() throws IOException {
-      if (isOpen) {
-        close(); // close the file
-      }
-    }
+  @Override
+  public void clearLock(String arg0) throws IOException {
+    // TODO Auto-generated method stub
   }
 
   @Override
   public IndexOutput createOutput(String arg0, IOContext arg1) throws IOException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public LockFactory getLockFactory() {
     // TODO Auto-generated method stub
     return null;
   }
@@ -364,13 +328,18 @@ public class FileSystemDirectory extends Directory {
 
   @Override
   public IndexInput openInput(String arg0, IOContext arg1) throws IOException {
-    return openInput(arg0);
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void setLockFactory(LockFactory arg0) throws IOException {
+    // TODO Auto-generated method stub
+    
   }
 
   @Override
   public void sync(Collection<String> arg0) throws IOException {
     // TODO Auto-generated method stub
-    
   }
-
 }
