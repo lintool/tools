@@ -114,6 +114,11 @@
       <artifactId>lucene-benchmark</artifactId>
       <version>4.10.2</version>
     </dependency>
+    <dependency>
+      <groupId>org.wikiclean</groupId>
+      <artifactId>wikiclean</artifactId>
+      <version>0.3</version>
+    </dependency>
 
     <!-- Make Hadoop optional so clients can pull in their own verisons -->
     <dependency>
