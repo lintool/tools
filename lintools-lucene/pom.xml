@@ -70,7 +70,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.6.1</version>
+          <version>2.5.1</version>
           <executions>
             <execution>
               <id>default</id>
@@ -83,6 +83,24 @@
             </execution>
          </executions>
        </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <version>1.9</version>
+        <configuration>
+          <extraJvmArguments>-Xms128M -Xmx1024M</extraJvmArguments>
+          <programs>
+            <program>
+              <mainClass>tl.lin.lucene.wikipedia.SearchWikipedia</mainClass>
+              <name>SearchWikipedia</name>
+            </program>
+            <program>
+              <mainClass>tl.lin.lucene.wikipedia.FetchWikipediaArticle</mainClass>
+              <name>FetchWikipediaArticle</name>
+            </program>
+          </programs>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
