@@ -63,6 +63,8 @@ public class SearchWikipedia {
       System.exit(-1);
     }
 
+    long startTime = System.currentTimeMillis();
+
     String queryText = cmdline.getOptionValue(QUERY_OPTION);
     int numResults = cmdline.hasOption(NUM_RESULTS_OPTION) ?
         Integer.parseInt(cmdline.getOptionValue(NUM_RESULTS_OPTION)) : DEFAULT_NUM_RESULTS;
@@ -93,6 +95,8 @@ public class SearchWikipedia {
       }
       i++;
     }
+
+    out.println("Search completed in " + (System.currentTimeMillis() - startTime) + "ms");
 
     searcher.close();
     out.close();
