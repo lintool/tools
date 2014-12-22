@@ -78,6 +78,13 @@ public class IndexWikipediaDumpDefault {
     Document doc;
     try {
       while ((doc = docMaker.makeDocument()) != null) {
+        // Document schema:
+        //   stored,indexed,omitNorms,indexOptions=DOCS_ONLY<docid:61>
+        //   indexed,tokenized,omitNorms<docname:670>
+        //   indexed,tokenized,omitNorms<docdate:06-NOV-2014 14:16:38.000>
+        //   indexed,tokenized,omitNorms,indexOptions=DOCS_ONLY,numericType=LONG,numericPrecisionStep=16<docdatenum:1415301398000> indexed,tokenized,omitNorms,indexOptions=DOCS_ONLY,numericType=INT,numericPrecisionStep=8<doctimesecnum:69398>
+        //   indexed,tokenized,omitNorms<doctitle:Alphabet>
+        //   indexed,tokenized<body:...>
         indexWriter.addDocument(doc);
         count++;
         if (count % 10000 == 0)
@@ -88,13 +95,12 @@ public class IndexWikipediaDumpDefault {
       nmd.printStackTrace();
     }
 
+    System.out.println("Optimizing index...");
     // Optimize down to a single segment
     indexWriter.forceMerge(1);
 
     long finish = System.currentTimeMillis();
     System.out.println("Indexing " + count + " documents took " + (finish - start) + " ms");
-    System.out.println("Total data processed: " + source.getTotalBytesCount() + " bytes");
-    System.out.println("Index should be located at " + dir.getDirectory().getAbsolutePath());
     docMaker.close();
     indexWriter.close();
   }
