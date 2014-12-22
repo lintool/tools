@@ -37,15 +37,16 @@ public class IndexWikipediaDump {
 
   public static final Analyzer ANALYZER = new StandardAnalyzer();
 
-  static final FieldType TEXT_OPTIONS = new FieldType();
+  static final FieldType TITLE_FIELD_TYPE = new FieldType();
 
   static {
-    TEXT_OPTIONS.setIndexed(true);
-    //TEXT_OPTIONS.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
-    TEXT_OPTIONS.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
-    TEXT_OPTIONS.setStored(true);
-    TEXT_OPTIONS.setTokenized(true);        
+    TITLE_FIELD_TYPE.setIndexed(true);
+    TITLE_FIELD_TYPE.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
+    TITLE_FIELD_TYPE.setStored(true);
+    TITLE_FIELD_TYPE.setTokenized(true);
   }
+
+  static final FieldType TEXT_FIELD_TYPE = new FieldType();
 
   public static enum IndexField {
     ID("id"),
@@ -66,6 +67,8 @@ public class IndexWikipediaDump {
   private static final String MAX_OPTION = "maxdocs";
   private static final String OPTIMIZE_OPTION = "optimize";
   private static final String THREADS_OPTION = "threads";
+  private static final String INDEX_POSITIONS_OPTION = "indexTermPositions";
+  private static final String STORE_TEXT_OPTION = "storeText";
 
   @SuppressWarnings("static-access")
   public static void main(String[] args) throws Exception {
@@ -80,6 +83,8 @@ public class IndexWikipediaDump {
         .withDescription("number of indexing threads").create(THREADS_OPTION));
 
     options.addOption(new Option(OPTIMIZE_OPTION, "merge indexes into a single segment"));
+    options.addOption(new Option(INDEX_POSITIONS_OPTION, "indexes term positions in text for phrase queries"));
+    options.addOption(new Option(STORE_TEXT_OPTION, "stores the actual text"));
 
     CommandLine cmdline = null;
     CommandLineParser parser = new GnuParser();
@@ -102,6 +107,17 @@ public class IndexWikipediaDump {
     int threads = cmdline.hasOption(THREADS_OPTION) ?
         Integer.parseInt(cmdline.getOptionValue(THREADS_OPTION)) : DEFAULT_NUM_THREADS;
 
+    TEXT_FIELD_TYPE.setIndexed(true);
+    if (cmdline.hasOption(INDEX_POSITIONS_OPTION)) {
+      TEXT_FIELD_TYPE.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
+    } else {
+      TEXT_FIELD_TYPE.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
+    }
+    if (cmdline.hasOption(STORE_TEXT_OPTION)) {
+      TEXT_FIELD_TYPE.setStored(true);
+    }
+    TEXT_FIELD_TYPE.setTokenized(true);
+
     long startTime = System.currentTimeMillis();
 
     String path = cmdline.getOptionValue(INPUT_OPTION);
@@ -115,6 +131,8 @@ public class IndexWikipediaDump {
     IndexWriter writer = new IndexWriter(dir, config);
     LOG.info("Creating index at " + indexPath);
     LOG.info("Indexing with " + threads + " threads");
+    LOG.info("Indexing term positions in main text: " + cmdline.hasOption(INDEX_POSITIONS_OPTION));
+    LOG.info("Storing text: " + cmdline.hasOption(STORE_TEXT_OPTION));
 
     try {
       WikipediaBz2DumpInputStream stream = new WikipediaBz2DumpInputStream(path);
@@ -127,6 +145,11 @@ public class IndexWikipediaDump {
 
         // These are heuristic specifically for filtering out non-articles in enwiki-20120104.
         if (title.startsWith("Wikipedia:") || title.startsWith("Portal:") || title.startsWith("File:")) {
+          continue;
+        }
+
+        // Filtering based on enwiki-20141106
+        if (title.startsWith("Draft:")) {
           continue;
         }
 
@@ -183,8 +206,8 @@ public class IndexWikipediaDump {
     public void run() {
       Document doc = new Document();
       doc.add(new IntField(IndexField.ID.name, Integer.parseInt(cleaner.getId(page)), Field.Store.YES));
-      doc.add(new Field(IndexField.TEXT.name, cleaner.clean(page), TEXT_OPTIONS));
-      doc.add(new Field(IndexField.TITLE.name, cleaner.getTitle(page), TEXT_OPTIONS));
+      doc.add(new Field(IndexField.TEXT.name, cleaner.clean(page), TEXT_FIELD_TYPE));
+      doc.add(new Field(IndexField.TITLE.name, cleaner.getTitle(page), TITLE_FIELD_TYPE));
 
       try {
         writer.addDocument(doc);
