@@ -98,6 +98,10 @@
               <mainClass>tl.lin.lucene.wikipedia.FetchWikipediaArticle</mainClass>
               <name>FetchWikipediaArticle</name>
             </program>
+            <program>
+              <mainClass>tl.lin.lucene.wikipedia.ConvertWikipediaDumpToTrecFormat</mainClass>
+              <name>ConvertWikipediaDumpToTrecFormat</name>
+            </program>
           </programs>
         </configuration>
       </plugin>
