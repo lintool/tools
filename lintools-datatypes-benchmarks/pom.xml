@@ -37,56 +37,46 @@
     <version>7</version>
   </parent>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.4.1</version>
-          <executions>
-            <execution>
-              <id>default</id>
-              <goals>
-                <goal>perform</goal>
-              </goals>
-              <configuration>
-                <pomFileName>lintools-datatypes-benchmarks/pom.xml</pomFileName>
-              </configuration>
-            </execution>
-         </executions>
-       </plugin>
-    </plugins>
-  </build>
+  <repositories>
+    <repository>
+      <id>maven</id>
+      <url>http://repo.maven.apache.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>cloudera</id>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+    </repository>
+    <repository>
+      <id>sonatype-release</id>
+      <url>https://oss.sonatype.org/content/repositories/releases/</url>
+    </repository>
+    <repository>
+      <id>sonatype-staging</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes-fastutil</artifactId>
-      <version>0.9.2</version>
-    </dependency>
-    <!-- Make Hadoop optional so clients can pull in their own verisons -->
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-core</artifactId>
-      <version>1.1.2</version>
-      <optional>true</optional>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
-      <version>1.1.2</version>
-      <optional>true</optional>
+      <version>2.5.0-cdh5.2.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.pig</groupId>
       <artifactId>pig</artifactId>
-      <version>0.11.1</version>
+      <version>0.12.0-cdh5.2.1</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

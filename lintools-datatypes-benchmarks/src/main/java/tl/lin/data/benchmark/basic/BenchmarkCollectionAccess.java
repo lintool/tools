@@ -24,14 +24,14 @@ import java.util.Map;
 /**
  * <p>
  * Benchmark comparing HashMaps, ArrayLists, and raw arrays. Tests one trillion accesses to a simple
- * three element collection. Sample output:
+ * three element collection. Sample output (1.7 GHz Intel Core i7, Mac OS X):
  * </p>
  * 
  * <pre>
  * 1000000000 accesses to a 3-element collection:
- *  for HashMap: 17.609 seconds
- *  for ArrayList: 12.313 seconds
- *  for array: 1.219 seconds
+ *  for HashMap: 4.783 seconds
+ *  for ArrayList: 0.005 seconds
+ *  for array: 0.004 seconds *
  * </pre>
  */
 public class BenchmarkCollectionAccess {

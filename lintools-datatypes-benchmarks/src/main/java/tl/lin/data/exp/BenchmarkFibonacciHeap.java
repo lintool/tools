@@ -21,6 +21,7 @@ public class BenchmarkFibonacciHeap {
     endTime = System.currentTimeMillis();
     System.out.println("inserts completed in " + (endTime - startTime) + " ms");
 
+    @SuppressWarnings("unused")
     long sum = 0;
     startTime = System.currentTimeMillis();
     for (int i = 0; i < 500000; i++) {
