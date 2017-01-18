@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 
 import junit.framework.JUnit4TestAdapter;
 
@@ -141,6 +142,24 @@ public class PairOfStringsTest {
     assertTrue(WritableComparatorTestHarness.compare(comparator, pair1, pair5) < 0);
     assertTrue(WritableComparatorTestHarness.compare(comparator, pair3, pair4) > 0);
     assertTrue(WritableComparatorTestHarness.compare(comparator, pair4, pair5) < 0);
+  }
+
+  @Test
+  public void testHashCode() throws IOException {
+    PairOfStrings pair1 = new PairOfStrings("hi", "there");
+    PairOfStrings pair2 = new PairOfStrings("there", "hi");
+    PairOfStrings pair3 = new PairOfStrings("hello", "world");
+
+    HashSet<PairOfStrings> hash = new HashSet<PairOfStrings>();
+
+    assertTrue(hash.add(pair1));
+    assertFalse(hash.add(pair1));
+    assertTrue(hash.add(pair2));
+    assertFalse(hash.add(pair2));
+    assertTrue(hash.add(pair3));
+    assertTrue(hash.remove(pair3));
+    assertTrue(hash.remove(pair1));
+    assertTrue(hash.remove(pair2));
   }
 
   public static junit.framework.Test suite() {
