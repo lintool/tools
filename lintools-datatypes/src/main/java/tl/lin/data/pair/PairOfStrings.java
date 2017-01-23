@@ -19,6 +19,7 @@ package tl.lin.data.pair;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Objects;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
@@ -153,7 +154,7 @@ public class PairOfStrings implements WritableComparable<PairOfStrings> {
    * @return hash code for the pair
    */
   public int hashCode() {
-    return leftElement.hashCode() + rightElement.hashCode();
+    return Objects.hash(leftElement, rightElement);
   }
 
   /**
