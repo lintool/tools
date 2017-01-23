@@ -16,8 +16,13 @@
 
 package tl.lin.data.map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import junit.framework.JUnit4TestAdapter;
+import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,14 +30,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.apache.hadoop.io.FloatWritable;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HashMapWritableTest {
 
@@ -132,12 +132,15 @@ public class HashMapWritableTest {
     assertEquals(value.get(), 77);
   }
 
-  @Test(expected = IOException.class)
+  @Test
   public void testTypeSafety() throws IOException {
     HashMapWritable<Writable, Writable> origMap = new HashMapWritable<Writable, Writable>();
 
     origMap.put(new Text("hi"), new FloatWritable(5.3f));
     origMap.put(new Text("there"), new Text("bbb"));
+
+    assertEquals(5.3f, ((FloatWritable) origMap.get(new Text("hi"))).get(), 10e-6);
+    assertEquals("bbb", origMap.get(new Text("there")).toString());
 
     ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
     DataOutputStream dataOut = new DataOutputStream(bytesOut);
@@ -147,6 +150,9 @@ public class HashMapWritableTest {
     HashMapWritable<Writable, Writable> map = new HashMapWritable<Writable, Writable>();
 
     map.readFields(new DataInputStream(new ByteArrayInputStream(bytesOut.toByteArray())));
+    assertEquals(5.3f, ((FloatWritable) map.get(new Text("hi"))).get(), 10e-6);
+    // De-serializer thinks type is a float, so tries to interpret text as a float.
+    assertNotEquals("bbb", map.get(new Text("there")).toString());
   }
 
   @Test

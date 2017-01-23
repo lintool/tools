@@ -16,6 +16,8 @@
 
 package tl.lin.data.map;
 
+import org.apache.hadoop.io.Writable;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
@@ -23,8 +25,6 @@ import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
-import org.apache.hadoop.io.Writable;
 
 /**
  * <p>
@@ -87,8 +87,6 @@ public class HMapIDW extends HMapID implements Writable {
 
   /**
    * In lazy decoding mode, populates the map with deserialized data. Otherwise, does nothing.
-   * 
-   * @throws IOException
    */
   public void decode() {
     if (keys == null)

@@ -27,8 +27,7 @@ import java.util.Set;
  * Hash-based implementation of the <tt>MapIV</tt> interface. {@link MapIV} is a specialized variant
  * the standard Java {@link Map} interface, except that the keys are hard coded as ints for
  * efficiency reasons (values can be arbitrary objects). This implementation was adapted from
- * {@link HashMap} version 1.73, 03/13/07. See <a href="{@docRoot} /../content/map.html">this
- * benchmark</a> for an efficiency comparison.
+ * {@link HashMap} version 1.73, 03/13/07.
  */
 public class HMapIV<V> implements MapIV<V>, Cloneable, Serializable {
 

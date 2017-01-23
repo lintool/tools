@@ -16,9 +16,10 @@
 
 package tl.lin.data.pair;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import junit.framework.JUnit4TestAdapter;
+import org.apache.hadoop.io.WritableComparator;
+import org.junit.Test;
+import tl.lin.data.WritableComparatorTestHarness;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,12 +28,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.apache.hadoop.io.WritableComparator;
-import org.junit.Test;
-
-import tl.lin.data.WritableComparatorTestHarness;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PairOfStringsTest {
 
@@ -146,6 +144,7 @@ public class PairOfStringsTest {
 
   @Test
   public void testHashCode() throws IOException {
+    // Confirm that we can add both (x, y) and (y, x)
     PairOfStrings pair1 = new PairOfStrings("hi", "there");
     PairOfStrings pair2 = new PairOfStrings("there", "hi");
     PairOfStrings pair3 = new PairOfStrings("hello", "world");

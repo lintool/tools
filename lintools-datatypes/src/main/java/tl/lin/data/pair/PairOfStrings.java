@@ -154,6 +154,7 @@ public class PairOfStrings implements WritableComparable<PairOfStrings> {
    * @return hash code for the pair
    */
   public int hashCode() {
+    // Make sure we can add both (x, y) and (y, x)
     return Objects.hash(leftElement, rightElement);
   }
 

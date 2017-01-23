@@ -87,8 +87,6 @@ public class HMapIFW extends HMapIF implements Writable {
 
   /**
    * In lazy decoding mode, populates the map with deserialized data. Otherwise, does nothing.
-   *
-   * @throws IOException
    */
   public void decode() {
     if (keys == null)

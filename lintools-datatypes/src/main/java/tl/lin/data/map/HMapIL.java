@@ -27,8 +27,7 @@ import java.util.Set;
  * Hash-based implementation of the <tt>MapIL</tt> interface. {@link MapIL} is a specialized variant
  * the standard Java {@link Map} interface, except that the keys are hard coded as ints and values
  * are hard coded as longs for efficiency reasons. This implementation was adapted from
- * {@link HashMap} version 1.73, 03/13/07. See <a href="{@docRoot} /../content/map.html">this
- * benchmark</a> for an efficiency comparison.
+ * {@link HashMap} version 1.73, 03/13/07.
  */
 public class HMapIL implements MapIL, Cloneable, Serializable {
 
