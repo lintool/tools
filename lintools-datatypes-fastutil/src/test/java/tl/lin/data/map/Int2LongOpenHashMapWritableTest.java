@@ -16,17 +16,16 @@
 
 package tl.lin.data.map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import it.unimi.dsi.fastutil.ints.Int2LongMap;
+import junit.framework.JUnit4TestAdapter;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Random;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class Int2LongOpenHashMapWritableTest {
 
@@ -137,6 +136,8 @@ public class Int2LongOpenHashMapWritableTest {
 
     value = m2.get(4);
     assertEquals(22L, value);
+
+    Int2LongOpenHashMapWritable.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -176,6 +177,8 @@ public class Int2LongOpenHashMapWritableTest {
 
     value = m3.get(4);
     assertEquals(22L, value);
+
+    Int2LongOpenHashMapWritable.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -281,6 +284,8 @@ public class Int2LongOpenHashMapWritableTest {
     assertEquals(9L, m1.get(1));
     assertEquals(22L, m1.get(2));
     assertEquals(5L, m1.get(3));
+
+    Int2LongOpenHashMapWritable.setLazyDecodeFlag(false);
   }
 
   @Test
