@@ -16,15 +16,14 @@
 
 package tl.lin.data.map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import junit.framework.JUnit4TestAdapter;
+import org.junit.Test;
 
 import java.io.IOException;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class HMapIFWTest {
 
@@ -110,6 +109,8 @@ public class HMapIFWTest {
 
     value = m2.get(4);
     assertTrue(value == 22.0f);
+
+    HMapIFW.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -147,6 +148,8 @@ public class HMapIFWTest {
 
     value = m2.get(4);
     assertTrue(value == 22.0f);
+
+    HMapIFW.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -184,6 +187,8 @@ public class HMapIFWTest {
     assertTrue(n1.get(5) == 1.0f);
     assertTrue(n1.isDecoded());
     assertFalse(n2.isDecoded());
+
+    HMapIFW.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -222,6 +227,8 @@ public class HMapIFWTest {
     assertTrue(n1.get(5) == 1.0f);
     assertTrue(n1.isDecoded());
     assertTrue(n2.isDecoded());
+
+    HMapIFW.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -260,6 +267,8 @@ public class HMapIFWTest {
     assertTrue(n1.get(5) == 1.0f);
     assertTrue(n1.isDecoded());
     assertFalse(n2.isDecoded());
+
+    HMapIFW.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -299,6 +308,8 @@ public class HMapIFWTest {
     assertTrue(n1.get(5) == 1.0f);
     assertTrue(n1.isDecoded());
     assertTrue(n2.isDecoded());
+
+    HMapIFW.setLazyDecodeFlag(false);
   }
 
   @Test
