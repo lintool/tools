@@ -1,6 +1,7 @@
 Lintools: tools by @lintool 
 ---------------------------
 [![Build Status](https://travis-ci.org/lintool/tools.svg?branch=master)](https://travis-ci.org/lintool/tools)
+[![LICENSE](https://img.shields.io/badge/license-Apache-blue.svg?style=flat-square)](./LICENSE)
 
 These are my personal Java libaries, containing bits of useful code I've developed over the years:
 
