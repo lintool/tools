@@ -16,23 +16,21 @@
 
 package tl.lin.data.array;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.util.List;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.junit.Test;
-
 import tl.lin.data.pair.PairOfWritables;
 import tl.lin.data.util.SequenceFileUtils;
+
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ArrayListOfIntsWritableTest {
   int neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7,
@@ -61,11 +59,9 @@ public class ArrayListOfIntsWritableTest {
     FileSystem.get(conf).delete(tmp, true);
 
     try {
-      // w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
-      // SequenceFile.Writer.keyClass(IntWritable.class),
-      // SequenceFile.Writer.valueClass(ArrayListOfIntsWritable.class));
-      w = SequenceFile.createWriter(FileSystem.get(conf), conf, tmp, IntWritable.class,
-          ArrayListOfIntsWritable.class);
+      w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
+      SequenceFile.Writer.keyClass(IntWritable.class),
+      SequenceFile.Writer.valueClass(ArrayListOfIntsWritable.class));
       w.append(new IntWritable(1), arr);
       w.close();
     } catch (IOException e) {
@@ -187,11 +183,9 @@ public class ArrayListOfIntsWritableTest {
     Configuration conf = new Configuration();
 
     try {
-      // w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(new Path("tmp")),
-      // SequenceFile.Writer.keyClass(ArrayListOfIntsWritable.class),
-      // SequenceFile.Writer.valueClass(IntWritable.class));
-      w = SequenceFile.createWriter(FileSystem.get(conf), conf, new Path("tmp"),
-          ArrayListOfIntsWritable.class, IntWritable.class);
+      w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(new Path("tmp")),
+      SequenceFile.Writer.keyClass(ArrayListOfIntsWritable.class),
+      SequenceFile.Writer.valueClass(IntWritable.class));
 
       w.append(a1, new IntWritable(1));
       w.append(a2, new IntWritable(2));
@@ -203,10 +197,7 @@ public class ArrayListOfIntsWritableTest {
     }
 
     try {
-      // SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.file(new
-      // Path("tmp")));
-      SequenceFile.Reader reader = new SequenceFile.Reader(FileSystem.get(conf), new Path("tmp"),
-          conf);
+      SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.file(new Path("tmp")));
 
       ArrayListOfIntsWritable key = (ArrayListOfIntsWritable) reader.getKeyClass().newInstance();
       IntWritable value = (IntWritable) reader.getValueClass().newInstance();

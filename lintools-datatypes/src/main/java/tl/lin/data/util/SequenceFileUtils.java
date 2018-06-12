@@ -16,20 +16,19 @@
 
 package tl.lin.data.util;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Writable;
-
 import tl.lin.data.pair.PairOfWritables;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Class containing a number of utility methods for manipulating {@code SequenceFile}s.
@@ -73,7 +72,7 @@ public class SequenceFileUtils {
 
     try {
       int k = 0;
-      SequenceFile.Reader reader = new SequenceFile.Reader(fs, path, fs.getConf());
+      SequenceFile.Reader reader = new SequenceFile.Reader(fs.getConf(), SequenceFile.Reader.file(path));
 
       K key;
       V value;
@@ -207,7 +206,7 @@ public class SequenceFileUtils {
 
     try {
       int k = 0;
-      SequenceFile.Reader reader = new SequenceFile.Reader(fs, path, fs.getConf());
+      SequenceFile.Reader reader = new SequenceFile.Reader(fs.getConf(), SequenceFile.Reader.file(path));
 
       K key = (K) reader.getKeyClass().newInstance();
       Writable value = (Writable) reader.getValueClass().newInstance();
@@ -260,7 +259,7 @@ public class SequenceFileUtils {
 
     try {
       int k = 0;
-      SequenceFile.Reader reader = new SequenceFile.Reader(fs, path, fs.getConf());
+      SequenceFile.Reader reader = new SequenceFile.Reader(fs.getConf(), SequenceFile.Reader.file(path));
 
       Writable key = (Writable) reader.getKeyClass().newInstance();
       V value = (V) reader.getValueClass().newInstance();
