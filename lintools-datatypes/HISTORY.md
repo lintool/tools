@@ -1,3 +1,9 @@
+Version 1.1.1
+=============
+June 12, 2018
+
++ Publishes test jar, needed by `lintools-datatypes-fastutil`
+
 Version 1.1.0
 =============
 June 12, 2018
