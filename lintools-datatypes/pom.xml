@@ -3,7 +3,7 @@
   <groupId>tl.lin</groupId>
   <artifactId>lintools-datatypes</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.1.0</version>
   <name>lintools-datatypes</name>
   <description>Lintools (core datatypes)</description>
   <url>http://lin.tl/</url>
@@ -93,6 +93,19 @@
             <phase>verify</phase>
             <goals>
               <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
             </goals>
           </execution>
         </executions>

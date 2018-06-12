@@ -1,3 +1,10 @@
+Version 1.1.0
+=============
+June 12, 2018
+
++ Fixed broken tests
++ Cleanup and upgraded dependencies
+
 Version 1.0.0
 =============
 December 10, 2014
