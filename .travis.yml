@@ -1,0 +1,4 @@
+language: java
+jdk:
+  - oraclejdk8
+script: cd lintools-datatypes && mvn test install -B && cd ../lintools-datatypes-fastutil && mvn test -B
