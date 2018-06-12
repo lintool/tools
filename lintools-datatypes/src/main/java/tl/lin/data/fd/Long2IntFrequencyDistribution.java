@@ -27,52 +27,77 @@ public interface Long2IntFrequencyDistribution extends SortableEntries<PairOfLon
 
   /**
    * Increments the count of an event {@code key}.
+   *
+   * @param key key
    */
   public void increment(long key);
 
   /**
    * Increments the count of an event {@code key} by {@code cnt}.
+   *
+   * @param key key
+   * @param cnt count
    */
   public void increment(long key, int cnt);
 
   /**
    * Decrements the count of an event {@code key}.
+   *
+   * @param key key
    */
   public void decrement(long key);
 
   /**
    * Decrements the count of an event {@code key} by {@code cnt}.
+   *
+   * @param key key
+   * @param cnt count
    */
   public void decrement(long key, int cnt);
 
   /**
    * Returns {@code true} if {@code key} exists in this object.
+   *
+   * @param key key
+   * @return {@code true} if key exists
    */
   public boolean contains(long key);
 
   /**
    * Returns the count of a particular event {@code key}.
+   *
+   * @param key key
+   * @return value of key
    */
   public int get(long key);
 
   /**
    * Computes the relative frequency of a particular event {@code key}. That is,
    * {@code f(key) / SUM_i f(key_i)}.
+   *
+   * @param key key
    */
   public double computeRelativeFrequency(long key);
 
   /**
    * Computes the log (base e) of the relative frequency of a particular event {@code key}.
+   *
+   * @param key key
    */
   public double computeLogRelativeFrequency(long key);
 
   /**
    * Sets the count of a particular event {@code key} to {@code cnt}.
+   *
+   * @param key key
+   * @param cnt count
    */
   public int set(long key, int cnt);
 
   /**
    * Removes the count of a particular event {@code key}.
+   *
+   * @param key key
    */
   public int remove(long key);
 
@@ -84,11 +109,15 @@ public interface Long2IntFrequencyDistribution extends SortableEntries<PairOfLon
   /**
    * Returns number of distinct events observed. Note that if an event is observed and then its
    * count subsequently removed, the event will not be included in this count.
+   *
+   * @return number of distinct events observed
    */
   public int getNumberOfEvents();
 
   /**
    * Returns the sum of counts of all observed events.
+   *
+   * @return sum of counts of all observed events
    */
   public long getSumOfCounts();
 }

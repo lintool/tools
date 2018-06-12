@@ -16,12 +16,12 @@
 
 package tl.lin.data.array;
 
+import org.apache.hadoop.io.Writable;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Arrays;
-
-import org.apache.hadoop.io.Writable;
 
 public class IntArrayWritable implements Writable {
   private int[] array;
@@ -80,6 +80,8 @@ public class IntArrayWritable implements Writable {
   /**
    * Returns a deep copy of the array. The length of the returned array will always be the value
    * {@link #size()}. That is, trailing unused space in the underlying array will be trimmed.
+   *
+   * @return deep copy of the underlying array
    */
   public int[] getClone() {
     int[] copy = new int[length];
@@ -90,6 +92,8 @@ public class IntArrayWritable implements Writable {
   /**
    * Returns a reference to the underlying array. Note that the underlying array may have length
    * longer than the value of {@link #size()}.
+   *
+   * @return reference to the underlying array
    */
   public int[] getArray() {
     return array;
@@ -97,6 +101,8 @@ public class IntArrayWritable implements Writable {
 
   /**
    * Sets the underlying array.
+   *
+   * @param array array
    */
   public void setArray(int[] array) {
     if (array == null) {
@@ -111,6 +117,9 @@ public class IntArrayWritable implements Writable {
 
   /**
    * Sets the underlying array and a specified length.
+   *
+   * @param array array
+   * @param length specified length
    */
   public void setArray(int[] array, int length) {
     this.array = array;
@@ -121,6 +130,7 @@ public class IntArrayWritable implements Writable {
    * Returns the value at index <i>i</i>. Note that no bounds checking is performed.
    *
    * @param i index position
+   * @return value at index <i>i</i>
    */
   public int get(int i) {
     return array[i];
@@ -137,7 +147,9 @@ public class IntArrayWritable implements Writable {
   }
 
   /**
-   * Returns the size of the float array.
+   * Returns the size of the int array.
+   *
+   * @return size of the int array
    */
   public int size() {
     return length;

@@ -16,11 +16,11 @@
 
 package tl.lin.data.array;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.RandomAccess;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Object representing a list of longs, backed by an resizable-array.
@@ -207,6 +207,9 @@ public class ArrayListOfLongs implements RandomAccess, Cloneable, Iterable<Long>
 
   /**
    * Appends the specified element to the end of this list.
+   *
+   * @param e element to add
+   * @return this object
    */
   public ArrayListOfLongs add(long e) {
     ensureCapacity(size + 1); // Increments modCount!!

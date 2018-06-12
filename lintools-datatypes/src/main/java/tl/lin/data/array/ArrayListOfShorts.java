@@ -16,11 +16,11 @@
 
 package tl.lin.data.array;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.RandomAccess;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Object representing a list of shorts, backed by an resizable-array.
@@ -208,6 +208,9 @@ public class ArrayListOfShorts implements RandomAccess, Cloneable, Iterable<Shor
 
   /**
    * Appends the specified element to the end of this list.
+   *
+   * @param e element to add
+   * @return this object
    */
   public ArrayListOfShorts add(short e) {
     ensureCapacity(size + 1); // Increments modCount!!

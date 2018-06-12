@@ -16,10 +16,11 @@
 
 package tl.lin.data.array;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.RandomAccess;
-import com.google.common.base.Preconditions;
 
 /**
  * Object representing a list of ints, backed by an resizable-array.
@@ -206,6 +207,9 @@ public class ArrayListOfInts implements RandomAccess, Cloneable, Iterable<Intege
 
   /**
    * Appends the specified element to the end of this list.
+   *
+   * @param e element to add
+   * @return this object
    */
   public ArrayListOfInts add(int e) {
     ensureCapacity(size + 1); // Increments modCount!!
