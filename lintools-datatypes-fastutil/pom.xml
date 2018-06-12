@@ -3,7 +3,7 @@
   <groupId>tl.lin</groupId>
   <artifactId>lintools-datatypes-fastutil</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.1.2-SNAPSHOT</version>
   <name>lintools-datatypes-fastutil</name>
   <description>Lintools (fastutil datatypes)</description>
   <url>http://lin.tl/</url>
@@ -27,15 +27,9 @@
     <developer>
       <id>lintool</id>
       <name>Jimmy Lin</name>
-      <email>jimmylin@umd.edu</email>
+      <email>jimmylin@uwaterloo.ca</email>
     </developer>
   </developers>
-
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
 
   <distributionManagement>
     <snapshotRepository>
@@ -63,12 +57,29 @@
     </repository>
   </repositories>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <testSource>1.8</testSource>
+          <testTarget>1.8</testTarget>
+          <showDeprecation>true</showDeprecation>
+          <compilerArgument>-Xlint:unchecked</compilerArgument>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.3</version>
+        <version>1.6.8</version>
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
@@ -79,7 +90,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.5</version>
+        <version>1.6</version>
         <executions>
           <execution>
             <id>sign-artifacts</id>
@@ -93,7 +104,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
+        <version>3.0.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -106,7 +117,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
+        <version>3.0.1</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -129,7 +140,7 @@
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.1</version>
       <type>test-jar</type>
       <scope>test</scope>
       <optional>true</optional>
@@ -137,7 +148,7 @@
     <dependency>
       <groupId>tl.lin</groupId>
       <artifactId>lintools-datatypes</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.1</version>
     </dependency>
     <dependency>
       <groupId>it.unimi.dsi</groupId>
@@ -158,7 +169,7 @@
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
-      <version>2.5.0-cdh5.2.1</version>
+      <version>3.1.0</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

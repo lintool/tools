@@ -16,17 +16,16 @@
 
 package tl.lin.data.map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import junit.framework.JUnit4TestAdapter;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Random;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class Int2IntOpenHashMapWritableTest {
 
@@ -133,6 +132,8 @@ public class Int2IntOpenHashMapWritableTest {
 
     value = m2.get(4);
     assertEquals(22, value);
+
+    Int2IntOpenHashMapWritable.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -143,12 +144,10 @@ public class Int2IntOpenHashMapWritableTest {
     m1.put(3, 5);
     m1.put(4, 22);
 
-    // Object m2 should not have been decoded, size lazy decode flag is
-    // true.
+    // Object m2 should not have been decoded, size lazy decode flag is true.
     Int2IntOpenHashMapWritable m2 = Int2IntOpenHashMapWritable.create(m1.serialize());
 
-    // Even though m2 hasn't be decoded, we should be able to properly
-    // serialize it.
+    // Even though m2 hasn't be decoded, we should be able to properly serialize it.
     Int2IntOpenHashMapWritable m3 = Int2IntOpenHashMapWritable.create(m2.serialize());
 
     assertEquals(0, m3.size());
@@ -174,6 +173,8 @@ public class Int2IntOpenHashMapWritableTest {
 
     value = m3.get(4);
     assertEquals(22, value);
+
+    Int2IntOpenHashMapWritable.setLazyDecodeFlag(false);
   }
 
   @Test
@@ -279,6 +280,8 @@ public class Int2IntOpenHashMapWritableTest {
     assertEquals(9, m1.get(1));
     assertEquals(22, m1.get(2));
     assertEquals(5, m1.get(3));
+
+    Int2IntOpenHashMapWritable.setLazyDecodeFlag(false);
   }
 
   @Test
