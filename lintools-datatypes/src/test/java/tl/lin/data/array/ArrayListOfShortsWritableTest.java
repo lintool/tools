@@ -16,23 +16,21 @@
 
 package tl.lin.data.array;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.util.List;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.junit.Test;
-
 import tl.lin.data.pair.PairOfWritables;
 import tl.lin.data.util.SequenceFileUtils;
+
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ArrayListOfShortsWritableTest {
   short neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6,
@@ -63,11 +61,9 @@ public class ArrayListOfShortsWritableTest {
     FileSystem.get(conf).delete(tmp, true);
 
     try {
-      // w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
-      // SequenceFile.Writer.keyClass(IntWritable.class),
-      // SequenceFile.Writer.valueClass(ArrayListOfShortsWritable.class));
-      w = SequenceFile.createWriter(FileSystem.get(conf), conf, tmp, IntWritable.class,
-          ArrayListOfShortsWritable.class);
+      w = SequenceFile.createWriter(conf, SequenceFile.Writer.file(tmp),
+      SequenceFile.Writer.keyClass(IntWritable.class),
+      SequenceFile.Writer.valueClass(ArrayListOfShortsWritable.class));
       w.append(new IntWritable(1), arr);
       w.close();
     } catch (IOException e) {

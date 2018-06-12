@@ -16,15 +16,14 @@
 
 package tl.lin.data.map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import junit.framework.JUnit4TestAdapter;
+import org.junit.Test;
 
 import java.io.IOException;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class HMapILWTest {
 
@@ -118,6 +117,8 @@ public class HMapILWTest {
     value = m2.get(4);
     assertTrue(value == Integer.MAX_VALUE + 22L);
     assertTrue(value > 0);
+
+    HMapILW.setLazyDecodeFlag(false);
   }
 
   @Test
