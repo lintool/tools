@@ -42,7 +42,8 @@ public class ArrayListOfDoubles implements RandomAccess, Cloneable, Iterable<Dou
       throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
     }
 
-    array = new double[initialCapacity];
+    this.array = new double[initialCapacity];
+    this.size = 0;
   }
 
   /**
@@ -191,6 +192,14 @@ public class ArrayListOfDoubles implements RandomAccess, Cloneable, Iterable<Dou
    * @return the element previously at the specified position
    */
   public double set(int index, double element) {
+    if (index >= array.length) {
+      ensureCapacity(index+1);
+    }
+
+    if (index >= size) {
+      size = index + 1;
+    }
+
     double oldValue = array[index];
     array[index] = element;
     return oldValue;

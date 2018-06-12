@@ -41,7 +41,8 @@ public class ArrayListOfInts implements RandomAccess, Cloneable, Iterable<Intege
       throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
     }
 
-    array = new int[initialCapacity];
+    this.array = new int[initialCapacity];
+    this.size = 0;
   }
 
   /**
@@ -190,6 +191,14 @@ public class ArrayListOfInts implements RandomAccess, Cloneable, Iterable<Intege
    * @return the element previously at the specified position
    */
   public int set(int index, int element) {
+    if (index >= array.length) {
+      ensureCapacity(index+1);
+    }
+
+    if (index >= size) {
+      size = index + 1;
+    }
+
     int oldValue = array[index];
     array[index] = element;
     return oldValue;

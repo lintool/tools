@@ -42,7 +42,8 @@ public class ArrayListOfLongs implements RandomAccess, Cloneable, Iterable<Long>
       throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
     }
 
-    array = new long[initialCapacity];
+    this.array = new long[initialCapacity];
+    this.size = 0;
   }
 
   /**
@@ -191,6 +192,14 @@ public class ArrayListOfLongs implements RandomAccess, Cloneable, Iterable<Long>
    * @return the element previously at the specified position
    */
   public long set(int index, long element) {
+    if (index >= array.length) {
+      ensureCapacity(index+1);
+    }
+
+    if (index >= size) {
+      size = index + 1;
+    }
+
     long oldValue = array[index];
     array[index] = element;
     return oldValue;

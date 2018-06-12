@@ -42,7 +42,8 @@ public class ArrayListOfFloats implements RandomAccess, Cloneable, Iterable<Floa
       throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
     }
 
-    array = new float[initialCapacity];
+    this.array = new float[initialCapacity];
+    this.size = 0;
   }
 
   /**
@@ -191,6 +192,14 @@ public class ArrayListOfFloats implements RandomAccess, Cloneable, Iterable<Floa
    * @return the element previously at the specified position
    */
   public float set(int index, float element) {
+    if (index >= array.length) {
+      ensureCapacity(index+1);
+    }
+
+    if (index >= size) {
+      size = index + 1;
+    }
+
     float oldValue = array[index];
     array[index] = element;
     return oldValue;

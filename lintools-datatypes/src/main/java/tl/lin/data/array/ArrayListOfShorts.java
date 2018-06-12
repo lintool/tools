@@ -42,7 +42,8 @@ public class ArrayListOfShorts implements RandomAccess, Cloneable, Iterable<Shor
       throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
     }
 
-    array = new short[initialCapacity];
+    this.array = new short[initialCapacity];
+    this.size = 0;
   }
 
   /**
@@ -192,6 +193,14 @@ public class ArrayListOfShorts implements RandomAccess, Cloneable, Iterable<Shor
    * @return the element previously at the specified position
    */
   public short set(int index, short element) {
+    if (index >= array.length) {
+      ensureCapacity(index+1);
+    }
+
+    if (index >= size) {
+      size = index + 1;
+    }
+
     short oldValue = array[index];
     array[index] = element;
     return oldValue;

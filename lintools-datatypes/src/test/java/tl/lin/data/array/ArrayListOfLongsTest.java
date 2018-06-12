@@ -16,18 +16,47 @@
 
 package tl.lin.data.array;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import junit.framework.JUnit4TestAdapter;
+import org.junit.Test;
 
 import java.util.Random;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ArrayListOfLongsTest {
   long neg_one = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7,
       nine = 9;
+
+  @Test
+  public void testInitialSize() {
+    ArrayListOfLongs a = new ArrayListOfLongs();
+    assertEquals(0, a.size());
+  }
+
+  @Test
+  public void testSetBounds() {
+    ArrayListOfLongs a = new ArrayListOfLongs(10);
+    assertEquals(0, a.size());
+
+    a.set(0, 1L);
+    assertEquals(1, a.size());
+
+    a.set(5, 1L);
+    assertEquals(6, a.size());
+
+    a.set(1, 1L);
+    assertEquals(6, a.size());
+
+    a.set(9, 1L);
+    assertEquals(10, a.size());
+
+    a.set(99, 1L);
+    assertEquals(100, a.size());
+
+    a.set(0, 2L);
+    assertEquals(100, a.size());
+  }
 
   @Test
   public void testRemoveWithinBounds() {
