@@ -72,8 +72,8 @@ The following provides more detail on each of the datatype packages, but the gen
 Summary of classes:
 
 + `{Double,Float,Int,Long,Short}ArrayWritable`: these classes are `Writable` objects that wrap primitive arrays. Use this if you have static fixed-length arrays. Otherwise, use the other classes below.
-+ `ArrayListOf{Double,Float,IntLong,Short}`: these are implementations of `ArrayList` customized for each primitive type. Like a normal `ArrayList`, the backing array grows dynamically.
-+ `ArrayListOf{Double,Float,IntLong,Short}Writable`: the above classes, except as `Writable` objects.
++ `ArrayListOf{Double,Float,Int,Long,Short}`: these are implementations of `ArrayList` customized for each primitive type. Like a normal `ArrayList`, the backing array grows dynamically.
++ `ArrayListOf{Double,Float,Int,Long,Short}Writable`: the above classes, except as `Writable` objects.
 + `ArrayListWritable` and `ArrayListWritableComparable`: as the names suggest, holds arbitrary `Writable` and `WritableComparable` objects.
 
 ### tl.lin.data.map
