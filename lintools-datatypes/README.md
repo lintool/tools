@@ -84,6 +84,7 @@ This package contains specialized primitive maps. Understanding the naming conve
 + `F` for float
 + `I` for integer
 + `S` for short
++ `St` for string
 + `K` for generic key
 + `V` for generic value
 + `W` for a Writable
